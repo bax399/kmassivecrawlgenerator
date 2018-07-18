@@ -1,5 +1,5 @@
 package model;
 import java.util.*;
-public abstract class AbstractHex {
+public abstract class Location {
 
 }
