@@ -20,14 +20,14 @@ public class Tuple
         return 31 * Arrays.hashCode(values);
     }
 
-    public Tuple add(Integer... adds)
+    public Tuple add(Tuple other)
     {
     	for(int ii=0;ii<3;ii++)
     	{
-    		adds[ii]+=values[ii];
+    		other.values[ii]+=values[ii];
     	}
     	
-    	return new Tuple(adds[0],adds[1],adds[2]);
+    	return other;
     }
     
     @Override
