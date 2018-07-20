@@ -2,7 +2,6 @@ package model;
 import model.graphresource.*;
 
 import java.util.*;
-
 //Citation: http://keekerdc.com/2011/03/hexagon-grids-coordinate-systems-and-distance-calculations/
 //Assuming corner is bottom-left (0,0,0)
 public class HexMap 
@@ -17,24 +16,49 @@ public class HexMap
 	private int height;
 	private int width;
 	
-	public HexMap(int h, int w)
+	public HexMap(int w, int h)
 	{
+		hexes = new LinkedHashMap<>();
+		tuples = new LinkedHashMap<>();
 		height = Math.max(1, h);
 		width = Math.max(1, w);
-		int shift = 0, count = 0;
-		int zz;
-		for(int yy=0;yy<width-shift;yy++)
+		int shift = 0, count = 0, xxcounter = 0;
+		int zz,xx;
+		Tuple tt;
+		Hex hh;
+		for(int yy=0;yy<height;yy++)
 		{
-			for(int xx=0;xx<width-shift;xx++)
+
+			
+			for(int ii=0;ii<width-shift;ii++)
 			{
+				xx = ii+xxcounter;
 				zz = -yy-xx;
-				hexes.put(new Tuple(xx,yy,zz),new Hex(count));
+				tt = new Tuple(xx,yy,zz);
+				hh = new Hex(count);
+				hexes.put(tt,hh);
+				tuples.put(hh,tt);
+				count++;				
 			}
 			
-			if (shift==1) {shift =0;}
-			if (shift==0) {shift = 1;}
-			count++;
+			if (shift==0) 
+			{
+				shift = 1;
+			}
+			else if (shift==1)
+			{
+				shift = 0;
+				xxcounter--;
+			}			
+
 		}
+		
+		System.out.println("done");		
+	}
+	
+	public int getTotal()
+	{
+		return hexes.size();
 	}
 
 	//public LinkedList getNeighbours(Hex origin)
@@ -73,5 +97,19 @@ public class HexMap
 		}
 		
 		return next;
+	}
+	
+	@Override
+	public String toString()
+	{
+		String output ="";
+		
+		Set<Tuple> keys = hexes.keySet();
+		Iterator it = keys.iterator();
+		while(it.hasNext())
+		{
+			output+= it.next().toString() +" | ";
+		}
+		return output;
 	}
 }

@@ -9,9 +9,10 @@ public class Tuple
 
     public Tuple(int x, int y, int z)
     {
+    	values = new int[3];
         values[0]=x;
         values[1]=y;
-        values[z]=z;
+        values[2]=z;
         this.hashCode = hashCode(values);
     }
 
@@ -28,6 +29,12 @@ public class Tuple
     	}
     	
     	return other;
+    }
+    
+    @Override
+    public String toString()
+    {
+    	return values[0] + ", "+values[1] +", "+ values[2];
     }
     
     @Override
