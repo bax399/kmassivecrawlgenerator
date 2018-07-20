@@ -13,7 +13,7 @@ public class TestHexMap {
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		MapDrawer ui = new MapDrawer();
 		f.add(ui);
-		f.setSize(400,250);
+		f.setSize(800,800);
 		f.setVisible(true);
 		
 		System.out.println(map.toString() + map.getTotal());

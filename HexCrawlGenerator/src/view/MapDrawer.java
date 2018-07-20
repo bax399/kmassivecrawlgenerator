@@ -11,6 +11,8 @@ public class MapDrawer extends JPanel
 
 	LinkedList<Polygon> polys = new LinkedList<>();
 	
+	static int size = 10;
+	
 	public MapDrawer()
 	{
 		for(int xx = 0; xx<10; xx++)
@@ -19,9 +21,10 @@ public class MapDrawer extends JPanel
 			{
 				Polygon h = new Polygon();
 				
-				for (int i = 0; i < 6; i++){
-					h.addPoint((int) (xx*50 + 20 * Math.cos(i * 2 * Math.PI / 6)),
-							  (int) (yy*50 + 20 * Math.sin(i * 2 * Math.PI / 6)));
+				for (int i = 0; i < 6; i++)
+				{
+					h.addPoint((int) ((xx+1)*50 + size * Math.cos(i * 2 * Math.PI / 6)),
+							  (int) ((yy+1)*50 + size * Math.sin(i * 2 * Math.PI / 6)));
 				}
 				polys.add(h);
 			}
@@ -45,10 +48,14 @@ public class MapDrawer extends JPanel
 		g.setColor(Color.RED);
 		g.drawString("Test", 25,120);
 		
+		g.drawOval(50, 50, 3, 3);
+		
 		Iterator<Polygon> it = polys.iterator();
 		while (it.hasNext())
 		{
 			g.drawPolygon(it.next());
 		}
+		
+		
 	}
 }
