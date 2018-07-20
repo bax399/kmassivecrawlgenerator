@@ -99,13 +99,14 @@ public class HexMap
 		return next;
 	}
 	
+	
 	@Override
 	public String toString()
 	{
 		String output ="";
 		
 		Set<Tuple> keys = hexes.keySet();
-		Iterator it = keys.iterator();
+		Iterator<Tuple> it = keys.iterator();
 		while(it.hasNext())
 		{
 			output+= it.next().toString() +" | ";
