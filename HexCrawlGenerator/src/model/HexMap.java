@@ -3,6 +3,7 @@ import model.graphresource.*;
 
 import java.util.*;
 
+//Citation: http://keekerdc.com/2011/03/hexagon-grids-coordinate-systems-and-distance-calculations/
 //Assuming corner is bottom-left (0,0,0)
 public class HexMap 
 {
@@ -20,7 +21,22 @@ public class HexMap
 	{
 		height = Math.max(1, h);
 		width = Math.max(1, w);
+		int shift = 0, count = 0;
+		int zz;
+		for(int yy=0;yy<width-shift;yy++)
+		{
+			for(int xx=0;xx<width-shift;xx++)
+			{
+				zz = -yy-xx;
+				hexes.put(new Tuple(xx,yy,zz),new Hex(count));
+			}
+			
+			if (shift==1) {shift =0;}
+			if (shift==0) {shift = 1;}
+			count++;
+		}
 	}
+
 	//public LinkedList getNeighbours(Hex origin)
 	
 	//public Hex moveOneStep(Hex origin, Hex destination)

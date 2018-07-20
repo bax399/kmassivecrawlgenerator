@@ -24,7 +24,7 @@ public class Edge<V extends Vertex> {
         if (this == obj) return true;
         if (!(obj instanceof Edge)) return false;
 
-        Edge _obj = (Edge) obj;
+        Edge<V> _obj = (Edge<V>) obj;
         return _obj.v1.equals(v1) && _obj.v2.equals(v2) &&
                _obj.weight == weight;
     }
