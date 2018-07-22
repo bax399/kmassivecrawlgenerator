@@ -7,7 +7,7 @@ import java.util.*;
 public class HexMap 
 {
 	
-	LinkedHashMap<int[], Hex> hexes; // Stores coordinates for each hex
+	LinkedHashMap<Integer, Hex> hexes; // Stores coordinates for each hex
 	
 	Graph<Hex,Connection> neighbours; // Stores each hex's neighbouring cells in hexagonal coordinates
 	Graph<Hex,Road> roads; // Stores road connections
@@ -25,6 +25,31 @@ public class HexMap
 		System.out.println("done");		
 	}
 	
+    private static int hashCode(Hex h)
+    {
+        return 31 * Arrays.hashCode(new int[]{h.q, h.r});
+    }
+    
+    private static int hashCode(int q, int r)
+    {
+    	return 31 * Arrays.hashCode(new int[] {q,r});
+    }
+	
+    public void addHex(Hex h)
+    {
+    	hexes.put(hashCode(h), h);
+    }
+    
+    public void addHex(int q, int r)
+    {
+    	hexes.put(hashCode(q,r), new Hex(q,r));
+    }
+    
+    public Hex getHex(int q, int r)
+    {
+    	return hexes.get(hashCode(q,r));
+    }
+    
 	public int getTotal()
 	{
 		return hexes.size();
@@ -40,11 +65,6 @@ public class HexMap
 		Hex rel = new Hex(xzy[0],xzy[1]);
 		//Get the tuple corresponding to the origin hex, adds xyz to it then gets the corresponding hex.
 		return hexes.get(new int[] {origin.add(rel).q,origin.add(rel).r});
-	}
-	
-	public Hex getHex(int[] xzy)
-	{
-		return hexes.get(new int[] {xzy[0],xzy[1]});
 	}
 	
 	//Get next in order, used for generation/looping
