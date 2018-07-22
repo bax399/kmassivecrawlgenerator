@@ -1,6 +1,5 @@
 package view;
 import java.util.*;
-import model.Tuple;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;

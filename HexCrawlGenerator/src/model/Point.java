@@ -1,6 +1,8 @@
-package model.redblob;
+package model;
 import java.util.*;
-public class Point {
+
+//Refactor to use awt.Point, as it has all functionality + base implementation.
+public class Point{
     public Point(double x, double y)
     {
         this.x = x;

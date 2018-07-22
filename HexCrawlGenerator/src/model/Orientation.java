@@ -1,4 +1,4 @@
-package model.redblob;
+package model;
 import java.util.*;
 public class Orientation {
     public Orientation(double f0, double f1, double f2, double f3, double b0, double b1, double b2, double b3, double start_angle)

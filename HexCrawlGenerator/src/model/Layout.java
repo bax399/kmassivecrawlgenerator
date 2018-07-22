@@ -1,4 +1,4 @@
-package model.redblob;
+package model;
 import java.awt.Polygon;
 import java.util.*;
 public class Layout {
@@ -41,6 +41,7 @@ public class Layout {
 	    }
 
 	    //Changed from arrayList -> Polygon for drawing.
+	    //MAY NEED TO USE FRACTIONALHEX -> hexRound() IF DRAWING IS OFF
 	    public Polygon polygonCorners(Hex h)
 	    {
 	        Polygon corners = new Polygon();
