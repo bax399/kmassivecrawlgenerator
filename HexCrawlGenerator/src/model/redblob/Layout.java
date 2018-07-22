@@ -1,4 +1,5 @@
 package model.redblob;
+import java.awt.Polygon;
 import java.util.*;
 public class Layout {
 	   public Layout(Orientation orientation, Point size, Point origin)
@@ -39,15 +40,16 @@ public class Layout {
 	        return new Point(size.x * Math.cos(angle), size.y * Math.sin(angle));
 	    }
 
-
-	    public ArrayList<Point> polygonCorners(Hex h)
+	    //Changed from arrayList -> Polygon for drawing.
+	    public Polygon polygonCorners(Hex h)
 	    {
-	        ArrayList<Point> corners = new ArrayList<Point>(){{}};
+	        Polygon corners = new Polygon();
 	        Point center = hexToPixel(h);
 	        for (int i = 0; i < 6; i++)
 	        {
 	            Point offset = hexCornerOffset(i);
-	            corners.add(new Point(center.x + offset.x, center.y + offset.y));
+	            //corners.add(new Point(center.x + offset.x, center.y + offset.y));
+	            corners.addPoint((int)(center.x+offset.x),  (int)(center.y+offset.y));
 	        }
 	        return corners;
 	    }
