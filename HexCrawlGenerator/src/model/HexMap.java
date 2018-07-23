@@ -1,9 +1,6 @@
 package model;
 import model.graphresource.*;
 
-import java.awt.Polygon;
-import java.lang.*;
-
 import java.util.*;
 //Citation: http://keekerdc.com/2011/03/hexagon-grids-coordinate-systems-and-distance-calculations/
 //Assuming corner is bottom-left (0,0,0)

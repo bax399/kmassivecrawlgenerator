@@ -1,5 +1,4 @@
 package model;
-import java.util.*;
 public class Road extends Connection{
 	public Road(FilledHex v1, FilledHex v2)
 	{

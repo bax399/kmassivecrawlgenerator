@@ -1,7 +1,5 @@
 //Code modified from: https://gist.github.com/smddzcy/bf8fc17dedf4d40b0a873fc44f855a58
 package model.graphresource;
-
-import java.util.*;
 public class Edge<V extends Vertex> {
     private static final int DEFAULT_WEIGHT = 1;
 

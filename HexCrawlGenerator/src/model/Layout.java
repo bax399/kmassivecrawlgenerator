@@ -1,6 +1,5 @@
 package model;
 import java.awt.Polygon;
-import java.util.*;
 public class Layout {
 	   public Layout(Orientation orientation, Point size, Point origin)
 	    {

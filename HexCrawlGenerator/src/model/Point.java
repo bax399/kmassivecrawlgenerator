@@ -1,5 +1,4 @@
 package model;
-import java.util.*;
 
 //Refactor to use awt.Point, as it has all functionality + base implementation.
 public class Point{

@@ -1,5 +1,4 @@
 package model;
-import java.util.*;
 import java.awt.Color;
 import java.awt.Polygon;
 public class FilledHex extends Hex 
