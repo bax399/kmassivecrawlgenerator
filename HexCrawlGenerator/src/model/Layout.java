@@ -48,7 +48,8 @@ public class Layout {
 	        Point center = hexToPixel(h);
 	        for (int i = 0; i < 6; i++)
 	        {
-	            Point offset = hexCornerOffset(i);
+
+	            Point offset = hexCornerOffset(i);	        	
 	            //corners.add(new Point(center.x + offset.x, center.y + offset.y));
 	            corners.addPoint((int)(center.x+offset.x),  (int)(center.y+offset.y));
 	        }
