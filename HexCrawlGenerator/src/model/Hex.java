@@ -2,7 +2,7 @@ package model;
 import model.graphresource.*;
 import java.util.*;
 public class Hex extends Vertex
-{
+{	
 	//Cube
     public Hex(int q, int r, int s)
     {
@@ -85,6 +85,11 @@ public class Hex extends Vertex
     public int distance(Hex b)
     {
         return subtract(b).length();
+    }
+    
+    public String toString()
+    {
+    	return q +", " + r +", "+ s;
     }
 
 }

@@ -3,32 +3,18 @@ import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-
+import model.FilledHex;
 //Panel draws to screen.
 public class MapDrawer extends JPanel 
 {
 
-	LinkedList<Polygon> polys = new LinkedList<>();
+	Map<Integer,FilledHex> hexes;
 	
 	static int size = 10;
 	
-	public MapDrawer()
+	public MapDrawer(Map<Integer,FilledHex> h)
 	{
-		for(int xx = 0; xx<10; xx++)
-		{
-			for(int yy=0; yy<10; yy++)
-			{
-				Polygon h = new Polygon();
-				
-				for (int i = 0; i < 6; i++)
-				{
-					h.addPoint((int) ((xx+1)*50 + size * Math.cos(i * 2 * Math.PI / 6)),
-							  (int) ((yy+1)*50 + size * Math.sin(i * 2 * Math.PI / 6)));
-				}
-				polys.add(h);
-			}
-		}
-
+		hexes=h;
 	}
 	
 	//Needed method, draws to screen
@@ -49,10 +35,11 @@ public class MapDrawer extends JPanel
 		
 		g.drawOval(50, 50, 3, 3);
 		
-		Iterator<Polygon> it = polys.iterator();
+		Set<Integer> ss = hexes.keySet();
+		Iterator<Integer> it = ss.iterator();
 		while (it.hasNext())
 		{
-			g.drawPolygon(it.next());
+			g.drawPolygon(hexes.get(it.next()).shape);
 		}
 		
 		
