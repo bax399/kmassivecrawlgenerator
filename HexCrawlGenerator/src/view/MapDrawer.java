@@ -39,7 +39,11 @@ public class MapDrawer extends JPanel
 		Iterator<Integer> it = ss.iterator();
 		while (it.hasNext())
 		{
-			g.drawPolygon(hexes.get(it.next()).shape);
+			FilledHex hh = hexes.get(it.next());
+			g.setColor(hh.getColor());
+			//Change offset to be relative to layout size
+			g.drawString(hh.getName(), (int)hh.center.x-15, (int)hh.center.y+5);
+			g.drawPolygon(hh.shape);
 		}
 		
 		

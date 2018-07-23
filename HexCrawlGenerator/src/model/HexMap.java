@@ -82,6 +82,7 @@ public class HexMap
 		{
 			FilledHex hh = hexes.get(it.next());
 			hh.shape = layout.polygonCorners(hh);
+			hh.center = layout.hexToPixel(hh);
 		}
 	}
 	
