@@ -24,26 +24,21 @@ public class MapDrawer extends JPanel
 		super.paintComponent(g);
 		this.setBackground(Color.WHITE);
 		
-		g.setColor(Color.BLACK);
-		g.fillRect(25,25,100,30);
-		
-		g.setColor(new Color(190,81,215));
-		g.fillRect(25, 65, 100, 30);
-		
-		g.setColor(Color.RED);
-		g.drawString("Test", 25,120);
-		
-		g.drawOval(50, 50, 3, 3);
-		
 		Set<Integer> ss = hexes.keySet();
 		Iterator<Integer> it = ss.iterator();
 		while (it.hasNext())
 		{
 			FilledHex hh = hexes.get(it.next());
-			g.setColor(hh.getColor());
+			
 			//Change offset to be relative to layout size
+			
+			g.setColor(hh.getColor().brighter().brighter().brighter());
+			g.fillPolygon(hh.shape);
+			g.setColor(Color.BLACK);
 			g.drawString(hh.getName(), (int)hh.center.x-15, (int)hh.center.y+5);
+			g.setColor(hh.getColor());
 			g.drawPolygon(hh.shape);
+			
 		}
 		
 		

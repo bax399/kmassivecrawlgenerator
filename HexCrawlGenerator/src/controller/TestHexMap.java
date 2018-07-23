@@ -8,7 +8,8 @@ public class TestHexMap {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		HexMap map = new HexMap(8,16);
-		JFrame f = new JFrame("Title");
+		JFrame f = new JFrame("HexMap");
+	
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		MapDrawer ui = new MapDrawer(map.getHexes());
 		f.add(ui);
