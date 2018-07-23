@@ -17,4 +17,14 @@ public class Biome {
 		riverorigin = ro;
 		riverend = re;
 	}
+	
+	public Biome(Biome biome)
+	{
+		this.name = biome.name;
+		this.color = biome.color;
+		this.height = biome.height;
+		this.travelcost = biome.travelcost;
+		this.riverorigin = biome.riverorigin;
+		this.riverend = biome.riverend;		
+	}
 }

@@ -4,29 +4,28 @@ import model.graphresource.*;
 import java.util.*;
 //Citation: http://keekerdc.com/2011/03/hexagon-grids-coordinate-systems-and-distance-calculations/
 //Assuming corner is bottom-left (0,0,0)
-public class HexMap 
+public class HexMap<V extends Hex>
 {
 	
-	Map<Integer, FilledHex> hexes; // Stores coordinates for each hex
-	Layout layout = new Layout(Layout.pointy, new Point(20,20), new Point(100,100));
-	Graph<FilledHex,Connection> neighbours; // Stores each hex's neighbouring cells in hexagonal coordinates
-	Graph<FilledHex,Road> roads; // Stores road connections
-	Graph<FilledHex,River> rivers; // Stores river connections
+	Map<Integer, V> hexes; // Stores coordinates for each hex
+
+	Graph<Hex,Connection> neighbours; // Stores each hex's neighbouring cells in hexagonal coordinates
+	Graph<Hex,Road> roads; // Stores road connections
+	Graph<Hex,River> rivers; // Stores river connections
 	
 	private int height;
 	private int width;
 	
-	public HexMap(int w, int h)
+	public HexMap()
 	{
 		hexes = new LinkedHashMap<>();
-		
-		height = Math.max(1, h);
-		width = Math.max(1, w);
-		createRectangleMap(height,width);
+		neighbours = new Graph<>();
+		roads = new Graph<>();
+		rivers = new Graph<>();
 		System.out.println("done");		
 	}
 	
-    private static int hashCode(FilledHex h)
+    private static int hashCode(Hex h)
     {
         return 31 * Arrays.hashCode(new int[]{h.q, h.r});
     }
@@ -36,22 +35,23 @@ public class HexMap
     	return 31 * Arrays.hashCode(new int[] {q,r});
     }
 	
-    public void addHex(FilledHex h)
+    public void addHex(V h)
     {
     	hexes.put(hashCode(h), h);
     }
     
+    /* Can't work with generics.
     public void addHex(int q, int r)
     {
-    	hexes.put(hashCode(q,r), new FilledHex(q,r));
-    }
+    	hexes.put(hashCode(q,r), new Hex(q,r));
+    }*/
     
-    public FilledHex getHex(int q, int r)
+    public Hex getHex(int q, int r)
     {
     	return hexes.get(hashCode(q,r));
     }
     
-    public FilledHex getHex(int hash)
+    public Hex getHex(int hash)
     {
     	return hexes.get(hash);
     }
@@ -61,30 +61,29 @@ public class HexMap
 		return hexes.size();
 	}
 	
-	public void createRectangleMap(int map_height, int map_width)
-	{
-		for (int r = 0; r < map_height; r++) 
-		{
-		    int r_offset = (int)Math.floor(r/2); // or r>>1
-		    for (int q = -r_offset; q < map_width - r_offset; q++) 
-		    {
-		        //hexes.(Hex(q, r, -q-r));
-		        addHex(q,r);
-		    }
-		}		
-	}
-	
-	public void getPositions()
-	{
-		Set<Integer> ss = hexes.keySet();
-		Iterator<Integer> it = ss.iterator();
+	public void initializeNeighbours()
+	{	
+		Set<Integer> s = hexes.keySet();
+		Iterator<Integer> it = s.iterator();
 		while(it.hasNext())
 		{
-			FilledHex hh = hexes.get(it.next());
-			hh.shape = layout.polygonCorners(hh);
-			hh.center = layout.hexToPixel(hh);
+			Hex each = hexes.get(it.next());
+			neighbours.addVertex(each);
+			
+			for(int ii = 0; ii<6;ii++)
+			{
+				Hex n = each.neighbor(ii);
+				if (hexes.containsValue(n))
+				{
+					neighbours.addEdge(new Connection(each, n));
+					
+				}
+				
+				
+			}
+			
 		}
-	}
+	}		
 	
 	@Override
 	public String toString()
@@ -94,15 +93,14 @@ public class HexMap
 		Iterator<Integer> it = ss.iterator();
 		while(it.hasNext())
 		{
-			FilledHex hh = hexes.get(it.next());
+			Hex hh = hexes.get(it.next());
 			output+=hh.toString() + " | ";
 		}
 		return output;
 	}
 	
-	public Map<Integer,FilledHex> getHexes()
+	public Map<Integer,V> getHexes()
 	{
-		getPositions();
-		return Collections.unmodifiableMap(hexes);
+		return hexes;
 	}
 }

@@ -21,6 +21,7 @@ public class MapDrawer extends JPanel
 	@Override
 	public void paintComponent(Graphics g)
 	{
+		Graphics2D g2d = (Graphics2D) g;
 		super.paintComponent(g);
 		this.setBackground(Color.WHITE);
 		
@@ -31,12 +32,10 @@ public class MapDrawer extends JPanel
 			FilledHex hh = hexes.get(it.next());
 			
 			//Change offset to be relative to layout size
-			
-			g.setColor(hh.getColor().brighter().brighter().brighter());
+			g.setColor(hh.getColor());
 			g.fillPolygon(hh.shape);
 			g.setColor(Color.BLACK);
 			g.drawString(hh.getName(), (int)hh.center.x-15, (int)hh.center.y+5);
-			g.setColor(hh.getColor());
 			g.drawPolygon(hh.shape);
 			
 		}

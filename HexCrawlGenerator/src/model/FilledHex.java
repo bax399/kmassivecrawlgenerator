@@ -25,7 +25,12 @@ public class FilledHex extends Hex
 	public FilledHex(int q, int r)
 	{
 		super(q,r);
-		biome = basic;
+		biome = new Biome(basic);
+	}
+	
+	public void setColor(Color c)
+	{
+		biome.color = c;
 	}
 	
 	public Color getColor()
