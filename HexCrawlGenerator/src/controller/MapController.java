@@ -2,6 +2,7 @@ package controller;
 import java.util.*;
 
 import model.*;
+import model.redblob.Layout;
 public class MapController{
 	HexMap<FilledHex> hexmap;
 	Layout layout = new Layout(Layout.pointy, new Point(20,20), new Point(100,100));	

@@ -1,6 +1,8 @@
 package model;
 import java.awt.Color;
 import java.awt.Polygon;
+
+import model.redblob.Hex;
 public class FilledHex extends Hex 
 {
 	private Biome biome;
