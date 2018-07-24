@@ -1,6 +1,8 @@
 package controller;
 import java.util.*;
 import java.io.*;
+import java.nio.file.Paths;
+import java.nio.file.Path;
 public class PropertyTypeReader {
 
 	
@@ -32,59 +34,53 @@ public class PropertyTypeReader {
 	
 	public PropertyTypeReader() 
 	{
-		FileInputStream in=null;
-		
+		storage = new HashMap<String, ArrayList<Properties>>();
+		FileReader fr=null;
 		//Add all defaults to a map for accessing
-		propsdefault.put("biome",defaultbiome);
-		propsdefault.put("bweight", defaultbweight);
-		
-		propsdefault.put("worldobject", defaultworldobject);
-		
-		propsdefault.put("monster",defaultmonster);
-		propsdefault.put("location", defaultlocation);
-		
-		propsdefault.put("nomad",defaultnomad);
-		propsdefault.put("site", defaultsite);
-		propsdefault.put("structure", defaultstructure);
-		
-		propsdefault.put("dungeon",defaultdungeon);
-		propsdefault.put("lair",defaultlair);
-		propsdefault.put("landmark",defaultlandmark);
-		propsdefault.put("town", defaulttown);
-		
-		
 		//DEFAULTS		
 		defaultbiome = new Properties();
-		loadDefault(in,"biome");
+		propsdefault.put("biome",defaultbiome);		
+		loadDefault(fr,"biome");
 		
 		defaultbweight = new Properties();
-		loadDefault(in,"bweight");
+		propsdefault.put("bweight", defaultbweight);		
+		loadDefault(fr,"bweight");
 		
 
 		defaultworldobject = new Properties();
-		loadDefault(in, "worldobject");
+		propsdefault.put("worldobject", defaultworldobject);		
+		loadDefault(fr, "worldobject");
 		
 		//Set up default iterations
 		defaultmonster = new Properties(defaultworldobject);
-		loadDefault(in, "monster");		
+		propsdefault.put("monster",defaultmonster);		
+		loadDefault(fr, "monster");		
 		defaultlocation = new Properties(defaultworldobject);
-		loadDefault(in, "location");
+		propsdefault.put("location", defaultlocation);		
+		loadDefault(fr, "location");
 		
 		defaultnomad = new Properties(defaultlocation);		
-		loadDefault(in, "nomad");
+		propsdefault.put("nomad",defaultnomad);		
+		loadDefault(fr, "nomad");
 		defaultsite =  new Properties(defaultlocation);
-		loadDefault(in, "site");		
+		propsdefault.put("site", defaultsite);		
+		loadDefault(fr, "site");		
 		defaultstructure = new Properties(defaultlocation);
-		loadDefault(in,"structure");
+		propsdefault.put("structure", defaultstructure);		
+		loadDefault(fr,"structure");
 		
 		defaultdungeon = new Properties(defaultstructure);
-		loadDefault(in, "dungeon");		
+		propsdefault.put("dungeon",defaultdungeon);		
+		loadDefault(fr, "dungeon");
 		defaultlair =  new Properties(defaultstructure);
-		loadDefault(in, "lair");
+		propsdefault.put("lair",defaultlair);
+		loadDefault(fr, "lair");
 		defaultlandmark =  new Properties(defaultstructure);
-		loadDefault(in, "landmark");		
+		propsdefault.put("landmark",defaultlandmark);
+		loadDefault(fr, "landmark");
 		defaulttown = new Properties(defaultstructure);
-		loadDefault(in, "town");
+		propsdefault.put("town", defaulttown);
+		loadDefault(fr, "town");
 		//END DEFAULTS
 
 		//Add all the types with a default to the storage arraylist
@@ -95,6 +91,8 @@ public class PropertyTypeReader {
 			String type = it.next();
 			storage.put(type,new ArrayList<Properties>());
 		}
+		
+		//System.out.println(propsdefault.get("biome").getProperty("name"));
 	}
 	
 	//While line is not empty, read into a WorldObject class
@@ -102,47 +100,43 @@ public class PropertyTypeReader {
 	//this is only called when there is just 1 type to process from bufferedreader.
 	public void processType(BufferedReader br) 
 	{
-		Scanner sc = new Scanner(br);
+		Scanner sc = new Scanner(br).useDelimiter("\n\r");
 		String line=null;
-		String[] typeh=null;
+		String typeh=null;
 		StringReader sr=null;
 		Properties defaulttype=null,f=null;
-		sc.useDelimiter("[^\\r\\n]+((\\r|\\n|\\r\\n)[^\\r\\n]+)*");
+		//BAD REGEX, MUST HAVE A BLANK/COMMENTED LINE, CALLED EVERY LINE 
+
 		//Starts with "type"
 		while(sc.hasNext())
 		{
-			//Read First line
-			line = sc.nextLine();
-
-			//Read until line contains TYPE=
-			while( (line.trim().isEmpty()) || (line.startsWith("#")) || (!line.startsWith("TYPE=")) )
-			{
-				line = sc.nextLine();
-			}
-
-			//Type splitting
-			typeh = line.split("=");
-			typeh[1] = cleanType(typeh[1]);
+			
+			//Read entire paragraph
+			line = sc.next();
+			typeh = line.trim();
+			typeh = typeh.split("=|\n")[1].trim();
 			
 			//get the default properties from type
-			defaulttype = getProperty(typeh[1]);
+			defaulttype = getProperty(typeh);
 			
 			//The rest of sc.next() is property stuff, process that.		
-			sr = new StringReader(sc.next());
+			sr = new StringReader(line);
 			
 			f = new Properties(defaulttype);
 			try
 			{
+				//Loads all the property information contained into f
 				f.load(sr);
-				List<Properties> proplist = storage.get(typeh[1]);
-				proplist.add(f);
+				storage.get(typeh).add(f);
+				System.out.println("Added WorldObject: " + f);
 			}
 			catch(IOException e)
 			{
-				System.out.println("Failed to create WorldObject: "+typeh[1]);
+				System.out.println("Failed to create WorldObject: "+typeh);
 			}
 		}
 		sc.close();
+		sr.close();
 	}
 	
 	public Map<String,ArrayList<Properties>> getFileObjects()
@@ -166,12 +160,13 @@ public class PropertyTypeReader {
 	}
 	
 	//Loads the default property specified by name
-	public void loadDefault(FileInputStream in, String name)
-	{
+	public void loadDefault(FileReader in, String name)
+	{	
 		name = cleanType(name);
 		try
-		{
-			in = new FileInputStream("default"+name);
+		{				
+			in = new FileReader("default"+name+".properties");
+
 			Properties prop = getProperty(name);
 			prop.load(in);
 			in.close();
