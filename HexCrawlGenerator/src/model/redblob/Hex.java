@@ -1,4 +1,4 @@
-package model;
+package model.redblob;
 import model.graphresource.*;
 import java.util.*;
 public class Hex extends Vertex

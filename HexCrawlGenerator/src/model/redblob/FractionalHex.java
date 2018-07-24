@@ -1,4 +1,4 @@
-package model;
+package model.redblob;
 import java.util.*;
 public class FractionalHex {
    public FractionalHex(double q, double r, double s)
