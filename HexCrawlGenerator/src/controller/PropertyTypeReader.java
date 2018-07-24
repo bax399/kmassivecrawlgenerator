@@ -128,7 +128,7 @@ public class PropertyTypeReader {
 				//Loads all the property information contained into f
 				f.load(sr);
 				storage.get(typeh).add(f);
-				System.out.println("Added WorldObject: " + f);
+				System.out.println("Added "+typeh+": " + f.getProperty("name"));
 			}
 			catch(IOException e)
 			{
