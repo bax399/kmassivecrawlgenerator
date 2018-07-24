@@ -18,23 +18,18 @@ public class FileProcessor {
 		{
 			fr = new FileReader(filename);
 			br = new BufferedReader(fr);
-			line = br.readLine();
+
 			tr = new PropertyTypeReader();
-			while(line != null)
-			{
-				while( (line.trim().isEmpty()) || (line.startsWith("#")) || (!line.startsWith("TYPE=")) )
-				{
-					line = br.readLine();
-				}
+
 				
-				tr.processType(br);
+			tr.processType(br);
 				
 					//Deprecated, not doing this method.
 						//String classname = split[1].trim();	
 						//classname = classname.substring(0,1).toUpperCase() + classname.substring(1).toLowerCase();
 						//Class<TypeReader> type = (Class<TypeReader>) Class.forName(classname+"Reader");
 
-			}
+			
 		}
 		catch(IOException e)
 		{

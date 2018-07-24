@@ -7,21 +7,24 @@ public class PropertyTypeReader {
 	//** DEFAULTS **
 	Map<String,Properties> propsdefault = new HashMap<>();
 	
-	Properties defaultworldobject;
-	//Reads default Properties from file, then each type 
 	Properties defaultbiome;
 	Properties defaultbweight;
 	
+	Properties defaultworldobject;
+	//WorldObjects (Below)
 	Properties defaultmonster;
+	Properties defaultlocation; //Abstract
 	
-	//Abstract, nothing can be just a location. Use 'Site' for misc stuff.
-	Properties defaultlocation;
+	
 	//Locations
+	Properties defaultnomad;
+	Properties defaultsite;
+	Properties defaultstructure; //Abstract
+	//Structures
 	Properties defaultdungeon;
 	Properties defaultlair;
 	Properties defaultlandmark;
-	Properties defaultnomad;
-	Properties defaultsite;
+	Properties defaulttown;
 	
 	//Type,Storage
 	Map<String, ArrayList<Properties>> storage;
@@ -29,49 +32,69 @@ public class PropertyTypeReader {
 	
 	public PropertyTypeReader() 
 	{
+		FileInputStream in=null;
+		
 		//Add all defaults to a map for accessing
-		propsdefault.put("worldobject", defaultworldobject);
-		propsdefault.put("location", defaultlocation);
 		propsdefault.put("biome",defaultbiome);
 		propsdefault.put("bweight", defaultbweight);
+		
+		propsdefault.put("worldobject", defaultworldobject);
+		
 		propsdefault.put("monster",defaultmonster);
+		propsdefault.put("location", defaultlocation);
+		
+		propsdefault.put("nomad",defaultnomad);
+		propsdefault.put("site", defaultsite);
+		propsdefault.put("structure", defaultstructure);
+		
 		propsdefault.put("dungeon",defaultdungeon);
 		propsdefault.put("lair",defaultlair);
 		propsdefault.put("landmark",defaultlandmark);
-		propsdefault.put("nomad",defaultnomad);
-		propsdefault.put("site", defaultsite);
+		propsdefault.put("town", defaulttown);
 		
-		//Read Defaults.
+		
+		//DEFAULTS		
+		defaultbiome = new Properties();
+		loadDefault(in,"biome");
+		
+		defaultbweight = new Properties();
+		loadDefault(in,"bweight");
+		
 
-		FileInputStream in=null;
 		defaultworldobject = new Properties();
-		
 		loadDefault(in, "worldobject");
 		
 		//Set up default iterations
-		defaultbiome = new Properties(defaultworldobject); 
-		defaultbweight = new Properties(defaultworldobject);
 		defaultmonster = new Properties(defaultworldobject);
+		loadDefault(in, "monster");		
 		defaultlocation = new Properties(defaultworldobject);
-		
-		
-		defaultdungeon = new Properties(defaultlocation);
-		defaultlair = new Properties(defaultlocation);
-		defaultlandmark = new Properties(defaultlocation);
-		defaultnomad = new Properties(defaultlocation);
-		defaultsite = new Properties(defaultlocation);
-		
-		//Load defaults from files
 		loadDefault(in, "location");
-		loadDefault(in, "biome");
-		loadDefault(in, "bweight");
-		loadDefault(in, "monster");
-		loadDefault(in, "dungeon");
-		loadDefault(in, "lair");
-		loadDefault(in, "landmark");
+		
+		defaultnomad = new Properties(defaultlocation);		
 		loadDefault(in, "nomad");
-		loadDefault(in, "site");
+		defaultsite =  new Properties(defaultlocation);
+		loadDefault(in, "site");		
+		defaultstructure = new Properties(defaultlocation);
+		loadDefault(in,"structure");
+		
+		defaultdungeon = new Properties(defaultstructure);
+		loadDefault(in, "dungeon");		
+		defaultlair =  new Properties(defaultstructure);
+		loadDefault(in, "lair");
+		defaultlandmark =  new Properties(defaultstructure);
+		loadDefault(in, "landmark");		
+		defaulttown = new Properties(defaultstructure);
+		loadDefault(in, "town");
+		//END DEFAULTS
 
+		//Add all the types with a default to the storage arraylist
+		Set<String> proptypes = propsdefault.keySet();
+		Iterator<String> it = proptypes.iterator();
+		while(it.hasNext())
+		{
+			String type = it.next();
+			storage.put(type,new ArrayList<Properties>());
+		}
 	}
 	
 	//While line is not empty, read into a WorldObject class
@@ -79,23 +102,46 @@ public class PropertyTypeReader {
 	//this is only called when there is just 1 type to process from bufferedreader.
 	public void processType(BufferedReader br) 
 	{
-		Scanner sc = new Scanner(br).useDelimiter("[^\\r\\n]+((\\r|\\n|\\r\\n)[^\\r\\n]+)*");
+		Scanner sc = new Scanner(br);
+		String line=null;
+		String[] typeh=null;
+		StringReader sr=null;
+		Properties defaulttype=null,f=null;
+		sc.useDelimiter("[^\\r\\n]+((\\r|\\n|\\r\\n)[^\\r\\n]+)*");
 		//Starts with "type"
-		String[] typeh = sc.nextLine().split("=");
-		Properties defaulttype = getProperty(typeh[1]);
-		//Class<TypeReader> type = (Class<TypeReader>) Class.forName(classname+"Reader");		
-		StringReader sr = new StringReader(sc.next());
-		
-		Properties f = new Properties(defaulttype);
-		try
+		while(sc.hasNext())
 		{
-			f.load(sr);
+			//Read First line
+			line = sc.nextLine();
+
+			//Read until line contains TYPE=
+			while( (line.trim().isEmpty()) || (line.startsWith("#")) || (!line.startsWith("TYPE=")) )
+			{
+				line = sc.nextLine();
+			}
+
+			//Type splitting
+			typeh = line.split("=");
+			typeh[1] = cleanType(typeh[1]);
+			
+			//get the default properties from type
+			defaulttype = getProperty(typeh[1]);
+			
+			//The rest of sc.next() is property stuff, process that.		
+			sr = new StringReader(sc.next());
+			
+			f = new Properties(defaulttype);
+			try
+			{
+				f.load(sr);
+				List<Properties> proplist = storage.get(typeh[1]);
+				proplist.add(f);
+			}
+			catch(IOException e)
+			{
+				System.out.println("Failed to create WorldObject: "+typeh[1]);
+			}
 		}
-		catch(IOException e)
-		{
-			System.out.println("Failed to create WorldObject: "+typeh[1]);
-		}
-		
 		sc.close();
 	}
 	
@@ -104,11 +150,17 @@ public class PropertyTypeReader {
 		return storage;
 	}
 	
+	public String cleanType(String type)
+	{
+		String out = type.trim();	
+		out = out.toLowerCase();
+		return out;
+	}
+	
 	//gets the name from the Map storage.
 	public Properties getProperty(String type)
 	{
-		type = type.trim();	
-		type = type.toLowerCase();
+		type = cleanType(type);
 		Properties prop = propsdefault.get(type);
 		return prop;
 	}
@@ -116,8 +168,7 @@ public class PropertyTypeReader {
 	//Loads the default property specified by name
 	public void loadDefault(FileInputStream in, String name)
 	{
-		name = name.trim();	
-		name = name.toLowerCase();		
+		name = cleanType(name);
 		try
 		{
 			in = new FileInputStream("default"+name);
