@@ -11,7 +11,7 @@ public class FileProcessor {
 		FileReader fr = null;
 		BufferedReader br = null;
 		String line = null;
-		TypeReader tr = null;	
+		PropertyTypeReader tr = null;	
 		//read until a line exists that isn't a comment or empty.
 		
 		try
@@ -19,15 +19,15 @@ public class FileProcessor {
 			fr = new FileReader(filename);
 			br = new BufferedReader(fr);
 			line = br.readLine();
-			tr = new TypeReader();
+			tr = new PropertyTypeReader();
 			while(line != null)
 			{
-				while( (line.trim().isEmpty()) || (line.startsWith("#")) || (!line.startsWith("TYPE")) )
+				while( (line.trim().isEmpty()) || (line.startsWith("#")) || (!line.startsWith("TYPE=")) )
 				{
 					line = br.readLine();
 				}
 				
-				tr.processString(br);
+				tr.processType(br);
 				
 					//Deprecated, not doing this method.
 						//String classname = split[1].trim();	
