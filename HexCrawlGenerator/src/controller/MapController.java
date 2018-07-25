@@ -5,6 +5,7 @@ import model.*;
 import model.redblob.Layout;
 public class MapController{
 	HexMap<FilledHex> hexmap;
+	BWeight bweights;
 	Layout layout = new Layout(Layout.pointy, new Point(20,20), new Point(100,100));	
 	
 	public MapController(int w, int h)
@@ -40,6 +41,8 @@ public class MapController{
 		    }
 		}		
 	}
+	
+	
 	
 	public Map<Integer,FilledHex> getHexes()
 	{

@@ -7,6 +7,10 @@ TYPE=biome
 name=mountain
 riverorigin=10
 
+TYPE=biome
+name=water
+riverorigin=20
+
 TYPE=monster
 name=zombie
 all=5
@@ -14,6 +18,7 @@ mountain=10
 desert=1
 
 TYPE=bweight
-name=mountain,desert
-mountain=5,1
-desert=1,5
+name=mountain,desert,water
+mountain=5,1,1
+desert=1,5,0
+water=1,0,5
