@@ -3,7 +3,7 @@ import java.util.*;
 import java.io.*;
 import java.nio.file.Paths;
 import java.nio.file.Path;
-public class PropertyTypeReader {
+public class PropertiesReader {
 
 	
 	//** DEFAULTS **
@@ -32,7 +32,7 @@ public class PropertyTypeReader {
 	Map<String, ArrayList<Properties>> storage;
 	
 	
-	public PropertyTypeReader() 
+	public PropertiesReader() 
 	{
 		storage = new HashMap<String, ArrayList<Properties>>();
 		FileReader fr=null;
@@ -176,5 +176,20 @@ public class PropertyTypeReader {
 			System.out.println("Failed to read default property: "+name);
 		}
 	}
-		
+
+	public ArrayList<Properties> getTypeList(String type)
+	{
+		type = cleanType(type);
+		return getStorage().get(type);
+	}
+	
+	public Map<String,ArrayList<Properties>> getStorage()
+	{
+		return Collections.unmodifiableMap(storage);
+	}
+	
+	public Map<String, Properties> getDefaults()
+	{
+		return Collections.unmodifiableMap(propsdefault);
+	}
 }

@@ -6,12 +6,12 @@ import java.io.*;
 
 public class FileProcessor {
 	
-	public void processFile(String filename, PropertyTypeReader ptr)
+	public void processFile(String filename, PropertiesReader ptr)
 	{
 		FileReader fr = null;
 		BufferedReader br = null;
 		String line = null;
-		PropertyTypeReader tr = null;	
+		PropertiesReader tr = null;	
 		//read until a line exists that isn't a comment or empty.
 		try
 		{

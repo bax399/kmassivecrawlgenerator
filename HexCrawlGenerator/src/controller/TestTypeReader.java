@@ -13,7 +13,9 @@ public class TestTypeReader {
 		System.out.println("Current relative path is: " + s);			
 		
 		FileProcessor fp = new FileProcessor();
-		PropertyTypeReader ptr = new PropertyTypeReader();
+		PropertiesReader ptr = new PropertiesReader();
 		fp.processFile("inputTest.txt", ptr);
+		
+		System.out.println(ptr.getTypeList("biome").get(0));
 	}
 }
