@@ -1,4 +1,4 @@
 package model.worldobjects;
-public abstract class Location {
+public abstract class Location extends WorldObject{
 
 }

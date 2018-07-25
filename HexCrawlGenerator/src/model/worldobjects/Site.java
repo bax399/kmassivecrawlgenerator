@@ -1,5 +1,5 @@
 package model.worldobjects;
 import java.util.*;
-public class Site {
+public class Site extends Location {
 
 }

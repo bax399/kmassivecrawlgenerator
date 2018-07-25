@@ -1,5 +1,5 @@
 package model.worldobjects;
 import java.util.*;
-public class Dungeon {
+public class Dungeon extends Structure{
 
 }

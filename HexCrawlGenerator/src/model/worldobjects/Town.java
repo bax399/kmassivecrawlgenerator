@@ -1,5 +1,5 @@
 package model.worldobjects;
 import java.util.*;
-public class Town {
+public class Town extends Structure {
 
 }
