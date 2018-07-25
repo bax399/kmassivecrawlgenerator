@@ -15,6 +15,7 @@ public class BWeight
 	{
 		ordering = new HashMap<>();
 		weights = new HashMap<>();
+		rollweights = new HashMap<>();
 		biomenames = new HashMap<>();
 		biomeid = new HashMap<>();
 		
@@ -127,12 +128,20 @@ public class BWeight
 	
 	public Biome rollBiome(Biome previous)
 	{
-		int min, max;
 		int prevnum = ordering.get(previous);
 		int nextnum = indexWeight(rollweights.get(prevnum), rollWeights(rollweights.get(prevnum)));
 		
 		return biomeid.get(nextnum);
 	}
+	
+	public Biome rollBiome()
+	{
+		Biome first = biomeid.get(new Integer(0));
+		int prevnum = ordering.get(first);
+		int nextnum = indexWeight(rollweights.get(prevnum), rollWeights(rollweights.get(prevnum)));
+		
+		return biomeid.get(nextnum);
+	}	
 	
 	public static int randInt(int min, int max)
 	{

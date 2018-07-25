@@ -10,7 +10,7 @@ public class TestHexMap {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		MapController mc = new MapController(10,10);
+		MapController mc = new MapController(10,10, null);
 		JFrame f = new JFrame("HexMap");
 		
 

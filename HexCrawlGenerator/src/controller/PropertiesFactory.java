@@ -2,7 +2,7 @@ package controller;
 import java.util.*;
 
 import model.Biome;
-public class PropertiesFactory<V>
+public class PropertiesFactory
 {
 	
 	
