@@ -139,6 +139,31 @@ public class PropertiesReader {
 		sr.close();
 	}
 	
+	/*FUTURE FUNCTIONALITY needs parent inheritance for properties.
+	public Properties useParent(Properties in, ArrayList<Properties> type)
+	{
+		Properties child;
+		String pname;
+		if(in.getProperty("parent") != null)
+		{
+			pname = in.getProperty("parent");
+			for(int ii = 0; ii < type.size();ii++)
+			{
+				if (type.get(ii).getProperty("name").equals(pname))
+				{
+					child = new Properties(type.get(ii));
+					for(String field: child.propertyNames())
+					{
+						
+					}
+					
+				}
+			}
+		}
+		
+		return in;
+	}
+	*/
 	public Map<String,ArrayList<Properties>> getFileObjects()
 	{
 		return storage;
