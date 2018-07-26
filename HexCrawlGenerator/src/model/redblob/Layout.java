@@ -1,7 +1,5 @@
 package model.redblob;
 import java.awt.Polygon;
-
-import model.Point;
 public class Layout {
 	   public Layout(Orientation orientation, Point size, Point origin)
 	    {

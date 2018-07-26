@@ -1,4 +1,4 @@
-package controller;
+package tests;
 import java.util.*;
 
 import model.BWeight;

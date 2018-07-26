@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.awt.Polygon;
 
 import model.redblob.Hex;
+import model.redblob.Point;
 public class FilledHex extends Hex 
 {
 	private Biome biome;

@@ -3,19 +3,30 @@ import java.util.*;
 
 import model.*;
 import model.redblob.Layout;
+import model.redblob.Point;
 public class MapController{
 	HexMap<FilledHex> hexmap;
 	BWeight bweights;
 	//size,origin
 	Layout layout = new Layout(Layout.flat, new Point(20,20), new Point(200,200));	
-	
+
 	public MapController(int w, int h, BWeight bweight)
 	{
 		hexmap = new HexMap<>();
 		//createRectangleMap(w,h, bweight);
 		createSpiralMap(w,bweight);
 		getPositions();
+		hexmap.initializeNeighbours();	
+	}	
+	
+	public MapController(int w, int h, BWeight bweight, Layout lt)
+	{
+		hexmap = new HexMap<>();
+		//createRectangleMap(w,h, bweight);
+		createSpiralMap(w,bweight);
+		getPositions();
 		hexmap.initializeNeighbours();
+		layout=lt;
 	}
 	
 	public void getPositions()

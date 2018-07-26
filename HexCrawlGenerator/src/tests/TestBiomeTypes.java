@@ -1,4 +1,4 @@
-package controller;
+package tests;
 import model.*;
 import view.MapDrawer;
 
@@ -7,6 +7,11 @@ import java.nio.file.Paths;
 import java.util.*;
 
 import javax.swing.JFrame;
+
+import controller.FileProcessor;
+import controller.MapController;
+import controller.PropertiesFactory;
+import controller.PropertiesReader;
 public class TestBiomeTypes {
 	public static void main(String[] args)
 	{
@@ -28,7 +33,7 @@ public class TestBiomeTypes {
 		BWeight bw = new BWeight(ptr.getTypeList("bweight").get(0),pf.processBiomes(ptr.getTypeList("biome")));
 		
 		
-		MapController mc = new MapController(5,10, bw);
+		MapController mc = new MapController(15,10, bw);
 		JFrame f = new JFrame("HexMap");
 		
 
@@ -38,7 +43,7 @@ public class TestBiomeTypes {
 		MapDrawer ui = new MapDrawer(mc.getHexes());
 		
 		f.add(ui);
-		f.setSize(800,800);
+		f.setSize(1920,1080);
 		f.setVisible(true);
 
 		System.out.println(mc.printString());
