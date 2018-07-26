@@ -1,4 +1,4 @@
-package deprececated;
+package zdeprececated;
 import java.util.Arrays;
 
 //Retrieved from https://stackoverflow.com/a/5128420

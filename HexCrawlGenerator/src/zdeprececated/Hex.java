@@ -1,4 +1,4 @@
-package deprececated;
+package zdeprececated;
 import model.graphresource.*;
 public class Hex extends Vertex{
 	public Hex(int uniqueid)

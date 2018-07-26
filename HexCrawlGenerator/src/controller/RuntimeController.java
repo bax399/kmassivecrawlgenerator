@@ -22,8 +22,8 @@ public class RuntimeController {
 		
 		BWeight bw = new BWeight(ptr.getTypeList("bweight").get(0),pf.processBiomes(ptr.getTypeList("biome")));
 		
-		Layout lt = new Layout(Layout.pointy,new Point(20,20),new Point(screenwidth/2,screenheight/2));
-		MapController mc = new MapController(5,10, bw, lt);
+		Layout lt = new Layout(Layout.flat,new Point(20,20),new Point(screenwidth/2,screenheight/2));
+		MapController mc = new MapController(8,10, bw, lt);
 		
 		JFrame f = new JFrame("HexMap");
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
