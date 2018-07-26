@@ -18,7 +18,7 @@ public class MapController{
 		getPositions();
 		hexmap.initializeNeighbours();	
 	}	
-	
+
 	public MapController(int w, int h, BWeight bweight, Layout lt)
 	{
 		hexmap = new HexMap<>();
