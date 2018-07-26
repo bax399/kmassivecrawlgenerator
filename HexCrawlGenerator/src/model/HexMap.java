@@ -28,12 +28,12 @@ public class HexMap<V extends Hex>
 	
     private static int hashCode(Hex h)
     {
-        return 31 * Arrays.hashCode(new int[]{h.q, h.r});
+        return 383 * Arrays.hashCode(new int[]{h.q, h.r, -h.q-h.r});
     }
     
     private static int hashCode(int q, int r)
     {
-    	return 31 * Arrays.hashCode(new int[] {q,r});
+    	return 383 * Arrays.hashCode(new int[] {q,r,-q-r});
     }
 	
     public void addHex(V h)

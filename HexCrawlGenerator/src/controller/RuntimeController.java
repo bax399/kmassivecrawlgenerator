@@ -25,7 +25,8 @@ public class RuntimeController {
 		//Layout lt = new Layout(Layout.pointy,new Point(20,20),new Point(screenwidth/2,screenheight/2)); //Spiral Map
 		Layout lt = new Layout(Layout.pointy,new Point(10,10),new Point(10,10));		
 		//Use primes for rectangular maps.
-		MapController mc = new MapController(19,31, bw, lt);
+		//Max 33 for height???
+		MapController mc = new MapController(34,91, bw, lt);
 		
 		JFrame f = new JFrame("HexMap");
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

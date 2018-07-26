@@ -59,8 +59,7 @@ public class MapController{
 		    int r_offset = (int)Math.floor(r/2); // or r>>1
 		    for (int q = -r_offset; q < map_width - r_offset; q++) 
 		    {
-		        //hexmap.addHex(new FilledHex(q,r));
-		        hexmap.addHex(new FilledHex(null,q,r));
+		        hexmap.addHex(new FilledHex(q,r));
 		    }
 		}	
 		
@@ -70,7 +69,7 @@ public class MapController{
 			wormStart(nullhexes.get(0), nullhexes, bweight);
 		}
 	}
-	
+
 	public void wormStart(Hex start, ArrayList<Hex> all, BWeight bweight)
 	{
 		Biome type = bweight.rollBiome();
@@ -78,7 +77,7 @@ public class MapController{
 		for(int ii = 0; ii < 6; ii++)
 		{
 			neighb = hexmap.getHex(start.neighbor(ii));
-			if (neighb != null && (neighb.getBiome() != null))
+			if (neighb != null && ((neighb.getBiome() != null) && !neighb.getName().equals("basic")))
 			{
 				type = neighb.getBiome();
 			}
@@ -103,7 +102,7 @@ public class MapController{
 			dir = rand.nextInt(dirs.size());
 			dirs.remove(dir);
 			next = hexmap.getHex(prev.neighbor(dir));
-		}while((next == null || next.getBiome()!=null) && dirs.size()>0);
+		}while((next == null || next.getBiome()!=null || !next.getName().equals("basic")) && dirs.size()>0);
 		
 		if(next !=null)
 		{		
