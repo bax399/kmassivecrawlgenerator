@@ -8,7 +8,7 @@ public class MapController{
 	HexMap<FilledHex> hexmap;
 	BWeight bweights;
 	//size,origin
-	Layout layout = new Layout(Layout.flat, new Point(20,20), new Point(200,200));	
+	Layout layout;// = new Layout(Layout.flat, new Point(20,20), new Point(200,200));	
 
 	public MapController(int w, int h, BWeight bweight)
 	{
@@ -22,11 +22,13 @@ public class MapController{
 	public MapController(int w, int h, BWeight bweight, Layout lt)
 	{
 		hexmap = new HexMap<>();
+		layout=lt;		
 		//createRectangleMap(w,h, bweight);
 		createSpiralMap(w,bweight);
 		getPositions();
 		hexmap.initializeNeighbours();
-		layout=lt;
+
+
 	}
 	
 	public void getPositions()

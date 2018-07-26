@@ -9,6 +9,8 @@ import java.util.*;
 
 import javax.swing.JFrame;
 public class RuntimeController {
+	final static int screenwidth = 1920/2;
+	final static int screenheight = 1080/2;
 	public static void main(String[] args)
 	{
 		
@@ -20,15 +22,15 @@ public class RuntimeController {
 		
 		BWeight bw = new BWeight(ptr.getTypeList("bweight").get(0),pf.processBiomes(ptr.getTypeList("biome")));
 		
-		Layout lt = new Layout(Layout.pointy,new Point(5,5),new Point(300,300));
-		MapController mc = new MapController(15,10, bw, lt);
+		Layout lt = new Layout(Layout.pointy,new Point(20,20),new Point(screenwidth/2,screenheight/2));
+		MapController mc = new MapController(5,10, bw, lt);
 		
 		JFrame f = new JFrame("HexMap");
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				
 		MapDrawer ui = new MapDrawer(mc.getHexes());
 		f.add(ui);
-		f.setSize(1920,1080);
+		f.setSize(screenwidth,screenheight);
 		f.setVisible(true);
 		
 	}
