@@ -30,6 +30,11 @@ public class FilledHex extends Hex
 		super(q,r);
 		biome = new Biome(basic);
 	}
+
+	public void setBiome(Biome b)
+	{
+		biome = b;
+	}
 	
 	public void setColor(Color c)
 	{

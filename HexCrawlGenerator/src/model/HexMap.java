@@ -47,12 +47,12 @@ public class HexMap<V extends Hex>
     	hexes.put(hashCode(q,r), new Hex(q,r));
     }*/
     
-    public Hex getHex(int q, int r)
+    public V getHex(int q, int r)
     {
     	return hexes.get(hashCode(q,r));
     }
     
-    public Hex getHex(int hash)
+    public V getHex(int hash)
     {
     	return hexes.get(hash);
     }
@@ -77,7 +77,6 @@ public class HexMap<V extends Hex>
 				if (hexes.containsValue(n))
 				{
 					neighbours.addEdge(new Connection(each, n));
-					
 				}
 				
 				

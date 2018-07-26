@@ -22,7 +22,8 @@ public class RuntimeController {
 		
 		BWeight bw = new BWeight(ptr.getTypeList("bweight").get(0),pf.processBiomes(ptr.getTypeList("biome")));
 		
-		Layout lt = new Layout(Layout.flat,new Point(20,20),new Point(screenwidth/2,screenheight/2));
+		//Layout lt = new Layout(Layout.pointy,new Point(20,20),new Point(screenwidth/2,screenheight/2)); //Spiral Map
+		Layout lt = new Layout(Layout.pointy,new Point(20,20),new Point(20,20));		
 		MapController mc = new MapController(8,10, bw, lt);
 		
 		JFrame f = new JFrame("HexMap");
