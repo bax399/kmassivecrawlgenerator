@@ -59,17 +59,16 @@ public class MapController{
 		    int r_offset = (int)Math.floor(r/2); // or r>>1
 		    for (int q = -r_offset; q < map_width - r_offset; q++) 
 		    {
-		        hexmap.addHex(new FilledHex(q,r));
+		        //hexmap.addHex(new FilledHex(q,r));
+		        hexmap.addHex(new FilledHex(null,q,r));
 		    }
 		}	
 		
-		ArrayList<Hex> basics = new ArrayList<>(hexmap.getHexes().values());
-	
-		while(basics.size() > 0)
+		ArrayList<Hex> nullhexes = new ArrayList<>(hexmap.getHexes().values());
+		while(nullhexes.size() > 0)
 		{
-			wormStart(basics.get(0), basics, bweight);
+			wormStart(nullhexes.get(0), nullhexes, bweight);
 		}
-		
 	}
 	
 	public void wormStart(Hex start, ArrayList<Hex> all, BWeight bweight)
@@ -79,17 +78,17 @@ public class MapController{
 		for(int ii = 0; ii < 6; ii++)
 		{
 			neighb = hexmap.getHex(start.neighbor(ii));
-			if (neighb != null && !neighb.getName().equals("basic"))
+			if (neighb != null && (neighb.getBiome() != null))
 			{
 				type = neighb.getBiome();
 			}
 		}
+		hexmap.getHex(start).setBiome(type);				
 		all.remove(start);
-		hexmap.getHex(start).setBiome(type);
 		wormThrough(start,all,bweight,type);
 	}
 	
-	//TODO fix stupid polymorphism, why am I referencing FilledHexes?
+	//TODO basic still appears rarely
 	public void wormThrough(Hex prev,ArrayList<Hex> all, BWeight bweight, Biome type)
 	{
 		//Check nearby hexes for non-null and basic
@@ -104,12 +103,12 @@ public class MapController{
 			dir = rand.nextInt(dirs.size());
 			dirs.remove(dir);
 			next = hexmap.getHex(prev.neighbor(dir));
-		}while((next == null || !next.getName().equals("basic")) && dirs.size()>0);
+		}while((next == null || next.getBiome()!=null) && dirs.size()>0);
 		
-		if((next !=null && next.getName().equals("basic")))
-		{
+		if(next !=null)
+		{		
+			hexmap.getHex(next).setBiome(nextType);				
 			all.remove(next);
-			hexmap.getHex(next).setBiome(nextType);
 			wormThrough(next, all, bweight, nextType);
 		}
 	}

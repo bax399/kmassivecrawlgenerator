@@ -53,4 +53,9 @@ public class Biome {
 		this.riverorigin = biome.riverorigin;
 		this.riverend = biome.riverend;		
 	}
+	
+	public String toString()
+	{
+		return name;
+	}
 }

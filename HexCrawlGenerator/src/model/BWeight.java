@@ -136,7 +136,9 @@ public class BWeight
 	
 	public Biome rollBiome()
 	{
-		Biome first = biomeid.get(new Integer(0));
+		Random rand = new Random();
+		int index = rand.nextInt(biomeid.size());
+		Biome first = biomeid.get(index);
 		int prevnum = ordering.get(first);
 		int nextnum = indexWeight(rollweights.get(prevnum), rollWeights(rollweights.get(prevnum)));
 		
