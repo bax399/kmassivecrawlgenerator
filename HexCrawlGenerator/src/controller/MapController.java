@@ -54,7 +54,6 @@ public class MapController{
 	
 	public void initializeRectangleMap(int map_height, int map_width, BWeight bweight)
 	{
-		System.out.println("worming");
 		for (int r = 0; r < map_height; r++) 
 		{
 		    int r_offset = (int)Math.floor(r/2); // or r>>1
@@ -64,47 +63,55 @@ public class MapController{
 		    }
 		}	
 		
-		ArrayList<Hex> all = new ArrayList<Hex>(hexmap.getHexes().values());
-		while(all.size()>0)
+		ArrayList<Hex> basics = new ArrayList<>(hexmap.getHexes().values());
+	
+		while(basics.size() > 0)
 		{
-			wormThrough(all.get(0).q,all.get(0).r,all,bweight);
+			wormStart(basics.get(0), basics, bweight);
 		}
-		System.out.println("finish worming");
+		
 	}
 	
+	public void wormStart(Hex start, ArrayList<Hex> all, BWeight bweight)
+	{
+		Biome type = bweight.rollBiome();
+		FilledHex neighb;
+		for(int ii = 0; ii < 6; ii++)
+		{
+			neighb = hexmap.getHex(start.neighbor(ii));
+			if (neighb != null && !neighb.getName().equals("basic"))
+			{
+				type = neighb.getBiome();
+			}
+		}
+		all.remove(start);
+		hexmap.getHex(start).setBiome(type);
+		wormThrough(start,all,bweight,type);
+	}
 	
 	//TODO fix stupid polymorphism, why am I referencing FilledHexes?
-	public void wormThrough(int qstart, int rstart,ArrayList<Hex> all, BWeight bweight)
+	public void wormThrough(Hex prev,ArrayList<Hex> all, BWeight bweight, Biome type)
 	{
-		int dir;
+		//Check nearby hexes for non-null and basic
+		
 		Random rand = new Random();
-		FilledHex curr;
-		Hex test;
-		ArrayList<Integer> dirRem = new ArrayList<>(Arrays.asList(0,1,2,3,4,5));
-		Biome type = bweight.rollBiome(); //TODO change this to nearby hex
-		
-		
-		curr = hexmap.getHex(qstart,rstart);
-		dir = rand.nextInt(dirRem.size());
-		test = curr.add(Hex.directions.get(dir));
-		while((hexmap.getHex(test.q,test.r) == null || !hexmap.getHex(test.q,test.r).getName().equals("basic")) && dirRem.size() > 1)
+		FilledHex next = null;
+		ArrayList<Integer> dirs = new ArrayList<>(Arrays.asList(0,1,2,3,4,5));
+		Biome nextType = bweight.rollBiome(type);
+		int dir;
+		do
 		{
-			dirRem.remove(dir);
-			dir = rand.nextInt(dirRem.size());
-			test = curr.add(Hex.directions.get(dir));
-		}
+			dir = rand.nextInt(dirs.size());
+			dirs.remove(dir);
+			next = hexmap.getHex(prev.neighbor(dir));
+		}while((next == null || !next.getName().equals("basic")) && dirs.size()>0);
 		
-		if((hexmap.getHex(test.q,test.r)!=null) && (hexmap.getHex(test.q,test.r).getName().equals("basic")))
+		if((next !=null && next.getName().equals("basic")))
 		{
-			type = bweight.rollBiome(type);
-			hexmap.getHex(test.q,test.r).setBiome(type);
-			all.remove(new Hex(test.q,test.r));
-			dirRem.clear();
-			dirRem.addAll(Arrays.asList(0,1,2,3,4,5));
+			all.remove(next);
+			hexmap.getHex(next).setBiome(nextType);
+			wormThrough(next, all, bweight, nextType);
 		}
-		else {/*End Worm, no where to go.*/}
-
-		
 	}
 	
 	public void createRectangleMap(int map_height, int map_width, BWeight bweight)

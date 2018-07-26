@@ -41,6 +41,11 @@ public class FilledHex extends Hex
 		biome.color = c;
 	}
 	
+	public Biome getBiome()
+	{
+		return biome;
+	}
+	
 	public Color getColor()
 	{
 		return biome.color;

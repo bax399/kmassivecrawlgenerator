@@ -47,6 +47,11 @@ public class HexMap<V extends Hex>
     	hexes.put(hashCode(q,r), new Hex(q,r));
     }*/
     
+    public V getHex(Hex h)
+    {
+    	return getHex(h.q,h.r);    	
+    }
+    
     public V getHex(int q, int r)
     {
     	return hexes.get(hashCode(q,r));
