@@ -13,8 +13,9 @@ import controller.MapController;
 import controller.PropertiesFactory;
 import controller.PropertiesReader;
 public class TestBiomeTypes {
+	/*
 	public static void main(String[] args)
-	{
+	{ 
 		String rootPath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
 		System.out.println("RootPath: "+rootPath);
 		
@@ -49,4 +50,5 @@ public class TestBiomeTypes {
 		System.out.println(mc.printString());
 		
 	}
+	*/
 }
