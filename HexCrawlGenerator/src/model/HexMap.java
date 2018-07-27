@@ -47,6 +47,16 @@ public class HexMap<V extends Hex>
     	hexes.put(hashCode(q,r), new Hex(q,r));
     }*/
     
+    public boolean containsHex(Hex h)
+    {
+    	return hexes.containsKey(hashCode(h));
+    }
+    
+    public boolean containsHex(Integer hash)
+    {
+    	return hexes.containsKey(hash);
+    }
+    
     public V getHex(Hex h)
     {
     	return getHex(h.q,h.r);    	

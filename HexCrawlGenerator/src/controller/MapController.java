@@ -63,36 +63,54 @@ public class MapController{
 		    }
 		}	
 		
-		ArrayList<Hex> nullhexes = new ArrayList<>(hexmap.getHexes().values());
-		while(nullhexes.size() > 0)
+		Set<Integer> hexCoords = new HashSet<>(hexmap.getHexes().keySet());
+		Iterator<Integer> it = hexCoords.iterator();
+		while(it.hasNext())
 		{
-			wormStart(nullhexes.get(0), nullhexes, bweight);
+			wormStart(it.next(), bweight);
 		}
 	}
 
-	public void wormStart(Hex start, ArrayList<Hex> all, BWeight bweight)
+	public void wormStart(Integer start, BWeight bweight)
 	{
 		Biome type = bweight.rollBiome();
-		FilledHex neighb;
-		for(int ii = 0; ii < 6; ii++)
+		FilledHex neighb, curr;
+		curr = hexmap.getHex(start);
+		boolean done = false;
+				
+		//If it is a valid hex in the map that has no biome OR a basic biome, start worming.
+		if (curr != null && (curr.getBiome() == null || curr.getName().equals("basic")))
 		{
-			neighb = hexmap.getHex(start.neighbor(ii));
-			if (neighb != null && ((neighb.getBiome() != null) && !neighb.getName().equals("basic")))
+			//Try to find an existing neighbor with a biome.
+			ArrayList<Integer> dirs = new ArrayList<>(Arrays.asList(0,1,2,3,4,5));
+			Random rand = new Random();
+			int dir;
+			do
 			{
-				type = neighb.getBiome();
-				type = bweight.rollBiome(type);
+				dir = rand.nextInt(dirs.size());
+				dirs.remove(Integer.valueOf(dir));
+				neighb = hexmap.getHex(hexmap.getHex(start).neighbor(dir));
+				if (hexmap.containsHex(neighb) && neighb.getBiome() != null && !neighb.getName().equals("basic"))
+				{
+					type = neighb.getBiome();
+					type = bweight.rollBiome(type);
+					done=true;
+				}
 			}
+			while(dirs.size() > 0 && !done );
+			
+			//Regardless of if it found a neighbouring biome table, start the worming.
+			curr.setBiome(type);	
+			wormThrough(curr,bweight,type);	
+						
 		}
-		hexmap.getHex(start).setBiome(type);				
-		all.remove(start);
-		wormThrough(start,all,bweight,type);
 	}
 	
 	//TODO basic still appears rarely
-	public void wormThrough(Hex prev,ArrayList<Hex> all, BWeight bweight, Biome type)
+	public void wormThrough(Hex prev, BWeight bweight, Biome type)
 	{
 		//Check nearby hexes for non-null and basic
-		
+
 		Random rand = new Random();
 		FilledHex next = null;
 		ArrayList<Integer> dirs = new ArrayList<>(Arrays.asList(0,1,2,3,4,5));
@@ -100,20 +118,18 @@ public class MapController{
 		int dir;
 		do
 		{
-			
 			dir = rand.nextInt(dirs.size());
-			dirs.remove(dir);
+			dirs.remove(Integer.valueOf(dir));
 			next = hexmap.getHex(prev.neighbor(dir));	
-		}while((next == null || next.getBiome()!=null || !next.getName().equals("basic")) && dirs.size()>0);
+		}while(next==null || !hexmap.containsHex(next) || (next.getBiome() != null && !next.getName().equals("basic")));
 		
 
 		if(next !=null)
 		{					
 			System.out.println(dir);
 			System.out.println(dirs);
-			hexmap.getHex(next).setBiome(type);				
-			all.remove(next);
-			wormThrough(next, all, bweight, type);
+			hexmap.getHex(next).setBiome(type);
+			wormThrough(next, bweight, type);
 		}
 	}
 	
