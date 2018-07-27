@@ -8,7 +8,7 @@ import java.util.*;
 public class HexMap<V extends Hex>
 {
 	
-	Map<Tuple<Integer>, V> hexes; // Stores coordinates for each hex
+	Map<Integer, V> hexes; // Stores coordinates for each hex
 
 	Graph<Hex,Connection> neighbours; // Stores each hex's neighbouring cells in hexagonal coordinates
 	Graph<Hex,Road> roads; // Stores road connections
@@ -24,10 +24,37 @@ public class HexMap<V extends Hex>
 		roads = new Graph<>();
 		rivers = new Graph<>();
 	}
-
-    public void addHex(V h)
+	 
+	/*
+    private static int hashCode(Hex h)
     {
-    	hexes.put(Tuple.create(h.q,h.r,-h.q-h.r), h);
+        return 31 * Arrays.hashCode(new int[]{h.q, h.r, -h.q-h.r});
+    }
+    
+    private static int hashCode(int q, int r)
+    {
+    	return 31 * Arrays.hashCode(new int[] {q,r,-q-r});
+    }
+	*/
+	private static int hashCode(int q, int r)
+	{
+		int hq = Integer.hashCode(q);
+		int hr = Integer.hashCode(r);
+
+		return 1013 * (hq) ^ 1009 * (hr);		
+	}
+	
+	private static int hashCode(Hex h)
+	{
+		int hq = Integer.hashCode(h.q);
+		int hr = Integer.hashCode(h.r);
+		 
+		return 1013 * (hq) ^ 1009 * (hr);	
+	}
+	
+    public void addHex(V h) 
+    {
+    	hexes.put(hashCode(h), h); 
     }
     
     /* Can't work with generics.
@@ -38,7 +65,7 @@ public class HexMap<V extends Hex>
     
     public boolean containsHex(Hex h)
     {
-    	return hexes.containsKey(Tuple.create(h.q,h.r,-h.q-h.r));
+    	return hexes.containsKey(hashCode(h));
     }
     
     public boolean containsHex(Integer hash)
@@ -53,7 +80,7 @@ public class HexMap<V extends Hex>
     
     public V getHex(int q, int r)
     {
-    	return hexes.get(Tuple.create(q,r,-0q-r));
+    	return hexes.get(hashCode(q,r));
     }
     
     public V getHex(int hash)

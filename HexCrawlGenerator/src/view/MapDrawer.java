@@ -25,8 +25,8 @@ public class MapDrawer extends JPanel
 	{
 		Graphics2D g2d = (Graphics2D) g;
 		super.paintComponent(g);
-		this.setBackground(Color.WHITE);
-		Font font = new Font("Serif",Font.PLAIN,9);
+		this.setBackground(Color.WHITE); 
+		Font font = new Font("Serif",Font.PLAIN,9); 
 		Font smallfont = font.deriveFont(0.5f);
 		Set<Integer> ss = hexes.getHexes().keySet();
 		Iterator<Integer> it = ss.iterator();
