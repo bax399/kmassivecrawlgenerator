@@ -3,39 +3,33 @@ import java.util.Arrays;
 
 import java.util.Arrays;
 
-public class Tuple<T>
+public class Tuple
 {
-    private T[] values;
-    private int hashCode;
+    public final int[] values = new int[3];
 
-    private Tuple(T... values)
+    //TODO make this safer
+    public Tuple(int[] qr)
     {
-        this.values = values;
-        this.hashCode = hashCode(values);
-    }
-
-    public static <T> Tuple<T> create(T... values)
-    {
-        return new Tuple<T>(values);
-    }
-
-    private static <T> int hashCode(T... values)
-    {
-        return 31 * Arrays.hashCode(values);
+    	values[0] = qr[0];
+    	values[1] = qr[1];
+    	values[2] = -values[0]-values[1];
     }
 
     @Override
     public int hashCode()
     {
-        return hashCode;
+		int hq = Integer.hashCode(values[0]);
+		int hr = Integer.hashCode(values[1]);
+
+		return (hq ^ (hr + 0x9e3779b9 + (hq << 6) + (hq >> 2)));
     }
 
     @Override
     public boolean equals(Object obj) 
     {
         if (this == obj) return true;
-        if (!(obj instanceof Tuple<?>)) return false;
-        Tuple<?> other = (Tuple<?>) obj;
+        if (!(obj instanceof Tuple)) return false;
+        Tuple other = (Tuple) obj;
         if (!Arrays.equals(values, other.values)) return false;
         return true;
     }

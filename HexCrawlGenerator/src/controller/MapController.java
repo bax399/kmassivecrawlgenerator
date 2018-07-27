@@ -44,9 +44,9 @@ public class MapController{
 	
 	public void getPolygons()
 	{
-		Map<Integer,FilledHex> hexes = hexmap.getHexes();
-		Set<Integer> ss = hexes.keySet();
-		Iterator<Integer> it = ss.iterator();
+		Map<Tuple,FilledHex> hexes = hexmap.getHexes();
+		Set<Tuple> ss = hexes.keySet();
+		Iterator<Tuple> it = ss.iterator();
 		while(it.hasNext())
 		{
 			FilledHex hh = hexmap.getHex(it.next());
@@ -148,7 +148,7 @@ public class MapController{
 		return hexmap.getHex(q,r);
 	}
 	
-	public Map<Integer,FilledHex> getHexes()
+	public Map<Tuple,FilledHex> getHexes()
 	{
 		return Collections.unmodifiableMap(hexmap.getHexes());
 	}

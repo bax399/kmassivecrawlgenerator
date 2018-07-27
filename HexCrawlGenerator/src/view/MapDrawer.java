@@ -1,6 +1,7 @@
 package view;
 import java.util.*;
 
+import model.redblob.Tuple;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -28,8 +29,8 @@ public class MapDrawer extends JPanel
 		this.setBackground(Color.WHITE); 
 		Font font = new Font("Serif",Font.PLAIN,9); 
 		Font smallfont = font.deriveFont(0.5f);
-		Set<Integer> ss = hexes.getHexes().keySet();
-		Iterator<Integer> it = ss.iterator();
+		Set<Tuple> ss = hexes.getHexes().keySet();
+		Iterator<Tuple> it = ss.iterator();
 		g.setFont(font);
 		while (it.hasNext())
 		{
@@ -39,12 +40,12 @@ public class MapDrawer extends JPanel
 			g.setColor(hh.getColor());
 			g.fillPolygon(hh.shape);
 
-			g.setColor(Color.WHITE);
-			g.drawPolygon(hh.shape);
 			g.setColor(Color.BLACK);
+			g.drawPolygon(hh.shape);
+			//g.setColor(Color.BLACK);
 			//g.drawString(hh.getName(), (int)hh.center.x-15, (int)hh.center.y+5);
-			g.drawString(""+hh.q,(int)hh.center.x-3, (int)hh.center.y-3);
-			g.drawString(""+hh.r,(int)hh.center.x-3, (int)hh.center.y+5);
+			//g.drawString(""+hh.q,(int)hh.center.x-3, (int)hh.center.y-3);
+			//g.drawString(""+hh.r,(int)hh.center.x-3, (int)hh.center.y+5);
 			
 			
 		}

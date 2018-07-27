@@ -8,7 +8,7 @@ import java.util.*;
 public class HexMap<V extends Hex>
 {
 	
-	Map<Integer, V> hexes; // Stores coordinates for each hex
+	Map<Tuple, V> hexes; // Stores coordinates for each hex
 
 	Graph<Hex,Connection> neighbours; // Stores each hex's neighbouring cells in hexagonal coordinates
 	Graph<Hex,Road> roads; // Stores road connections
@@ -25,36 +25,23 @@ public class HexMap<V extends Hex>
 		rivers = new Graph<>();
 	}
 	 
-	/*
-    private static int hashCode(Hex h)
-    {
-        return 31 * Arrays.hashCode(new int[]{h.q, h.r, -h.q-h.r});
-    }
-    
-    private static int hashCode(int q, int r)
-    {
-    	return 31 * Arrays.hashCode(new int[] {q,r,-q-r});
-    }
-	*/
 	private static int hashCode(int q, int r)
 	{
 		int hq = Integer.hashCode(q);
 		int hr = Integer.hashCode(r);
 
-		return 1013 * (hq) ^ 1009 * (hr);		
+		return (hq ^ (hr + 0x9e3779b9 + (hq << 6) + (hq >> 2)));
+
 	}
 	
 	private static int hashCode(Hex h)
 	{
-		int hq = Integer.hashCode(h.q);
-		int hr = Integer.hashCode(h.r);
-		 
-		return 1013 * (hq) ^ 1009 * (hr);	
+		return hashCode(h.q,h.r);
 	}
 	
-    public void addHex(V h) 
+    public void addHex(V h)
     {
-    	hexes.put(hashCode(h), h); 
+    	hexes.put(new Tuple(new int[] {h.q,h.r}), h);
     }
     
     /* Can't work with generics.
@@ -80,12 +67,12 @@ public class HexMap<V extends Hex>
     
     public V getHex(int q, int r)
     {
-    	return hexes.get(hashCode(q,r));
+    	return hexes.get(new Tuple(new int[] {q,r}));
     }
     
-    public V getHex(int hash)
+    public V getHex(Tuple tuple)
     {
-    	return hexes.get(hash);
+    	return hexes.get(tuple);
     }
     
 	public int getTotal()
@@ -95,8 +82,8 @@ public class HexMap<V extends Hex>
 	
 	public void initializeNeighbours()
 	{	
-		Set<Integer> s = hexes.keySet();
-		Iterator<Integer> it = s.iterator();
+		Set<Tuple> s = hexes.keySet();
+		Iterator<Tuple> it = s.iterator();
 		while(it.hasNext())
 		{
 			Hex each = hexes.get(it.next());
@@ -120,8 +107,8 @@ public class HexMap<V extends Hex>
 	public String toString()
 	{
 		String output ="";
-		Set<Integer> ss = hexes.keySet();
-		Iterator<Integer> it = ss.iterator();
+		Set<Tuple> ss = hexes.keySet();
+		Iterator<Tuple> it = ss.iterator();
 		while(it.hasNext())
 		{
 			Hex hh = hexes.get(it.next());
@@ -130,7 +117,7 @@ public class HexMap<V extends Hex>
 		return output;
 	}
 	
-	public Map<Integer,V> getHexes()
+	public Map<Tuple,V> getHexes()
 	{
 		return hexes;
 	}
