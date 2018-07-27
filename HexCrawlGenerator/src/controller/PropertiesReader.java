@@ -128,7 +128,8 @@ public class PropertiesReader {
 				//Loads all the property information contained into f
 				f.load(sr);
 				storage.get(typeh).add(f);
-				System.out.println("Added "+typeh+": " + f.getProperty("name"));
+				//System.out.println("Added "+typeh+": " + f.getProperty("name"));
+				System.out.println(f.stringPropertyNames());
 			}
 			catch(IOException e)
 			{

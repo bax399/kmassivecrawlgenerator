@@ -27,8 +27,7 @@ public class MapDrawer extends JPanel
 		Graphics2D g2d = (Graphics2D) g;
 		super.paintComponent(g);
 		this.setBackground(Color.WHITE); 
-		Font font = new Font("Serif",Font.PLAIN,9); 
-		Font smallfont = font.deriveFont(0.5f);
+		Font font = new Font("Serif",Font.PLAIN,12); 
 		Set<Tuple> ss = hexes.getHexes().keySet();
 		Iterator<Tuple> it = ss.iterator();
 		g.setFont(font);
@@ -43,7 +42,7 @@ public class MapDrawer extends JPanel
 			g.setColor(Color.BLACK);
 			g.drawPolygon(hh.shape);
 			//g.setColor(Color.BLACK);
-			//g.drawString(hh.getName(), (int)hh.center.x-15, (int)hh.center.y+5);
+			g.drawString(hh.getName(), (int)hh.center.x-15, (int)hh.center.y+5);
 			//g.drawString(""+hh.q,(int)hh.center.x-3, (int)hh.center.y-3);
 			//g.drawString(""+hh.r,(int)hh.center.x-3, (int)hh.center.y+5);
 			

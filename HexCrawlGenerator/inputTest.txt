@@ -29,7 +29,7 @@ color=172,145,11
 
 TYPE=biome
 name=desert
-color=245,245,31
+color=245,245,30
 
 TYPE=biome
 name=hills

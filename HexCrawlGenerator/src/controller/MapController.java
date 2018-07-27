@@ -5,40 +5,27 @@ import model.redblob.*;
 
 public class MapController{
 	HexMap<FilledHex> hexmap;
-	BWeight bweights;
 	//size,origin
 	Layout layout;// = new Layout(Layout.flat, new Point(20,20), new Point(200,200));	
 
-	public MapController(int h, int w, BWeight bweight)
-	{
-		hexmap = new HexMap<>();
-		//createRectangleMap(w,h, bweight);
-		initializeRectangleMap(h,w);
-		wormWrapper(bweight);
-		getPolygons();
-		hexmap.initializeNeighbours();	
-	}	
-
 	public MapController(int h, int w, BWeight bweight, Layout lt)
 	{
-		hexmap = new HexMap<>();
+		hexmap = new ConnectedHexMap();
 		layout=lt;		
 		//createRectangleMap(w,h, bweight);
 		initializeRectangleMap(h,w);
 		wormWrapper(bweight);
 		getPolygons();
-		hexmap.initializeNeighbours();
 	}
 
 	public MapController(int r, BWeight bweight, Layout lt)
 	{
-		hexmap = new HexMap<>();
+		hexmap = new ConnectedHexMap();
 		layout=lt;		
 		//createRectangleMap(w,h, bweight);
 		initializeSpiralMap(r);
 		wormWrapper(bweight);
 		getPolygons();
-		hexmap.initializeNeighbours();
 	}
 	
 	
@@ -82,6 +69,7 @@ public class MapController{
 		}
 	}	
 	
+	//TODO this should be more efficient.
 	public void wormWrapper(BWeight bweight)
 	{
 		ArrayList<FilledHex> nullhexes = new ArrayList<>(hexmap.getHexes().values());

@@ -9,34 +9,10 @@ public class HexMap<V extends Hex>
 {
 	
 	Map<Tuple, V> hexes; // Stores coordinates for each hex
-
-	Graph<Hex,Connection> neighbours; // Stores each hex's neighbouring cells in hexagonal coordinates
-	Graph<Hex,Road> roads; // Stores road connections
-	Graph<Hex,River> rivers; // Stores river connections
-	
-	private int height;
-	private int width;
 	
 	public HexMap()
 	{
 		hexes = new LinkedHashMap<>();
-		neighbours = new Graph<>();
-		roads = new Graph<>();
-		rivers = new Graph<>();
-	}
-	 
-	private static int hashCode(int q, int r)
-	{
-		int hq = Integer.hashCode(q);
-		int hr = Integer.hashCode(r);
-
-		return (hq ^ (hr + 0x9e3779b9 + (hq << 6) + (hq >> 2)));
-
-	}
-	
-	private static int hashCode(Hex h)
-	{
-		return hashCode(h.q,h.r);
 	}
 	
     public void addHex(V h)
@@ -44,20 +20,9 @@ public class HexMap<V extends Hex>
     	hexes.put(new Tuple(new int[] {h.q,h.r}), h);
     }
     
-    /* Can't work with generics.
-    public void addHex(int q, int r)
-    {
-    	hexes.put(hashCode(q,r), new Hex(q,r));
-    }*/
-    
     public boolean containsHex(Hex h)
     {
-    	return hexes.containsKey(hashCode(h));
-    }
-    
-    public boolean containsHex(Integer hash)
-    {
-    	return hexes.containsKey(hash);
+    	return hexes.containsKey(new Tuple(new int[] {h.q,h.r}));
     }
     
     public V getHex(Hex h)
@@ -79,29 +44,6 @@ public class HexMap<V extends Hex>
 	{
 		return hexes.size();
 	}
-	
-	public void initializeNeighbours()
-	{	
-		Set<Tuple> s = hexes.keySet();
-		Iterator<Tuple> it = s.iterator();
-		while(it.hasNext())
-		{
-			Hex each = hexes.get(it.next());
-			neighbours.addVertex(each);
-			
-			for(int ii = 0; ii<6;ii++)
-			{
-				Hex n = each.neighbor(ii);
-				if (hexes.containsValue(n))
-				{
-					neighbours.addEdge(new Connection(each, n));
-				}
-				
-				
-			}
-			
-		}
-	}		
 	
 	@Override
 	public String toString()
