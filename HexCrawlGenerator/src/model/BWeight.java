@@ -1,15 +1,17 @@
 package model;
 import java.util.*;
+
 public class BWeight 
 {
 	Map<Biome,Integer> ordering;
 	Map<Integer,Biome> biomeid;
 	
 	Map<Integer,ArrayList<Integer>> weights;
-	Map<Integer,ArrayList<Integer>> rollweights;
+	public Map<Integer,ArrayList<Integer>> rollweights;
 	int total;
 	
 	Map<String,Biome> biomenames;
+	Random rand = new Random();
 	
 	public BWeight(Properties bweights, ArrayList<Biome> biomes)
 	{
@@ -96,7 +98,7 @@ public class BWeight
 		return incremented;
 	}
 	
-	public static int rollWeights(ArrayList<Integer> incremented)
+	public int rollWeights(ArrayList<Integer> incremented)
 	{
 		int min = 1;
 		int max = 1;
@@ -130,13 +132,11 @@ public class BWeight
 	{
 		int prevnum = ordering.get(previous);
 		int nextnum = indexWeight(rollweights.get(prevnum), rollWeights(rollweights.get(prevnum)));
-		
 		return biomeid.get(nextnum);
 	}
 	
 	public Biome rollBiome()
 	{
-		Random rand = new Random();
 		int index = rand.nextInt(biomeid.size());
 		Biome first = biomeid.get(index);
 		int prevnum = ordering.get(first);
@@ -145,9 +145,8 @@ public class BWeight
 		return biomeid.get(nextnum);
 	}	
 	
-	public static int randInt(int min, int max)
-	{
-		Random rand = new Random();		
+	public int randInt(int min, int max)
+	{		
 		return rand.nextInt((max-min)+1)+min;		
 	}
 }

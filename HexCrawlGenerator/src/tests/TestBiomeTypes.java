@@ -23,7 +23,7 @@ public class TestBiomeTypes {
 		System.out.println("Current relative path is: " + s);			
 		
 		FileProcessor fp = new FileProcessor();
-		PropertiesReader ptr = new PropertiesReader();
+		PropertiesReader ptr = new PropertiesReader(); 
 		fp.processFile("inputTest.txt", ptr);
 		
 		System.out.println(ptr.getTypeList("biome").get(0));
@@ -40,7 +40,7 @@ public class TestBiomeTypes {
 		
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				
-		MapDrawer ui = new MapDrawer(mc.getHexes());
+		MapDrawer ui = new MapDrawer(mc);
 		
 		f.add(ui);
 		f.setSize(1920,1080);

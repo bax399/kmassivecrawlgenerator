@@ -9,6 +9,7 @@ public class Biome {
 	int spotdistance;
 	double riverorigin;
 	double riverend;
+
 	
 	public Biome(Properties pp)
 	{

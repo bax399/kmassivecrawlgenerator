@@ -12,7 +12,7 @@ public class Hex extends Vertex
         this.s = s;
         if (q + r + s != 0) throw new IllegalArgumentException("q + r + s must be 0");
     }
-    
+     
     //Axial
     public Hex(int q, int r)
     {
