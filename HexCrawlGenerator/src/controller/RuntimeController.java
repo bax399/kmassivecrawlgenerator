@@ -26,7 +26,9 @@ public class RuntimeController {
 		Layout lt = new Layout(Layout.pointy,new Point(10,10),new Point(10,10));		
 		//Use primes for rectangular maps.
 		//Max 33 for height???
-		MapController mc = new MapController(34,91, bw, lt);
+		//TODO fix height error
+		
+		MapController mc = new MapController(32,91, bw, lt);
 		
 		JFrame f = new JFrame("HexMap");
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

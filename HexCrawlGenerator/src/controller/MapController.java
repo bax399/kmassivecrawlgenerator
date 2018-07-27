@@ -80,6 +80,7 @@ public class MapController{
 			if (neighb != null && ((neighb.getBiome() != null) && !neighb.getName().equals("basic")))
 			{
 				type = neighb.getBiome();
+				type = bweight.rollBiome(type);
 			}
 		}
 		hexmap.getHex(start).setBiome(type);				
@@ -95,20 +96,24 @@ public class MapController{
 		Random rand = new Random();
 		FilledHex next = null;
 		ArrayList<Integer> dirs = new ArrayList<>(Arrays.asList(0,1,2,3,4,5));
-		Biome nextType = bweight.rollBiome(type);
+		type = bweight.rollBiome(type);
 		int dir;
 		do
 		{
+			
 			dir = rand.nextInt(dirs.size());
 			dirs.remove(dir);
-			next = hexmap.getHex(prev.neighbor(dir));
+			next = hexmap.getHex(prev.neighbor(dir));	
 		}while((next == null || next.getBiome()!=null || !next.getName().equals("basic")) && dirs.size()>0);
 		
+
 		if(next !=null)
-		{		
-			hexmap.getHex(next).setBiome(nextType);				
+		{					
+			System.out.println(dir);
+			System.out.println(dirs);
+			hexmap.getHex(next).setBiome(type);				
 			all.remove(next);
-			wormThrough(next, all, bweight, nextType);
+			wormThrough(next, all, bweight, type);
 		}
 	}
 	

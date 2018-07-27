@@ -36,7 +36,7 @@ public class MapDrawer extends JPanel
 			g.fillPolygon(hh.shape);
 			g.setColor(Color.BLACK);
 			//g.drawString(hh.getName(), (int)hh.center.x-15, (int)hh.center.y+5);
-			g.drawString(""+hh.q+":"+hh.r,(int)hh.center.x-15, (int)hh.center.y+5);
+			//g.drawString(""+hh.q+":"+hh.r,(int)hh.center.x-15, (int)hh.center.y+5);
 			g.drawPolygon(hh.shape);
 			
 		}

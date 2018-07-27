@@ -1,9 +1,15 @@
 
 TYPE=bweight
-name=plain,scrub,forest
-plain=1,1,1
-scrub=0,10,0
-forest=0,0,10
+name=plain,scrub,forest,rough,desert,hills,mountains,marsh,abyss
+plain=6,1,1,1,1,1,1,1,0
+scrub=3,8,2,1,1,1,1,1,0
+forest=1,3,10,1,0,1,1,1,0
+rough=2,2,1,3,2,4,2,1,0
+desert=3,2,0,3,12,1,2,1,1
+hills=1,2,2,2,1,6,2,1,0
+mountains=1,1,1,2,1,4,8,0,0
+marsh=2,2,2,1,0,1,0,7,0
+abyss=0,0,0,5,5,0,0,0,10
 
 TYPE=biome
 name=plain
