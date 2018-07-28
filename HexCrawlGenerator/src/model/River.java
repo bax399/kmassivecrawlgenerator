@@ -1,7 +1,7 @@
 package model;
 public class River extends Connection {
-	public River(FilledHex v1, FilledHex v2, int weight)
+	public River(FilledHex v1, FilledHex v2)
 	{
-		super(v1, v2, weight);
+		super(v1, v2);
 	}	
 }
