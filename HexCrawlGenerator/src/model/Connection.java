@@ -7,4 +7,9 @@ public class Connection extends Edge<FilledHex>{
 	{
 		super(v1, v2,weight);
 	}
+	
+	public boolean containsHex(FilledHex h1)
+	{
+		return getVertexes().contains(h1);
+	}
 }

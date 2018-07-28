@@ -135,7 +135,8 @@ public class BWeight
 		return biomeid.get(nextnum);
 	}
 	
-	//TODO this rolls for a biome after reandomizing a biome, this can potentially get a Desert->Abyss into a point that shouldnt be allowed
+	//TODO this rolls for a biome after randomizing a biome, this can potentially get a Desert->Abyss into a point that shouldnt be allowed
+	//TODO this shouldn't select rare biomes to potentially roll from, or is that OK?
 	public Biome rollBiome()
 	{
 		int index = rand.nextInt(biomeid.size());

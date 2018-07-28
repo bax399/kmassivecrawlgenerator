@@ -31,6 +31,13 @@ public class FilledHex extends Hex
 		biome = new Biome(basic);
 	}
 
+	//TODO setup structure storing in hexes, search all for object o.
+	public boolean contains(Object o)
+	{
+		return false;
+		
+	}
+	
 	public void setBiome(Biome b)
 	{
 		biome = b;
