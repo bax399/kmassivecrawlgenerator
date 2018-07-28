@@ -3,7 +3,7 @@ import java.util.*;
 public class Roadfinder extends Pathfinder {
 
 	@Override
-	public int heuristic(ConnectedHexMap chm, FilledHex current, FilledHex next)
+	public int heuristic(ConnectedHexMap chm, FilledHex goal, FilledHex current, FilledHex next)
 	{
 		return getCost(chm,current,next);
 	}

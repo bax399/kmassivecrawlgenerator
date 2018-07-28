@@ -14,7 +14,7 @@ public abstract class Pathfinder {
 	
 	public abstract int getCost(ConnectedHexMap chm, FilledHex current, FilledHex next);
 	
-	public abstract int heuristic(ConnectedHexMap chm, FilledHex current, FilledHex next);
+	public abstract int heuristic(ConnectedHexMap chm, FilledHex goal, FilledHex current, FilledHex next);
 	
 	public Set<Connection> GreedyBFS(ConnectedHexMap chm, FilledHex goal, FilledHex start)
 	{
@@ -39,7 +39,7 @@ public abstract class Pathfinder {
 		    	next = it.next();
 			    if (!came_from.containsKey(next))
 			    {
-			    	 next.priority = heuristic(chm,current,next); //+ heuristic(goal,next); //The heuristic
+			    	 next.priority = heuristic(chm,goal,current,next); //+ heuristic(goal,next); //The heuristic
 			         frontier.add(next);
 			         came_from.put(next, current);	    	 
 			    }
@@ -53,7 +53,6 @@ public abstract class Pathfinder {
 		current = goal;
 		while(!foundstart)
 		{
-			System.out.println("trying:");
 			next = came_from.get(current);
 			path_from.add(new Connection(current,next,getCost(chm,current,next)));
 			if(next.equals(start))
