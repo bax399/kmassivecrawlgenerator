@@ -14,6 +14,13 @@ public class Tuple
     	values[1] = qr[1];
     	values[2] = -values[0]-values[1];
     }
+    
+    public Tuple(int q, int r)
+    {
+    	values[0] = q;
+    	values[1] = r;
+    	values[2] = -q-r;
+    }
 
     @Override
     public int hashCode()

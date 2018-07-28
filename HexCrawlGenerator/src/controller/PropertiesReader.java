@@ -31,7 +31,7 @@ public class PropertiesReader {
 	//Type,Storage
 	Map<String, ArrayList<Properties>> storage;
 	
-	
+	//TODO change seperate defaultPropertie variables to just be accessed by the map.
 	public PropertiesReader() 
 	{
 		storage = new HashMap<String, ArrayList<Properties>>();
@@ -117,7 +117,7 @@ public class PropertiesReader {
 			typeh = typeh.split("=|\n")[1].trim();
 			
 			//get the default properties from type
-			defaulttype = getProperty(typeh);
+			defaulttype = getDefaultProperty(typeh);
 			
 			//The rest of sc.next() is property stuff, process that.		
 			sr = new StringReader(line);
@@ -129,7 +129,7 @@ public class PropertiesReader {
 				f.load(sr);
 				storage.get(typeh).add(f);
 				//System.out.println("Added "+typeh+": " + f.getProperty("name"));
-				System.out.println(f.stringPropertyNames());
+				//System.out.println(f.stringPropertyNames());
 			}
 			catch(IOException e)
 			{
@@ -140,7 +140,7 @@ public class PropertiesReader {
 		sr.close();
 	}
 	
-	/*FUTURE FUNCTIONALITY needs parent inheritance for properties.
+	/*TODO FUTURE FUNCTIONALITY needs parent inheritance for properties.
 	public Properties useParent(Properties in, ArrayList<Properties> type)
 	{
 		Properties child;
@@ -165,6 +165,7 @@ public class PropertiesReader {
 		return in;
 	}
 	*/
+	
 	public Map<String,ArrayList<Properties>> getFileObjects()
 	{
 		return storage;
@@ -178,7 +179,7 @@ public class PropertiesReader {
 	}
 	
 	//gets the name from the Map storage.
-	public Properties getProperty(String type)
+	public Properties getDefaultProperty(String type)
 	{
 		type = cleanType(type);
 		Properties prop = propsdefault.get(type);
@@ -193,7 +194,7 @@ public class PropertiesReader {
 		{				
 			in = new FileReader("default"+name+".properties");
 
-			Properties prop = getProperty(name);
+			Properties prop = getDefaultProperty(name);
 			prop.load(in);
 			in.close();
 		}

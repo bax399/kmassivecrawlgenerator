@@ -6,9 +6,9 @@ import model.redblob.Hex;
 import model.redblob.Tuple;
 public class ConnectedHexMap extends HexMap<FilledHex> {
 
-	Graph<Hex,Connection> neighbours; // Stores each hex's neighbouring cells in hexagonal coordinates
-	Graph<Hex,Road> roads; // Stores road connections
-	Graph<Hex,River> rivers; // Stores river connections
+	Graph<FilledHex,Connection> neighbours; // Stores each hex's neighbouring cells in hexagonal coordinates
+	Graph<FilledHex,Road> roads; // Stores road connections
+	Graph<FilledHex,River> rivers; // Stores river connections
 	
 	public ConnectedHexMap()
 	{
@@ -16,6 +16,7 @@ public class ConnectedHexMap extends HexMap<FilledHex> {
 		neighbours = new Graph<>();
 		roads = new Graph<>();
 		rivers = new Graph<>();		
+		
 	}
 	
 	public void initializeNeighbours()
@@ -24,14 +25,14 @@ public class ConnectedHexMap extends HexMap<FilledHex> {
 		Iterator<Tuple> it = s.iterator();
 		while(it.hasNext())
 		{
-			Hex each = hexes.get(it.next());
+			FilledHex each = hexes.get(it.next());
 			neighbours.addVertex(each);
 			for(int ii = 0; ii<6;ii++)
 			{
 				Hex n = each.neighbor(ii);
 				if (hexes.containsValue(n))
 				{
-					neighbours.addEdge(new Connection(each, n));
+					neighbours.addEdge(new Connection(each, super.getHex(n)));
 				}
 				
 				
@@ -39,4 +40,9 @@ public class ConnectedHexMap extends HexMap<FilledHex> {
 			
 		}
 	}			
+	
+	public Set<Connection> getConnections()
+	{
+		return Collections.unmodifiableSet(neighbours.getEdges());
+	}
 }

@@ -6,16 +6,18 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import model.FilledHex;
+import model.ConnectedHexMap;
 import model.HexMap;
+import model.*;
 //Panel draws to screen.
 public class MapDrawer extends JPanel 
 {
 
-	HexMap<FilledHex> hexes;
+	ConnectedHexMap hexes;
 	
 	static int size = 10;
 	
-	public MapDrawer(HexMap<FilledHex> h)
+	public MapDrawer(ConnectedHexMap h)
 	{
 		hexes=h;
 	}
@@ -46,9 +48,17 @@ public class MapDrawer extends JPanel
 			//g.drawString(""+hh.q,(int)hh.center.x-3, (int)hh.center.y-3);
 			//g.drawString(""+hh.r,(int)hh.center.x-3, (int)hh.center.y+5);
 			
-			
 		}
 		
+		/*Draws connections between hexes
+		Set<Connection> cc = hexes.getConnections();
+		Iterator<Connection> ic = cc.iterator();
+		g.setColor(Color.WHITE);
+		while(ic.hasNext())
+		{
+			Connection edge = ic.next();
+			g.drawLine((int)edge.getVertexes().get(0).center.x, (int)edge.getVertexes().get(0).center.y, (int)edge.getVertexes().get(1).center.x, (int)edge.getVertexes().get(1).center.y);
+		}*/
 
 		
 	}

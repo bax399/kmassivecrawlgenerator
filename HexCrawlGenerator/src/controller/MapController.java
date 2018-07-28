@@ -4,7 +4,7 @@ import model.*;
 import model.redblob.*;
 
 public class MapController{
-	HexMap<FilledHex> hexmap;
+	ConnectedHexMap hexmap;
 	//size,origin
 	Layout layout;// = new Layout(Layout.flat, new Point(20,20), new Point(200,200));	
 
@@ -16,6 +16,7 @@ public class MapController{
 		initializeRectangleMap(h,w);
 		wormWrapper(bweight);
 		getPolygons();
+		hexmap.initializeNeighbours();
 	}
 
 	public MapController(int r, BWeight bweight, Layout lt)
@@ -26,6 +27,7 @@ public class MapController{
 		initializeSpiralMap(r);
 		wormWrapper(bweight);
 		getPolygons();
+		hexmap.initializeNeighbours();
 	}
 	
 	

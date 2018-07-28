@@ -1,15 +1,20 @@
 
 TYPE=bweight
-name=plain,scrub,forest,rough,desert,hills,mountains,marsh,abyss
-plain=500,10,10,1,10,1,1,1,0
-scrub=10,500,10,1,10,1,1,1,0
-forest=10,10,500,1,10,1,1,1,0
-rough=1,1,1,50,10,1,1,0,1
-desert=1,1,0,50,5,1,1,0,1
-hills=100,1,100,1,10,50,1,1,0
-mountains=1,1,1,10,1,1,500,1,0
-marsh=1,1,1,0,10,1,0,50,0
-abyss=0,0,0,5,5,0,0,0,1
+name=plain,scrub,forest,rough,desert,hills,mountains,marsh,abyss,water
+plain=500,10,10,1,10,1,1,1,0,1
+scrub=10,500,10,1,10,1,1,1,0,1
+forest=10,10,500,1,10,1,1,1,0,1
+rough=1,1,1,50,10,1,1,0,1,1
+desert=1,1,0,50,5,1,1,0,1,1
+hills=100,1,100,1,10,50,1,1,0,1
+mountains=1,1,1,10,1,1,500,1,0,1
+marsh=1,1,1,0,10,1,0,50,0,1
+abyss=0,0,0,5,5,0,0,0,1,1
+water=1,1,1,1,1,1,1,1,1,500
+
+TYPE=biome
+name=water
+color=10,100,255
 
 TYPE=biome
 name=plain
