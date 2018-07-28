@@ -17,6 +17,7 @@ public class FilledHex extends Hex
 		super(q, r);
 		biome = b;
 	}
+	//Blahcomments
 
 	public FilledHex(Biome b, int q, int r)
 	{
