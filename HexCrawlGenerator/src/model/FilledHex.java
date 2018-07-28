@@ -9,8 +9,8 @@ public class FilledHex extends Hex
 	private Biome biome;
 	public Point center;
 	public Polygon shape = new Polygon();
-	 
-	public static Biome basic = new Biome("basic",new int[] {0,40,255},0,0,1,0,0);
+	public int priority=0; //Editable field for pathfinding priority
+	public static Biome basic = new Biome("basic",new int[] {0,40,255},0,0,1,0,0); //default biome.
 	
 	public FilledHex(Biome b, int q, int r, int s)
 	{
@@ -31,6 +31,13 @@ public class FilledHex extends Hex
 		biome = new Biome(basic);
 	}
 
+	//TODO setup structure storing in hexes, search all for object o.
+	public boolean contains(Object o)
+	{
+		return false;
+		
+	}
+	
 	public void setBiome(Biome b)
 	{
 		biome = b;
@@ -65,4 +72,9 @@ public class FilledHex extends Hex
 	{
 		return biome.riverend;
 	}	
+	
+	public double getTravelCost()
+	{
+		return biome.travelcost;
+	}
 }

@@ -11,7 +11,7 @@ import javax.swing.JFrame;
 public class RuntimeController {
 	final static int screenwidth = 1920;
 	final static int screenheight = 1080;
-	final static int size = 30;
+	final static int size = 10;
 	public static void main(String[] args)
 	{ 
 		
@@ -28,14 +28,19 @@ public class RuntimeController {
 		//Layout lt = new Layout(Layout.pointy,new Point(size,size),new Point(size,size));//Rectangle Map
 		
 		//h,w
-		MapController mc = new MapController(10, bw, lt); 
+		MapController mc = new MapController(30, bw, lt); 
 		System.out.println("total connects: " + mc.hexmap.getConnections().size());
 		JFrame f = new JFrame("HexMap");
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				
-		MapDrawer ui = new MapDrawer(mc.hexmap);
+
+		Pathfinder pfa = new Riverfinder();
+		Set<Connection> path = pfa.GreedyBFS(mc.hexmap, mc.getHexes().get(new Tuple(0,10)), mc.getHexes().get(new Tuple(0,-10)));		
+		
+		MapDrawer ui = new MapDrawer(mc.hexmap,path);
 		f.add(ui);
 		f.setSize(screenwidth,screenheight);
 		f.setVisible(true);
+		
+
 	}
 }
