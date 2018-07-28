@@ -29,10 +29,10 @@ public class ConnectedHexMap extends HexMap<FilledHex> {
 			neighbours.addVertex(each);
 			for(int ii = 0; ii<6;ii++)
 			{
-				Hex n = each.neighbor(ii);
+				FilledHex n = super.getHex(each.neighbor(ii));
 				if (hexes.containsValue(n))
 				{
-					neighbours.addEdge(new Connection(each, super.getHex(n)));
+					neighbours.addEdge(new Connection(each, n,(int)(each.getCost()+n.getCost())/2));
 				}
 				
 				
@@ -44,5 +44,20 @@ public class ConnectedHexMap extends HexMap<FilledHex> {
 	public Set<Connection> getConnections()
 	{
 		return Collections.unmodifiableSet(neighbours.getEdges());
+	}
+	
+	public Set<FilledHex> neighbours(FilledHex curr)
+	{
+		return neighbours.getAdjVertices(curr);
+	}
+	
+	public int adjCost(FilledHex curr, FilledHex next)
+	{
+		int cost = Integer.MAX_VALUE;
+		if (neighbours(curr).contains(next))
+		{
+			cost = (int) (curr.getCost()+next.getCost())/2;
+		}
+		return cost;
 	}
 }

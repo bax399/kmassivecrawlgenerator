@@ -32,10 +32,15 @@ public class RuntimeController {
 		System.out.println("total connects: " + mc.hexmap.getConnections().size());
 		JFrame f = new JFrame("HexMap");
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				
-		MapDrawer ui = new MapDrawer(mc.hexmap);
+
+		PathfindingAlgorithms pfa = new PathfindingAlgorithms();
+		Set<Connection> path = pfa.Dijkstra(mc.hexmap, mc.getHexes().get(new Tuple(0,10)), mc.getHexes().get(new Tuple(0,-10)));		
+		
+		MapDrawer ui = new MapDrawer(mc.hexmap,path);
 		f.add(ui);
 		f.setSize(screenwidth,screenheight);
 		f.setVisible(true);
+		
+
 	}
 }

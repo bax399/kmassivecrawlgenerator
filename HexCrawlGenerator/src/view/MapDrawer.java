@@ -14,13 +14,19 @@ public class MapDrawer extends JPanel
 {
 
 	ConnectedHexMap hexes;
-	
+	Set<Connection> cc;
 	static int size = 10;
 	
 	public MapDrawer(ConnectedHexMap h)
 	{
 		hexes=h;
 	}
+
+	public MapDrawer(ConnectedHexMap h, Set<Connection> c)
+	{
+		hexes=h;
+		cc=c;
+	}	
 	
 	//Needed method, draws to screen
 	@Override
@@ -44,22 +50,27 @@ public class MapDrawer extends JPanel
 			g.setColor(Color.BLACK);
 			g.drawPolygon(hh.shape);
 			//g.setColor(Color.BLACK);
-			g.drawString(hh.getName(), (int)hh.center.x-15, (int)hh.center.y+5);
-			//g.drawString(""+hh.q,(int)hh.center.x-3, (int)hh.center.y-3);
-			//g.drawString(""+hh.r,(int)hh.center.x-3, (int)hh.center.y+5);
+			//g.drawString(hh.getName(), (int)hh.center.x-15, (int)hh.center.y+5);
+			g.drawString(""+hh.q,(int)hh.center.x-3, (int)hh.center.y-3);
+			g.drawString(""+hh.r,(int)hh.center.x-3, (int)hh.center.y+5);
 			
 		}
 		
-		/*Draws connections between hexes
-		Set<Connection> cc = hexes.getConnections();
+
 		Iterator<Connection> ic = cc.iterator();
-		g.setColor(Color.WHITE);
+		g.setColor(Color.RED);
 		while(ic.hasNext())
 		{
 			Connection edge = ic.next();
 			g.drawLine((int)edge.getVertexes().get(0).center.x, (int)edge.getVertexes().get(0).center.y, (int)edge.getVertexes().get(1).center.x, (int)edge.getVertexes().get(1).center.y);
-		}*/
-
+		}
+		
+		//Drawing the two pathing hexes
+		/*FilledHex h1 = hexes.getHexes().get(new Tuple(1,1));
+		FilledHex h2 = hexes.getHexes().get(new Tuple(1,0));
+		g.setColor(Color.RED);
+		g.drawLine((int)h1.center.x, (int)h1.center.y, (int)h2.center.x,(int)h2.center.y);
+		*/
 		
 	}
 }

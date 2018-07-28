@@ -64,7 +64,7 @@ public class Graph<V extends Vertex,E extends Edge<V>>
     public Set<E> getEdges() {
         return Collections.unmodifiableSet(edges);
     }
-
+    
     public Map<V, Set<E>> getAdjList() {
         return Collections.unmodifiableMap(adjList);
     }
