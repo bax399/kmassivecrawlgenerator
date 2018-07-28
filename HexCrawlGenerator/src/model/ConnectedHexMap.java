@@ -7,11 +7,15 @@ import model.redblob.Tuple;
 public class ConnectedHexMap extends HexMap<FilledHex> {
 
 	Graph<FilledHex,Connection> neighbours; // Stores each hex's neighbouring cells in hexagonal coordinates
-
+	Graph<FilledHex,Road> roads; // Stores road connections
+	Graph<FilledHex,River> rivers; // Stores river connections
+	
 	public ConnectedHexMap()
 	{
 		super();
 		neighbours = new Graph<>();
+		roads = new Graph<>();
+		rivers = new Graph<>();		
 		
 	}
 	
