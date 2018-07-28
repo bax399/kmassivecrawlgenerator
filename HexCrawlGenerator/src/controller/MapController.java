@@ -71,7 +71,7 @@ public class MapController{
 		}
 	}	
 	
-	//TODO this should be more efficient.
+	//TODO MOVE GENERATION TYPES INTO A NEW CLASS
 	public void wormWrapper(BWeight bweight)
 	{
 		ArrayList<FilledHex> nullhexes = new ArrayList<>(hexmap.getHexes().values());

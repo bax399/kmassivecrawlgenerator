@@ -33,8 +33,8 @@ public class RuntimeController {
 		JFrame f = new JFrame("HexMap");
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		PathfindingAlgorithms pfa = new PathfindingAlgorithms();
-		Set<Connection> path = pfa.Dijkstra(mc.hexmap, mc.getHexes().get(new Tuple(0,10)), mc.getHexes().get(new Tuple(0,-10)));		
+		Pathfinder pfa = new Riverfinder();
+		Set<Connection> path = pfa.GreedyBFS(mc.hexmap, mc.getHexes().get(new Tuple(0,10)), mc.getHexes().get(new Tuple(0,-10)));		
 		
 		MapDrawer ui = new MapDrawer(mc.hexmap,path);
 		f.add(ui);

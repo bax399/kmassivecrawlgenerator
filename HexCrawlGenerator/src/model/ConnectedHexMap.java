@@ -32,7 +32,7 @@ public class ConnectedHexMap extends HexMap<FilledHex> {
 				FilledHex n = super.getHex(each.neighbor(ii));
 				if (hexes.containsValue(n))
 				{
-					neighbours.addEdge(new Connection(each, n,(int)(each.getCost()+n.getCost())/2));
+					neighbours.addEdge(new Connection(each, n,(int)(each.getTravelCost()+n.getTravelCost())/2));
 				}
 				
 				
@@ -51,12 +51,12 @@ public class ConnectedHexMap extends HexMap<FilledHex> {
 		return neighbours.getAdjVertices(curr);
 	}
 	
-	public int adjCost(FilledHex curr, FilledHex next)
+	public int adjTravelCost(FilledHex curr, FilledHex next)
 	{
 		int cost = Integer.MAX_VALUE;
 		if (neighbours(curr).contains(next))
 		{
-			cost = (int) (curr.getCost()+next.getCost())/2;
+			cost = (int) (curr.getTravelCost()+next.getTravelCost())/2;
 		}
 		return cost;
 	}
