@@ -1,6 +1,7 @@
 package model;
 import java.awt.Color;
 import java.util.Properties;
+
 public class Biome {
 	String name;
 	Color color;

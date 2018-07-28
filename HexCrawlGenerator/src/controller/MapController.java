@@ -89,17 +89,19 @@ public class MapController{
 		{
 			Biome type = bweight.rollBiome();
 			FilledHex neighb;
+			//TODO randomize this choice
 			for(int ii = 0; ii < 6; ii++)
 			{
 				neighb = hexmap.getHex(start.neighbor(ii));
 				if (neighb != null && ((neighb.getBiome() != null) && !neighb.getName().equals("basic")))
 				{
 					type = neighb.getBiome();
-					type = bweight.rollBiome(type);
+					//type = bweight.rollBiome(type); //This rolls from the neighbors biome, sometimes getting something unexpected
 				}
 			}
 			
-			hexmap.getHex(start).setBiome(type);				
+			System.out.println("Starting biome: "+type);
+			start.setBiome(type);
 			iterativeWormThrough(start,bweight,type, rand);
 		}
 	}

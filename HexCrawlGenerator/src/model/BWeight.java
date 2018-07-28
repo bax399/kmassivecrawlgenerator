@@ -135,6 +135,7 @@ public class BWeight
 		return biomeid.get(nextnum);
 	}
 	
+	//TODO this rolls for a biome after reandomizing a biome, this can potentially get a Desert->Abyss into a point that shouldnt be allowed
 	public Biome rollBiome()
 	{
 		int index = rand.nextInt(biomeid.size());

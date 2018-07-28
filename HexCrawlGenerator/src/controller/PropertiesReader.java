@@ -9,25 +9,6 @@ public class PropertiesReader {
 	//** DEFAULTS **
 	Map<String,Properties> propsdefault = new HashMap<>();
 	
-	Properties defaultbiome;
-	Properties defaultbweight;
-	
-	Properties defaultworldobject;
-	//WorldObjects (Below)
-	Properties defaultmonster;
-	Properties defaultlocation; //Abstract
-	
-	
-	//Locations
-	Properties defaultnomad;
-	Properties defaultsite;
-	Properties defaultstructure; //Abstract
-	//Structures
-	Properties defaultdungeon;
-	Properties defaultlair;
-	Properties defaultlandmark;
-	Properties defaulttown;
-	
 	//Type,Storage
 	Map<String, ArrayList<Properties>> storage;
 	
@@ -38,48 +19,48 @@ public class PropertiesReader {
 		FileReader fr=null;
 		//Add all defaults to a map for accessing
 		//DEFAULTS		
-		defaultbiome = new Properties();
-		propsdefault.put("biome",defaultbiome);		
+		//defaultbiome = 
+		propsdefault.put("biome",new Properties());		
 		loadDefault(fr,"biome");
 		
-		defaultbweight = new Properties();
-		propsdefault.put("bweight", defaultbweight);		
+		//defaultbweight = 
+		propsdefault.put("bweight", new Properties());		
 		loadDefault(fr,"bweight");
 		
 
-		defaultworldobject = new Properties();
-		propsdefault.put("worldobject", defaultworldobject);		
+		//defaultworldobject = 
+		propsdefault.put("worldobject", new Properties());		
 		loadDefault(fr, "worldobject");
 		
 		//Set up default iterations
-		defaultmonster = new Properties(defaultworldobject);
-		propsdefault.put("monster",defaultmonster);		
+		//defaultmonster = 
+		propsdefault.put("monster",new Properties(propsdefault.get("worldobject")));		
 		loadDefault(fr, "monster");		
-		defaultlocation = new Properties(defaultworldobject);
-		propsdefault.put("location", defaultlocation);		
+		//defaultlocation = 
+		propsdefault.put("location", new Properties(propsdefault.get("worldobject")));		
 		loadDefault(fr, "location");
 		
-		defaultnomad = new Properties(defaultlocation);		
-		propsdefault.put("nomad",defaultnomad);		
+		//defaultnomad = 		
+		propsdefault.put("nomad",new Properties(propsdefault.get("location")));		
 		loadDefault(fr, "nomad");
-		defaultsite =  new Properties(defaultlocation);
-		propsdefault.put("site", defaultsite);		
+		//defaultsite =  
+		propsdefault.put("site", new Properties(propsdefault.get("location")));		
 		loadDefault(fr, "site");		
-		defaultstructure = new Properties(defaultlocation);
-		propsdefault.put("structure", defaultstructure);		
+		//defaultstructure = 
+		propsdefault.put("structure", new Properties(propsdefault.get("location")));		
 		loadDefault(fr,"structure");
 		
-		defaultdungeon = new Properties(defaultstructure);
-		propsdefault.put("dungeon",defaultdungeon);		
+		//defaultdungeon = 
+		propsdefault.put("dungeon",new Properties(propsdefault.get("structure")));		
 		loadDefault(fr, "dungeon");
-		defaultlair =  new Properties(defaultstructure);
-		propsdefault.put("lair",defaultlair);
+		//defaultlair =
+		propsdefault.put("lair",new Properties(propsdefault.get("structure")));
 		loadDefault(fr, "lair");
-		defaultlandmark =  new Properties(defaultstructure);
-		propsdefault.put("landmark",defaultlandmark);
+		//defaultlandmark =  
+		propsdefault.put("landmark",new Properties(propsdefault.get("structure")));
 		loadDefault(fr, "landmark");
-		defaulttown = new Properties(defaultstructure);
-		propsdefault.put("town", defaulttown);
+		//defaulttown = 
+		propsdefault.put("town", new Properties(propsdefault.get("structure")));
 		loadDefault(fr, "town");
 		//END DEFAULTS
 
