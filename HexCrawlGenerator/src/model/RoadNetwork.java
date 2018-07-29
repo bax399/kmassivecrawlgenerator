@@ -4,11 +4,20 @@ import model.worldobjects.*;
 import java.util.*;
 public class RoadNetwork{
 
-	Set<Structure> structures;
+	Set<Town> towns;
 	Set<Connection> roads;
+	//TODO move some of these functions into a road/connectioncontroller
+	
+	//check if a crossing of road->river exists at this hex
+	public boolean getCrossing(FilledHex origin)
+	{
+		
+		return false;
+	}
 	
 	public int getIntersectionNumber(FilledHex origin)
 	{
+		//TODO change this to accessing the hex's RoadNodes, and counting its size.
 		//return number of connections with this hex
 		int count=0;
 		Iterator<Connection> it = roads.iterator();
@@ -22,23 +31,23 @@ public class RoadNetwork{
 		return count;
 	}
 	
-	public Set<Structure> getStructuresInHex(FilledHex origin)
+	public Set<Town> getStructuresInHex(FilledHex origin)
 	{
-		Iterator<Structure> it = structures.iterator();
-		Set<Structure> structuresFound = new HashSet<>();
+		Iterator<Town> it = towns.iterator();
+		Set<Town> townsFound = new HashSet<>();
 		while(it.hasNext())
 		{
-			Structure ss = it.next();
+			Town ss = it.next();
 			if (origin.contains(ss))
 			{
-				structuresFound.add(ss);
+				townsFound.add(ss);
 			}
 		}
 		
-		return structuresFound;
+		return townsFound;
 	}
 	
-	public Set<Structure> getStructuresAlongRoad(FilledHex origin, Connection direction)
+	public Set<Town> getStructuresAlongRoad(FilledHex origin, Connection direction)
 	{
 		//Follow connection, whenever it splits, send recursive call to follow
 		//Any 

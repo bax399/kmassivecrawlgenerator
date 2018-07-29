@@ -1,5 +1,11 @@
 package model.worldobjects;
 import java.util.*;
-public abstract class WorldObject {
-
+import model.*;
+public abstract class WorldObject extends HasDescriptor
+{
+	public abstract int getVisibility();
+	public WorldObject(WorldDescriptor wd)
+	{
+		super(wd);
+	}
 }

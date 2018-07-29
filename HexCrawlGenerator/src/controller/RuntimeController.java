@@ -20,9 +20,8 @@ public class RuntimeController {
 		fp.processFile("inputTest.txt", ptr);
 		
 		PropertiesFactory pf = new PropertiesFactory();
-		
 		BWeight bw = new BWeight(ptr.getTypeList("bweight").get(0),pf.processBiomes(ptr.getTypeList("biome")));
-		
+
 
 		Layout lt = new Layout(Layout.pointy,new Point(size,size),new Point(screenwidth/2,screenheight/2)); //Spiral Map
 		//Layout lt = new Layout(Layout.pointy,new Point(size,size),new Point(size,size));//Rectangle Map

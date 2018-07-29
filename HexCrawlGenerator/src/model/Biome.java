@@ -1,20 +1,19 @@
 package model;
 import java.awt.Color;
-import java.util.Properties;
-
-public class Biome {
-	String name;
-	Color color;
-	int height;
-	int travelcost;
-	int spotdistance;
-	double riverorigin;
-	double riverend;
-
+import java.util.*;
+public class Biome extends HasDescriptor implements BiomeProperties{
+	public static final String[] setvalues = {"biome"};
+	public static final Set<String> tags = new HashSet<>(Arrays.asList(setvalues));
+	private Color color;
+	private int height;
+	private int travelcost;
+	private int spotdistance;
+	private double riverorigin;
+	private double riverend;
 	
 	public Biome(Properties pp)
 	{
-		name = pp.getProperty("name");
+		super(new WorldDescriptor(pp.getProperty("name"), Biome.tags, pp.getProperty("name"), 10));
 		color = parseColor(pp.getProperty("color"));
 		height = Integer.parseInt(pp.getProperty("height"));
 		travelcost = Integer.parseInt(pp.getProperty("travelcost"));
@@ -37,7 +36,7 @@ public class Biome {
 	
 	public Biome(String n, int[] c, int h, int tc, int sd, double ro, double re)
 	{
-		name = n;
+		super(new WorldDescriptor(n,Biome.tags,n,0));
 		color = new Color(c[0],c[1],c[2]);
 		height = h;
 		travelcost = tc;
@@ -48,16 +47,39 @@ public class Biome {
 	
 	public Biome(Biome biome)
 	{
-		this.name = biome.name;
+		super(biome.getDescriptor());
 		this.color = biome.color;
 		this.height = biome.height;
 		this.travelcost = biome.travelcost;
 		this.riverorigin = biome.riverorigin;
-		this.riverend = biome.riverend;		
+		this.riverend = biome.riverend;
 	}
 	
+	public Color getColor()
+	{
+		return color;
+	}
+
+	public int getTravelCost()
+	{
+		return travelcost;
+	}
+	
+	public int getHeight()
+	{
+		return height;
+	}
+	
+	public int getSpotDistance()
+	{
+		return spotdistance;
+	}
+	
+	@Override
 	public String toString()
 	{
-		return name;
+		return super.getName();
 	}
+	
+	
 }

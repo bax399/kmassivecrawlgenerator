@@ -44,7 +44,7 @@ public class MapDrawer extends JPanel
 			FilledHex hh = hexes.getHex(it.next());
 			
 			//Change offset to be relative to layout size 
-			g.setColor(hh.getColor());
+			g.setColor(hh.getBiome().getColor());
 			g.fillPolygon(hh.shape);
 
 			g.setColor(Color.BLACK);

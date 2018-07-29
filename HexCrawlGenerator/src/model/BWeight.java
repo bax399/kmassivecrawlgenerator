@@ -26,14 +26,13 @@ public class BWeight
 		String biomename;
 		ArrayList<Integer> weightings;
 		//get ordering from bweights.name
+
 		ArrayList<String> nameorder = parseOrdering(bweights.getProperty("name"));
-			
 		//Initialise quick access of biomes based on name
 		for(int ii = 0; ii<biomes.size();ii++)
 		{
-			biomenames.put(biomes.get(ii).name,biomes.get(ii));
+			biomenames.put(biomes.get(ii).getName(),biomes.get(ii));
 		}
-		
 		//put biomes into order based on the nameorder
 		for(int ii = 0; ii<nameorder.size();ii++)
 		{
@@ -45,7 +44,7 @@ public class BWeight
 		for(int ii = 0; ii<ordering.size();ii++)
 		{
 			biomenum = ordering.get(biomes.get(ii));
-			biomename = biomes.get(ii).name;
+			biomename = biomes.get(ii).getName();
 			weightings = parseWeights(bweights.getProperty(biomename));
 			weights.put(biomenum, weightings);
 			rollweights.put(biomenum, incrementWeights(weightings));
