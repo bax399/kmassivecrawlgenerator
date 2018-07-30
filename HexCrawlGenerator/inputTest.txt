@@ -74,3 +74,6 @@ TYPE=biome
 name=abyss
 color=255,0,0
 travelcost=3
+
+TYPE=monster
+name=zombie
