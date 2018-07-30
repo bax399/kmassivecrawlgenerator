@@ -85,6 +85,21 @@ public class Biome extends HasDescriptor implements BiomeProperties{
 		return spotdistance;
 	}
 	
+	public String getDescription()
+	{
+		return "nodescriptionaddedtobiomes";
+	}
+	
+	public int getRiverEnd()
+	{
+		return 1;
+	}	
+	
+	public int getRiverOrigin()
+	{
+		return 1;
+	}
+	
 	@Override
 	public String toString()
 	{

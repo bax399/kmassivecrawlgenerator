@@ -5,10 +5,10 @@ import java.util.*;
 //Anything that properties input, the object is expected to use.
 public interface BiomeProperties extends HasProperties
 {
-	public String getName();
 	public Color getColor();
 	public int getHeight();
 	public int getTravelCost();
-	public int getSpotDistance();	
-	
+	public int getSpotDistance();
+	public int getRiverOrigin();
+	public int getRiverEnd();
 }

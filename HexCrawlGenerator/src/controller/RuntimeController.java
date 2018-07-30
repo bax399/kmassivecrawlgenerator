@@ -8,10 +8,12 @@ import java.nio.file.Paths;
 import java.util.*;
 
 import javax.swing.JFrame;
-public class RuntimeController {
+public class RuntimeController 
+{	
 	final static int screenwidth = 1920;
 	final static int screenheight = 1080;
 	final static int size = 10;
+	
 	public static void main(String[] args)
 	{ 
 		
@@ -33,13 +35,12 @@ public class RuntimeController {
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		Pathfinder pfa = new Riverfinder();
-		Set<Connection> path = pfa.GreedyBFS(mc.hexmap, mc.getHexes().get(new Tuple(0,10)), mc.getHexes().get(new Tuple(0,-10)));		
+		Set<Connection> path = pfa.Dijkstra(mc.hexmap, mc.getHexes().get(new Tuple(0,10)), mc.getHexes().get(new Tuple(0,-10)));		
 		
 		MapDrawer ui = new MapDrawer(mc.hexmap,path);
 		f.add(ui);
 		f.setSize(screenwidth,screenheight);
 		f.setVisible(true);
 		
-
 	}
 }
