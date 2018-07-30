@@ -35,7 +35,7 @@ public class MapDrawer extends JPanel
 		Graphics2D g2d = (Graphics2D) g;
 		super.paintComponent(g);
 		this.setBackground(Color.WHITE); 
-		Font font = new Font("Serif",Font.PLAIN,12); 
+		Font font = new Font("Courier New",Font.PLAIN,11); 
 		Set<Tuple> ss = hexes.getHexes().keySet();
 		Iterator<Tuple> it = ss.iterator();
 		g.setFont(font);
@@ -49,14 +49,15 @@ public class MapDrawer extends JPanel
 
 			g.setColor(Color.BLACK);
 			g.drawPolygon(hh.shape);
-			//g.setColor(Color.BLACK);
-			//g.drawString(hh.getName(), (int)hh.center.x-15, (int)hh.center.y+5);
-			g.drawString(""+hh.q,(int)hh.center.x-3, (int)hh.center.y-3);
-			g.drawString(""+hh.r,(int)hh.center.x-3, (int)hh.center.y+5);
+			g.setColor(Color.BLACK);
+			g.drawString(hh.getBiome().getName().substring(0,2), (int)hh.center.x-5, (int)hh.center.y+5);
+			//g.drawString(""+hh.q,(int)hh.center.x-3, (int)hh.center.y-3);
+			//g.drawString(""+hh.r,(int)hh.center.x-3, (int)hh.center.y+5);
 			
 		}
 		
 
+		
 		Iterator<Connection> ic = cc.iterator();
 		g.setColor(Color.RED);
 		while(ic.hasNext())

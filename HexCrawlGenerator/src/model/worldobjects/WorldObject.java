@@ -3,9 +3,21 @@ import java.util.*;
 import model.*;
 public abstract class WorldObject extends HasDescriptor
 {
-	public abstract int getVisibility();
-	public WorldObject(WorldDescriptor wd)
+	private int visibility;
+	
+	public WorldObject(WorldDescriptor wd, int vis)
 	{
 		super(wd);
+		visibility = vis;
+	}
+	
+	public int getVisibility()
+	{
+		return visibility;
+	}
+	
+	public void setVisibility(int vis)
+	{
+		visibility = vis;
 	}
 }

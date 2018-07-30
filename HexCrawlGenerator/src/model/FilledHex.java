@@ -13,7 +13,7 @@ public class FilledHex extends Hex
 	public Point center;
 	public Polygon shape = new Polygon();
 	public int priority=0; //Editable field for pathfinding priority
-	public static Biome basic = new Biome("basic",new int[] {0,40,255},0,0,1,0,0); //default biome.
+
 	//Points are stored to place worldobjects in exact locations
 	private Map<Point,Lair> lairs;
 	private Map<Point,Dungeon> dungeons;
@@ -37,7 +37,7 @@ public class FilledHex extends Hex
 	public FilledHex(int q, int r)
 	{
 		super(q,r);
-		biome = new Biome(basic);
+		biome = new Biome(Biome.basic);
 	}
 
 	//TODO setup structure storing in hexes, search all for object o.
