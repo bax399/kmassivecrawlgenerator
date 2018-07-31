@@ -52,7 +52,7 @@ public class BWeight
 	}
 
 	
-	public ArrayList<String> parseOrdering(String csv)
+	private ArrayList<String> parseOrdering(String csv)
 	{
 		String[] each = csv.split(",");
 		ArrayList<String> output = new ArrayList<>();
@@ -64,7 +64,7 @@ public class BWeight
 		return output;	
 	}	
 	
-	public ArrayList<Integer> parseWeights(String csv)
+	private ArrayList<Integer> parseWeights(String csv)
 	{
 		String[] each = csv.split(",");
 		ArrayList<Integer> output = new ArrayList<>();
@@ -76,7 +76,7 @@ public class BWeight
 		return output;
 	}
 	
-	public static ArrayList<Integer> incrementWeights(ArrayList<Integer> weights)
+	private static ArrayList<Integer> incrementWeights(ArrayList<Integer> weights)
 	{
 		ArrayList<Integer> incremented = new ArrayList<>();
 		
@@ -97,7 +97,7 @@ public class BWeight
 		return incremented;
 	}
 	
-	public int rollWeights(ArrayList<Integer> incremented)
+	private int rollWeights(ArrayList<Integer> incremented)
 	{
 		int min = 1;
 		int max = 1;
@@ -113,7 +113,7 @@ public class BWeight
 		return randInt(min,max);
 	}
 	
-	public static int indexWeight(ArrayList<Integer> incremented, int weight)
+	private static int indexWeight(ArrayList<Integer> incremented, int weight)
 	{
 		int index = 0;
 		for(int ii = 0; ii < incremented.size();ii++)
@@ -146,7 +146,7 @@ public class BWeight
 		return biomeid.get(nextnum);
 	}	
 	
-	public int randInt(int min, int max)
+	private int randInt(int min, int max)
 	{		
 		return rand.nextInt((max-min)+1)+min;		
 	}

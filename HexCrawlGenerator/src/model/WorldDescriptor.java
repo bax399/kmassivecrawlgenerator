@@ -9,7 +9,7 @@ public class WorldDescriptor
 	
 	public WorldDescriptor(String n, Collection<String> t, String d, int i)
 	{
-		name = n;
+		name = n.toLowerCase();
 		tags = new HashSet<>();
 		tags.addAll(t);
 		description = d;

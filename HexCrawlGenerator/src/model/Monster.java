@@ -10,12 +10,6 @@ public class Monster extends HasDescriptor implements MonsterProperties {
 	}
 
 	@Override
-	public void processProperties(Properties props) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public int getVisibility() {
 		// TODO Auto-generated method stub
 		return 0;

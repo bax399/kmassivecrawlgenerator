@@ -11,4 +11,5 @@ public interface BiomeProperties extends HasProperties
 	public int getSpotDistance();
 	public int getRiverOrigin();
 	public int getRiverEnd();
+	public String getWeight();
 }

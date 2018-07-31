@@ -37,7 +37,7 @@ public class FilledHex extends Hex
 	public FilledHex(int q, int r)
 	{
 		super(q,r);
-		biome = new Biome(Biome.basic);
+		biome = Biome.basic;
 	}
 
 	//TODO setup structure storing in hexes, search all for object o.
