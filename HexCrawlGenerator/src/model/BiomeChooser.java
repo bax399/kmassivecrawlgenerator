@@ -33,21 +33,29 @@ public class BiomeChooser
 	public static String[] putAllEnd(String[] weightarray) throws IllegalArgumentException
 	{
 		String swap;
-		int index=-1;
 		int size=weightarray.length;
-		for(int ii=0;ii<size;ii++)
+		boolean foundend=false,found=false;
+		
+		if(weightarray[size-1].startsWith("all:"))
+		{
+			foundend=true;
+		}
+		
+		for(int ii=0;ii<size-1;ii++)
 		{		
 			if (weightarray[ii].startsWith("all:"))
 			{
-				
-				if(index!=-1) {throw new IllegalArgumentException("Cannot have two 'all' keywords in weights");}
-				else
+				if(!foundend && !found)
 				{
 					//swap with the last index
-					index=ii;
 					swap = weightarray[ii];
 					weightarray[ii] = weightarray[size-1];
 					weightarray[size-1] = swap;
+					found=true;
+				}
+				else
+				{
+					throw new IllegalArgumentException("Cannot have two 'all' keywords in weights");
 				}
 				
 			}
@@ -72,7 +80,7 @@ public class BiomeChooser
 		for(String wv: each)
 		{
 			double weight;
-			String bname=wv.substring(0, wv.lastIndexOf(":")-1);
+			String bname=wv.substring(0, wv.lastIndexOf(":"));
 			try {weight=Double.parseDouble(wv.substring(wv.lastIndexOf(":")+1));} 
 			catch(NumberFormatException e) {throw new IllegalArgumentException("Biome weight invalid in: " +origin.getBiomeName());}
 			
@@ -89,7 +97,7 @@ public class BiomeChooser
 			}
 			else
 			{
-				Biome bfound=biomenames.get(wv.substring(0, wv.lastIndexOf(":")-1));
+				Biome bfound=biomenames.get(bname);
 				if(bfound==null) throw new IllegalArgumentException("Biome weight invalid in: " +origin.getBiomeName());	
 				bb.add(weight,bfound);				
 			}
