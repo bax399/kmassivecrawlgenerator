@@ -1,5 +1,7 @@
-package model;
+package zdeprececated;
 import java.util.*;
+
+import model.Biome;
 
 public class BWeight 
 {

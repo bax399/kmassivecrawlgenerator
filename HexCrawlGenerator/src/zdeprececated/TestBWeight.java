@@ -1,7 +1,5 @@
-package tests;
+package zdeprececated;
 import java.util.*;
-
-import model.BWeight;
 public class TestBWeight 
 {
 	public static void main(String[] args)
