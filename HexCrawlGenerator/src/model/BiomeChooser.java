@@ -121,7 +121,7 @@ public class BiomeChooser
 		{
 			it.next();
 		}
-		return it.next();
+		return rollBiome(it.next());
 	}	
 	
 	public Biome rollBiome(String name)

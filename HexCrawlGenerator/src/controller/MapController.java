@@ -85,7 +85,7 @@ public class MapController{
 	
 	public void wormStart(FilledHex start, BiomeChooser bc, Random rand)
 	{
-		if (start.getBiome() == null || start.getBiome().getName().equals("basic"))
+		if (start.getBiome() == null || start.getBiome().getBiomeName().equals("basic"))
 		{
 			Biome type = bc.rollBiome();
 			FilledHex neighb;
@@ -93,7 +93,7 @@ public class MapController{
 			for(int ii = 0; ii < 6; ii++)
 			{
 				neighb = hexmap.getHex(start.neighbor(ii));
-				if (neighb != null && ((neighb.getBiome() != null) && !neighb.getBiome().getName().equals("basic")))
+				if (neighb != null && ((neighb.getBiome() != null) && !neighb.getBiome().getBiomeName().equals("basic")))
 				{
 					type = neighb.getBiome();
 					//type = bweight.rollBiome(type); //This rolls from the neighbors biome, sometimes getting something unexpected
@@ -121,9 +121,9 @@ public class MapController{
 				dir = dirs.get(rand.nextInt(dirs.size()));
 				dirs.remove(Integer.valueOf(dir));
 				next = hexmap.getHex(curr.neighbor(dir));
-			}while((next == null || ( next.getBiome()!=null && !next.getBiome().getName().equals("basic"))) && dirs.size()>0);			
+			}while((next == null || ( next.getBiome()!=null && !next.getBiome().getBiomeName().equals("basic"))) && dirs.size()>0);			
 			
-			if(next !=null && (next.getBiome() != null || next.getBiome().getName().equals("basic")))
+			if(next !=null && (next.getBiome() != null || next.getBiome().getBiomeName().equals("basic")))
 			{
 				curr = next;
 				curr.setBiome(type);
