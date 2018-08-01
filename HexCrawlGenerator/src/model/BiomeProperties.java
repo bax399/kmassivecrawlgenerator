@@ -8,7 +8,7 @@ public interface BiomeProperties extends HasProperties
 	public Color getColor();
 	public int getHeight();
 	public int getTravelCost();
-	public int getSpotDistance();
+	public String getSpotDistance();
 	public int getRiverOrigin();
 	public int getRiverEnd();
 	public String getWeight();

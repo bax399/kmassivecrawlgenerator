@@ -28,6 +28,11 @@ public abstract class HasDescriptor
 		descriptor.tags.addAll(t);
 	}
 	
+	public void setTags(String t)
+	{
+		descriptor.tags.add(t);
+	}
+	
 	public void setDescription(String desc)
 	{
 		descriptor.description = desc;

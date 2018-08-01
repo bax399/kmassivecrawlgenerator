@@ -7,6 +7,6 @@ public interface DungeonProperties extends HasProperties
 {
 	public int getVisibility();
 	public int getSpawnChance();
-	public Map<Monster,Integer> getMonsterChance();
+	public Map<BaseMonster,Integer> getMonsterChance();
 	
 }

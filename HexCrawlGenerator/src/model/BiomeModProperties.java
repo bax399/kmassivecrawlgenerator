@@ -7,7 +7,7 @@ public interface BiomeModProperties extends HasProperties
 	public Color getColor();
 	public int getHeight();
 	public int getTravelCost();
-	public int getSpotDistance();
+	public String getSpotDistance();
 	public int getRiverOrigin();
 	public int getRiverEnd();
 	public Set<Biome> getValidBiomes();

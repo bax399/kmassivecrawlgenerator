@@ -6,9 +6,9 @@ import java.util.*;
 public interface MonsterProperties extends HasProperties
 {
 	public int getVisibility();
-	public int getNomadChance();
+	public double getNomadChance();
 	public int getRoamRadius();
-	public int getSpawnChance();
+	public Map<Biome,Double> getSpawnChance();
 	public int getRoamType();
-	public int getEncounterChance();
+	public double getEncounterChance();
 }
