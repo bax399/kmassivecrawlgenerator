@@ -57,18 +57,16 @@ public class MapDrawer extends JPanel
 			
 		}
 		
-
-		
 		Iterator<Set<Connection>> isc = ccs.iterator();
-		g.setColor(Color.CYAN);
-		
+		g2d.setColor(Color.RED);
+		g2d.setStroke(new BasicStroke(2.0f));
 		while(isc.hasNext())
 		{
 			for(Connection edge : isc.next())
 			{
 				Point st = edge.getVertexes().get(0).center;
 				Point fn = edge.getVertexes().get(1).center;
-				g.drawLine((int)st.x, (int)st.y, (int)fn.x, (int)fn.y);
+				g2d.drawLine((int)st.x, (int)st.y, (int)fn.x, (int)fn.y);
 			}
 		}
 		//Drawing the two pathing hexes

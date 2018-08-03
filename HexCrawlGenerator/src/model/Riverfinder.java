@@ -13,7 +13,7 @@ public class Riverfinder extends Pathfinder {
 	{
 		int heightdiff;
 		heightdiff = next.getBiome().getHeight() - (current.getBiome().getHeight()+1);
-		heightdiff = Math.max(heightdiff, 0);
+		//heightdiff = Math.max(heightdiff, 0);
 		heightdiff *= 100;
 		return heightdiff;
 	}

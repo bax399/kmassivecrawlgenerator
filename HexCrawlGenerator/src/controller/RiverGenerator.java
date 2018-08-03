@@ -14,8 +14,10 @@ public class RiverGenerator
 	
 	public Set<RiverNetwork> initializeRivers(ConnectedHexMap chm)
 	{
-		List<FilledHex> riverpoints = new ArrayList<>();
-		Queue<FilledHex> queue = new LinkedList<>();
+		List<FilledHex> riverstarts = new ArrayList<>();
+
+		List<FilledHex> riverends = new ArrayList<>();
+		
 		RiverNetwork rn;
 		Set<RiverNetwork> networks = new HashSet<>();
 		
@@ -27,42 +29,21 @@ public class RiverGenerator
 			//Start
 			if (rollRiver(fh.getBiome().getRiverOrigin()))
 			{
-				fh.rivertype=1;
-				riverpoints.add(fh);
+				riverstarts.add(fh);
 			}
-			//End
-			else if (rollRiver(fh.getBiome().getRiverEnd()))
+			else if (fh.getBiome().getRiverOrigin()>0d)
 			{
-				fh.rivertype=0;
-				riverpoints.add(fh);
-			}	
+				riverends.add(fh);
+			}
 		}
 		
-		Iterator<FilledHex> it2 = riverpoints.iterator();
+		Iterator<FilledHex> it2 = riverstarts.iterator();
 		while(it2.hasNext())
 		{
 			FilledHex fh2 = it2.next();
-			if (queue.isEmpty())
-			{
-				queue.add(fh2);
-			}
-			else if (queue.peek().rivertype != fh2.rivertype) //found a start or an end, make a river to each other.
-			{
-				rn = new RiverNetwork(networks);
-				if(queue.peek().rivertype<fh2.rivertype)
-				{
-					rn.createRiver(chm, queue.poll(), fh2);
-				}
-				else
-				{
-					rn.createRiver(chm,fh2,queue.poll());
-				}
-				networks.add(rn);
-			}
-			else
-			{
-				queue.add(fh2);
-			}
+			rn = new RiverNetwork(networks);
+			rn.createRiver(chm, riverends.get(rand.nextInt(riverends.size())), fh2);
+			networks.add(rn);
 		}
 		
 		//TODO remove this
