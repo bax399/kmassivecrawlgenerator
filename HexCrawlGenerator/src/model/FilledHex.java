@@ -35,13 +35,13 @@ public class FilledHex extends Hex
 	//TODO addWorldObject methods to FilledHexes, randomize point then add it to the map.
 	public FilledHex(Biome b, int q, int r, int s)
 	{
-		super(q, r);
+		super(q,r);
 		biome = b;
 	}
 
 	public FilledHex(Biome b, int q, int r)
 	{
-		super(q, r);
+		super(q,r);
 		biome = b;
 	}
 	
@@ -49,7 +49,7 @@ public class FilledHex extends Hex
 	public FilledHex(int q, int r)
 	{
 		super(q,r);
-		biome = Biome.basic;
+		biome = BiomeConcrete.basic;
 	}
 
 	//TODO setup structure storing in hexes, search all for object o.

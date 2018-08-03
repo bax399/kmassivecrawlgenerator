@@ -33,7 +33,7 @@ public class RuntimeController
 		
 		//h,w
 		MapController mc = new MapController(30, bc, lt); 
-		System.out.println("total connects: " + mc.hexmap.getConnections().size());
+		//System.out.println("total connects: " + mc.hexmap.getConnections().size());
 		JFrame f = new JFrame("HexMap");
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

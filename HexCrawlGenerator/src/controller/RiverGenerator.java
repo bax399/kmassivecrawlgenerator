@@ -12,7 +12,7 @@ public class RiverGenerator
 	}
 	
 	
-	public Set<RiverNetwork> initializeRivers(ConnectedHexMap chm)
+	public Set<RiverNetwork> initializeRivers(ConnectedHexMap chm, double mindistance)
 	{
 		List<FilledHex> riverstarts = new ArrayList<>();
 
@@ -31,24 +31,38 @@ public class RiverGenerator
 			{
 				riverstarts.add(fh);
 			}
-			else if (fh.getBiome().getRiverOrigin()>0d)
+ 
+			if (fh.getBiome().getRiverOrigin()>0d)
 			{
 				riverends.add(fh);
 			}
 		}
 		
 		Iterator<FilledHex> it2 = riverstarts.iterator();
+
+
 		while(it2.hasNext())
 		{
+			rn = new RiverNetwork(networks);								
 			FilledHex fh2 = it2.next();
-			rn = new RiverNetwork(networks);
-			rn.createRiver(chm, riverends.get(rand.nextInt(riverends.size())), fh2);
+			int random=0;
+			
+			//Choosing a random ending that hasn't got a river			
+			FilledHex fend=null;
+			
+			for(int ii = 0;ii<5;ii++)
+			{
+				
+				random = rand.nextInt(riverends.size());
+				fend = riverends.get(random);
+				if (fend.distance(fh2) > (int) mindistance*3) break;
+			}
+			riverends.remove(random);			
+						
+			rn.createRiver(chm, fend, fh2);
 			networks.add(rn);
 		}
-		
-		//TODO remove this
-		System.out.println(networks.size());
-		
+						
 		return networks;
 	}
 	

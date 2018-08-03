@@ -9,7 +9,8 @@ public interface BiomeModifierProperties extends HasProperties
 	public int getTravelCost();
 	public String getSpotDistance();
 	public double getRiverOrigin();
-	public double getRiverEnd();
+	public double getRiverEnd();	
+	public String getBiomes();
+	public double getOriginChance();
 	public Set<Biome> getValidBiomes();
-	public Map<Biome,Integer> getOriginBiomesChance();
 }

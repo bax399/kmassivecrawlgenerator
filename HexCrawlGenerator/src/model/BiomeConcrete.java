@@ -1,7 +1,7 @@
 package model;
 import java.awt.Color;
 import java.util.*;
-public class BiomeConcrete extends Biome implements BiomeProperties{
+public class BiomeConcrete extends HasDescriptor implements Biome,BiomeProperties{
 	public static final String[] setvalues = {"biome"};
 	public static final Set<String> tags = new HashSet<>(Arrays.asList(setvalues));
 	

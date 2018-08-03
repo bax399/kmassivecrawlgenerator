@@ -3,9 +3,15 @@ package model.graphresource;
 public class Vertex {
     private int uniqueLabel;
 
+    static int instanceCounter = 0;
+    int counter=0;
+    
     public Vertex(int uniqueLabel) {
         super();
-        this.uniqueLabel = uniqueLabel;
+        instanceCounter++;
+        counter=instanceCounter;
+        this.uniqueLabel=counter;
+        //this.uniqueLabel = uniqueLabel;
     }
 
     @Override

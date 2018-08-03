@@ -10,7 +10,7 @@ public class MapController{
 
 	public MapController(int h, int w, BiomeChooser bc, Layout lt)
 	{
-		hexmap = new ConnectedHexMap();
+		hexmap = new ConnectedHexMap(w,h);
 		layout=lt;		
 		//createRectangleMap(w,h, bweight);
 		initializeRectangleMap(h,w);
@@ -35,7 +35,7 @@ public class MapController{
 	
 	public MapController(int r, BiomeChooser bc, Layout lt)
 	{
-		hexmap = new ConnectedHexMap();
+		hexmap = new ConnectedHexMap(r,r);
 		layout=lt;		
 		//createRectangleMap(w,h, bweight);
 		initializeSpiralMap(r);
@@ -45,7 +45,7 @@ public class MapController{
 		
 		RiverGenerator rg = new RiverGenerator(new Random());
 
-		hexmap.setNetworks(rg.initializeRivers(hexmap));
+		hexmap.setNetworks(rg.initializeRivers(hexmap,layout.size.x *2d));
 	}
 	
 	

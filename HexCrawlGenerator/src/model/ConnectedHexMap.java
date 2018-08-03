@@ -6,11 +6,16 @@ public class ConnectedHexMap extends HexMap<FilledHex> {
 
 	Graph<FilledHex,Connection> neighbours; // Stores each hex's neighbouring cells in hexagonal coordinates
 	Set<RiverNetwork> rivernetworks;
-	public ConnectedHexMap()
+	public final int height;
+	public final int width;
+	
+	public ConnectedHexMap(int w, int h)
 	{
 		super();
 		neighbours = new Graph<>();
 		rivernetworks = new HashSet<>();
+		width = w;
+		height = h;		
 	}
 	
 	public void setNetworks(Set<RiverNetwork> rivers)
@@ -20,23 +25,22 @@ public class ConnectedHexMap extends HexMap<FilledHex> {
 	
 	public void initializeNeighbours()
 	{	
-		Set<Tuple> s = hexes.keySet();
-		Iterator<Tuple> it = s.iterator();
+		Iterator<FilledHex> it = hexes.values().iterator();
 		while(it.hasNext())
 		{
-			FilledHex each = hexes.get(it.next());
+			FilledHex each = it.next();
 			neighbours.addVertex(each);
 			for(int ii = 0; ii<6;ii++)
 			{
-				FilledHex n = super.getHex(each.neighbor(ii));
-				if (hexes.containsValue(n))
+				FilledHex n = getHex(each.neighbor(ii));
+				
+				if (n!=null && super.containsHex(n))
 				{
 					neighbours.addEdge(new Connection(each, n,(int)(each.getBiome().getTravelCost()+n.getBiome().getTravelCost())/2));
 				}
 				
 				
 			}
-			
 		}
 	}			
 	

@@ -60,6 +60,15 @@ public class RiverNetwork {
 					{
 						RiverNode rn = new RiverNode(this, chm.getRandomPoint(fh));						
 						fh.addRiverNode(rn); //add river node to the hex
+						
+						//Adds a river modifier to the hex.
+						
+						if (!fh.getBiome().equals(BiomeModifier.river))
+						{
+							BiomeModifier b = new BiomeModifier(BiomeModifier.river,fh.getBiome());							
+							b.setNext(fh.getBiome());
+							fh.setBiome(b);
+						}
 						nodes.add(rn);
 					}
 					else //It has a rivernode currently JOIN THE TWO NETWORKS TOGETHER
