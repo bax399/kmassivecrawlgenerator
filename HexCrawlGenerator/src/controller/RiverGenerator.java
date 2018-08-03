@@ -49,7 +49,14 @@ public class RiverGenerator
 			else if (queue.peek().rivertype != fh2.rivertype) //found a start or an end, make a river to each other.
 			{
 				rn = new RiverNetwork(networks);
-				rn.createRiver(chm, queue.poll(), fh2);
+				if(queue.peek().rivertype<fh2.rivertype)
+				{
+					rn.createRiver(chm, queue.poll(), fh2);
+				}
+				else
+				{
+					rn.createRiver(chm,fh2,queue.poll());
+				}
 				networks.add(rn);
 			}
 			else

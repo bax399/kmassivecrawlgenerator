@@ -35,13 +35,13 @@ public class RiverNetwork {
 		hexes.add(fh);
 	}	
 	
-	public void createRiver(ConnectedHexMap chm, FilledHex origin, FilledHex destination)
+	public void createRiver(ConnectedHexMap chm, FilledHex destination, FilledHex origin)
 	{
 		//create BFS path from origin to destination
 		Pathfinder rf = new Riverfinder();
 
 		//add all connections to set
-		connects = rf.GreedyBFS(chm, origin, destination);
+		connects = rf.GreedyBFS(chm, destination, origin);
 		Set<Connection> tempset = new HashSet<>();
 		tempset.addAll(connects);
 		//add all hexes to set (get from connections)

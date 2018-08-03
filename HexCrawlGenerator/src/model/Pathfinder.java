@@ -33,6 +33,12 @@ public abstract class Pathfinder {
 			   break;
 		    }
 		    
+		    //for rivers...
+		    if (current.getBiome().equals(goal.getBiome()))
+		    {
+		    	goal = current;
+		    	break;
+		    }
 		    
 		    Iterator<FilledHex> it = chm.neighbours(current).iterator();
 		    while(it.hasNext())
