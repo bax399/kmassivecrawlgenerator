@@ -60,7 +60,7 @@ public class MapDrawer extends JPanel
 
 		
 		Iterator<Set<Connection>> isc = ccs.iterator();
-		g.setColor(Color.BLACK);
+		g.setColor(Color.CYAN);
 		
 		while(isc.hasNext())
 		{
