@@ -14,11 +14,25 @@ public class MapController{
 		layout=lt;		
 		//createRectangleMap(w,h, bweight);
 		initializeRectangleMap(h,w);
-		wormWrapper(bc);
+		wormWrapper(bc); 		
 		getPolygons();
 		hexmap.initializeNeighbours();
 	}
 
+	//TODO setup observer pattern.
+	public void initializeHexes()
+	{
+		/*
+		ArrayList<FilledHex> nullhexes = new ArrayList<>(hexmap.getHexes().values());
+		Iterator<FilledHex> it = nullhexes.iterator();
+		Random rand = new Random();
+		while(it.hasNext())
+		{
+			notifiyObservers(it.next());
+		}
+		*/				
+	}
+	
 	public MapController(int r, BiomeChooser bc, Layout lt)
 	{
 		hexmap = new ConnectedHexMap();
@@ -28,6 +42,10 @@ public class MapController{
 		wormWrapper(bc);
 		getPolygons();
 		hexmap.initializeNeighbours();
+		
+		RiverGenerator rg = new RiverGenerator(new Random());
+
+		hexmap.setNetworks(rg.initializeRivers(hexmap));
 	}
 	
 	

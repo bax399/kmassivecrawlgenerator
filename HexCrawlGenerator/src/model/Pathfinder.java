@@ -33,6 +33,7 @@ public abstract class Pathfinder {
 			   break;
 		    }
 		    
+		    
 		    Iterator<FilledHex> it = chm.neighbours(current).iterator();
 		    while(it.hasNext())
 		    {

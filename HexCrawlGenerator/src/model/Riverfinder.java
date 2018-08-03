@@ -9,9 +9,13 @@ public class Riverfinder extends Pathfinder {
 	}
 	
 	@Override
-	public int getCost(ConnectedHexMap chm, FilledHex current, FilledHex next) {
-		
-		return chm.adjTravelCost(current,next);
+	public int getCost(ConnectedHexMap chm, FilledHex current, FilledHex next) 
+	{
+		int heightdiff;
+		heightdiff = next.getBiome().getHeight() - (current.getBiome().getHeight()+1);
+		heightdiff = Math.max(heightdiff, 0);
+		heightdiff *= 100;
+		return chm.adjTravelCost(current,next) + heightdiff;
 	}
 
 }

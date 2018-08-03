@@ -90,14 +90,14 @@ public class Biome extends HasDescriptor implements BiomeProperties{
 		return "nodescriptionaddedtobiomes";
 	}
 	
-	public int getRiverEnd()
+	public double getRiverEnd()
 	{
-		return 1;
+		return riverend;
 	}	
 	
-	public int getRiverOrigin()
+	public double getRiverOrigin()
 	{
-		return 1;
+		return riverorigin;
 	}
 	
 	@Override

@@ -16,7 +16,16 @@ name=water
 color=10,100,255
 travelcost=3
 height=0
-weight=all:1,abyss:0,water:300,reef:10
+weight=all:1,abyss:0,water:200,reef:6
+riverend=0.01
+
+TYPE=biome
+name=mountains
+color=4,4,100
+travelcost=100
+height=100
+weight=all:1,reef:0,abyss:0,rough:5,mountains:500
+riverorigin=0.05
 
 TYPE=biome
 name=plain
@@ -56,13 +65,6 @@ color=0,250,0
 travelcost=2
 height=5
 weight=all:1,plain:100,forest:100,hills:500,mountains:100,abyss:0,reef:0
-
-TYPE=biome
-name=mountains
-color=4,4,100
-travelcost=100
-height=100
-weight=all:1,reef:0,abyss:0,rough:5,mountains:500
 
 TYPE=biome
 name=marsh

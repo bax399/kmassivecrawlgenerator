@@ -2,6 +2,7 @@ package view;
 import java.util.*;
 
 import model.redblob.Tuple;
+import model.redblob.Point;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -14,7 +15,7 @@ public class MapDrawer extends JPanel
 {
 
 	ConnectedHexMap hexes;
-	Set<Connection> cc;
+	Set<Set<Connection>> ccs;
 	static int size = 10;
 	
 	public MapDrawer(ConnectedHexMap h)
@@ -22,10 +23,10 @@ public class MapDrawer extends JPanel
 		hexes=h;
 	}
 
-	public MapDrawer(ConnectedHexMap h, Set<Connection> c)
+	public MapDrawer(ConnectedHexMap h, Set<Set<Connection>> cs)
 	{
 		hexes=h;
-		cc=c;
+		ccs=cs;
 	}	
 	
 	//Needed method, draws to screen
@@ -58,14 +59,18 @@ public class MapDrawer extends JPanel
 		
 
 		
-		Iterator<Connection> ic = cc.iterator();
-		g.setColor(Color.RED);
-		while(ic.hasNext())
-		{
-			Connection edge = ic.next();
-			g.drawLine((int)edge.getVertexes().get(0).center.x, (int)edge.getVertexes().get(0).center.y, (int)edge.getVertexes().get(1).center.x, (int)edge.getVertexes().get(1).center.y);
-		}
+		Iterator<Set<Connection>> isc = ccs.iterator();
+		g.setColor(Color.BLACK);
 		
+		while(isc.hasNext())
+		{
+			for(Connection edge : isc.next())
+			{
+				Point st = edge.getVertexes().get(0).center;
+				Point fn = edge.getVertexes().get(1).center;
+				g.drawLine((int)st.x, (int)st.y, (int)fn.x, (int)fn.y);
+			}
+		}
 		//Drawing the two pathing hexes
 		/*FilledHex h1 = hexes.getHexes().get(new Tuple(1,1));
 		FilledHex h2 = hexes.getHexes().get(new Tuple(1,0));

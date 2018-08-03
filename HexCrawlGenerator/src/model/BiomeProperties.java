@@ -9,7 +9,7 @@ public interface BiomeProperties extends HasProperties
 	public int getHeight();
 	public int getTravelCost();
 	public String getSpotDistance();
-	public int getRiverOrigin();
-	public int getRiverEnd();
+	public double getRiverOrigin();
+	public double getRiverEnd();
 	public String getWeight();
 }

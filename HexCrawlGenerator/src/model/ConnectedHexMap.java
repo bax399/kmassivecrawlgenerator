@@ -1,18 +1,21 @@
 package model;
 import java.util.*;
-
+import model.redblob.*;
 import model.graphresource.Graph;
-import model.redblob.Hex;
-import model.redblob.Tuple;
 public class ConnectedHexMap extends HexMap<FilledHex> {
 
 	Graph<FilledHex,Connection> neighbours; // Stores each hex's neighbouring cells in hexagonal coordinates
-
+	Set<RiverNetwork> rivernetworks;
 	public ConnectedHexMap()
 	{
 		super();
 		neighbours = new Graph<>();
-		
+		rivernetworks = new HashSet<>();
+	}
+	
+	public void setNetworks(Set<RiverNetwork> rivers)
+	{
+		rivernetworks = rivers;
 	}
 	
 	public void initializeNeighbours()
@@ -36,6 +39,22 @@ public class ConnectedHexMap extends HexMap<FilledHex> {
 			
 		}
 	}			
+	
+	public Set<Set<Connection>> getRiverConnections()
+	{
+		Set<Set<Connection>> riverconnections = new HashSet<>();
+		for(RiverNetwork rn : rivernetworks)
+		{
+			riverconnections.add(rn.getConnections());
+		}
+		
+		return riverconnections;
+	}
+	
+	public Point getRandomPoint(FilledHex origin)
+	{
+		return origin.center;
+	}
 	
 	public Set<Connection> getConnections()
 	{

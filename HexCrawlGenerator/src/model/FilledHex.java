@@ -13,7 +13,8 @@ public class FilledHex extends Hex
 	public Point center;
 	public Polygon shape = new Polygon();
 	public int priority=0; //Editable field for pathfinding priority
-
+	public int rivertype=-1; //Editable field for creating rivers
+	
 	//Points are stored to place worldobjects in exact locations
 	//Need a better way to store Points.
 	//These are ONLY ITEMS THAT EXIST WITHIN THE HEX
@@ -22,8 +23,10 @@ public class FilledHex extends Hex
 	private Set<Town> towns;
 	private Set<Landmark> landmarks;
 	private Set<Nomad> nomads;
+	private RiverNode river = null;
+	private Set<RoadNode> roads;
 	
-	//Stores the random points for each item it contains
+	//Stores the random points for each item it contains, rivers and roads store their own.
 	private Map<WorldObject, Point> points;
 	
 	//TODO make a way to roll for random points within hex that isn't cpu intensive
@@ -55,6 +58,16 @@ public class FilledHex extends Hex
 		
 		return false;
 		
+	}
+	
+	public void addRiverNode(RiverNode rn)
+	{
+		river = rn;
+	}
+	
+	public RiverNode getRiverNode()
+	{
+		return river;
 	}
 	
 	public void setBiome(Biome b)

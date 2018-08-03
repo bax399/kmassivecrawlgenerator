@@ -37,10 +37,11 @@ public class RuntimeController
 		JFrame f = new JFrame("HexMap");
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		Pathfinder pfa = new Riverfinder();
-		Set<Connection> path = pfa.Dijkstra(mc.hexmap, mc.getHexes().get(new Tuple(0,10)), mc.getHexes().get(new Tuple(0,-10)));		
+		//Deprecated
+		//Pathfinder pfa = new Riverfinder();
+		//Set<Connection> path = pfa.GreedyBFS(mc.hexmap, mc.getHexes().get(new Tuple(0,10)), mc.getHexes().get(new Tuple(0,-10)));		
 		
-		MapDrawer ui = new MapDrawer(mc.hexmap,path);
+		MapDrawer ui = new MapDrawer(mc.hexmap,mc.hexmap.getRiverConnections());
 		f.add(ui);
 		f.setSize(screenwidth,screenheight);
 		f.setVisible(true);
