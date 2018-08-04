@@ -98,8 +98,8 @@ public class BiomeChooser
 			else
 			{
 				Biome bfound=biomenames.get(bname);
-				if(bfound==null) throw new IllegalArgumentException("Biome weight invalid in: " +origin.getBiomeName());	
-				bb.add(weight,bfound);				
+				if(bfound==null) System.out.println("invalid biome weight");//throw new IllegalArgumentException("Biome weight invalid in: " +origin.getBiomeName());	
+				if(bfound!=null) bb.add(weight,bfound);				
 			}
 		}
 		
