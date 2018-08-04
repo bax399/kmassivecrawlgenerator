@@ -6,59 +6,24 @@ height=0
 weight=ocean:10000,all:1,reef:5,water:0,abyss:0
 riverend=1
 
-<<<<<<< HEAD
-TYPE=bweight
-<<<<<<< Upstream, based on origin/pathfinding
-name=plain,scrub,forest,rough,desert,hills,mountains,marsh,abyss,water,reef
-plain=500,10,10,1,10,1,1,1,0,1,0
-scrub=10,500,10,1,10,1,1,1,0,1,0
-forest=10,10,500,1,10,1,1,1,0,1,0
-rough=1,1,1,50,5,1,1,0,1,1,0
-desert=1,1,0,5,50,1,1,0,1,1,0
-hills=100,1,100,1,10,500,1,1,0,1,0
-mountains=1,1,1,5,1,1,500,1,0,1,0
-marsh=1,1,1,0,10,1,0,50,0,1,0
-abyss=0,0,0,5,5,0,0,0,1,0,0
-water=1,1,1,1,1,1,1,1,0,300,10
-reef=0,0,0,0,0,0,0,0,0,10,10
-=======
 TYPE=biome
 name=abyss
 color=255,0,0
 travelcost=3
 weight=desert:5,rough:5
 validstart=0
->>>>>>> refs/heads/hexstorage
 
 TYPE=biome
 name=reef
 color=80,100,250
 travelcost=4
 height=0
-<<<<<<< HEAD
-=======
-name=plain,scrub,forest,rough,desert,hills,mountains,marsh,abyss,water
-plain=500,10,10,1,10,1,1,1,0,1
-scrub=10,500,10,1,10,1,1,1,0,1
-forest=10,10,500,1,10,1,1,1,0,1
-rough=1,1,1,50,10,1,1,0,1,1
-desert=1,1,0,50,5,1,1,0,1,1
-hills=100,1,100,1,10,50,1,1,0,1
-mountains=1,1,1,10,1,1,500,1,0,1
-marsh=1,1,1,0,10,1,0,50,0,1
-abyss=0,0,0,5,5,0,0,0,1,1
-water=1,1,1,1,1,1,1,1,1,500
->>>>>>> e2cc375 Adds road networks and setting up hexstorage
-=======
 weight=ocean:10,reef:10
 riverend=1
->>>>>>> refs/heads/hexstorage
 
 TYPE=biome
 name=water
 color=10,100,255
-<<<<<<< HEAD
-=======
 travelcost=5
 height=0
 weight=all:1,mountains:0,abyss:0,water:50,reef:0,ocean:0
@@ -71,80 +36,50 @@ travelcost=100
 height=100
 weight=all:10,reef:0,water:0,abyss:0,rough:50,mountains:5000,ocean:1
 riverorigin=0.05
->>>>>>> refs/heads/hexstorage
 
 TYPE=biome
 name=plain
 color=185,250,72
-<<<<<<< HEAD
-=======
 height=1
 weight=plain:5000,scrub:100,forest:100,all:10,abyss:0,reef:0,ocean:1
->>>>>>> refs/heads/hexstorage
 
 TYPE=biome
 name=scrub
 color=186,220,126
-<<<<<<< HEAD
-=======
 height=1
 weight=plain:100,scrub:5000,all:10,abyss:0,reef:0,ocean:1
->>>>>>> refs/heads/hexstorage
 
 TYPE=biome
 name=forest
 color=16,172,11
-<<<<<<< HEAD
-=======
 travelcost=2
 height=2
 weight=plain:100,scrub:100,forest:5000,all:10,abyss:0,reef:0,ocean:1
->>>>>>> refs/heads/hexstorage
 
 TYPE=biome
 name=rough
 color=172,145,11
-<<<<<<< HEAD
-=======
 height=2
 weight=all:10,rough:50,desert:100,marsh:0,reef:0,water:0,abyss:1,ocean:1
->>>>>>> refs/heads/hexstorage
 
 TYPE=biome
 name=desert
 color=245,245,30
-<<<<<<< HEAD
-=======
 travelcost=2
 height=2
 weight=all:10,forest:0,rough:50,desert:1500,water:0,reef:0,abyss:1,ocean:1
->>>>>>> refs/heads/hexstorage
 
 TYPE=biome
 name=hills
 color=0,250,0
-<<<<<<< HEAD
-
-TYPE=biome
-name=mountains
-color=4,4,100
-=======
 travelcost=2
 height=5
 weight=all:10,plain:1000,forest:1000,hills:5000,mountains:1000,abyss:0,reef:0,ocean:1
->>>>>>> refs/heads/hexstorage
 
 TYPE=biome
 name=marsh
 color=60,4,60
-<<<<<<< HEAD
-
-TYPE=biome
-name=abyss
-color=255,0,0
-=======
 travelcost=3
 height=1
 weight=all:10,desert:0,hills:100,marsh:500,water:30,ocean:1
 riverend=0.01
->>>>>>> refs/heads/hexstorage

@@ -1,7 +1,6 @@
 package controller;
 import java.util.*;
-
-import model.Biome;
+import model.*;
 public class PropertiesFactory
 {
 	
@@ -15,7 +14,8 @@ public class PropertiesFactory
 		Iterator<Properties> iter = biomeprops.iterator();
 		while(iter.hasNext())
 		{
-			b = new Biome(iter.next());
+			Properties p = iter.next();
+			b = new BiomeConcrete(p);
 			biomelist.add(b);
 		}
 		

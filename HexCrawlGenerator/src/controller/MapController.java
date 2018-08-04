@@ -8,26 +8,44 @@ public class MapController{
 	//size,origin
 	Layout layout;// = new Layout(Layout.flat, new Point(20,20), new Point(200,200));	
 
-	public MapController(int h, int w, BWeight bweight, Layout lt)
+	public MapController(int h, int w, BiomeChooser bc, Layout lt,Random rand)
 	{
-		hexmap = new ConnectedHexMap();
+		hexmap = new ConnectedHexMap(w,h,lt,rand);
 		layout=lt;		
 		//createRectangleMap(w,h, bweight);
 		initializeRectangleMap(h,w);
-		wormWrapper(bweight);
+		wormWrapper(bc); 		
 		getPolygons();
 		hexmap.initializeNeighbours();
 	}
 
-	public MapController(int r, BWeight bweight, Layout lt)
+	//TODO setup observer pattern.
+	public void initializeHexes()
 	{
-		hexmap = new ConnectedHexMap();
+		/*
+		ArrayList<FilledHex> nullhexes = new ArrayList<>(hexmap.getHexes().values());
+		Iterator<FilledHex> it = nullhexes.iterator();
+		Random rand = new Random();
+		while(it.hasNext())
+		{
+			notifiyObservers(it.next());
+		}
+		*/				
+	}
+	
+	public MapController(int r, BiomeChooser bc, Layout lt, Random rand)
+	{
+		hexmap = new ConnectedHexMap(r,r,lt,rand);
 		layout=lt;		
 		//createRectangleMap(w,h, bweight);
 		initializeSpiralMap(r);
-		wormWrapper(bweight);
+		wormWrapper(bc);
 		getPolygons();
 		hexmap.initializeNeighbours();
+		
+		RiverGenerator rg = new RiverGenerator(new Random());
+
+		hexmap.setNetworks(rg.initializeRivers(hexmap,layout.size.x *2d));
 	}
 	
 	
@@ -70,68 +88,77 @@ public class MapController{
 		    }
 		}
 	}	
+
+		
 	
 	//TODO MOVE GENERATION TYPES INTO A NEW CLASS
-	public void wormWrapper(BWeight bweight)
+	public void wormWrapper(BiomeChooser bc)
 	{
 		ArrayList<FilledHex> nullhexes = new ArrayList<>(hexmap.getHexes().values());
 		Iterator<FilledHex> it = nullhexes.iterator();
 		Random rand = new Random();
 		while(it.hasNext())
 		{
-			wormStart(it.next(), bweight, rand);
+			wormStart(it.next(), bc, rand);
 		}		
 	}
 	
-	public void wormStart(FilledHex start, BWeight bweight, Random rand)
+	public void wormStart(FilledHex start, BiomeChooser bc, Random rand)
 	{
-		if (start.getBiome() == null || start.getName().equals("basic"))
+		if (start.getBiome() == null || start.getBiome().getBiomeName().equals("basic"))
 		{
-			Biome type = bweight.rollBiome();
+			Biome type = bc.rollBiome();
 			FilledHex neighb;
 			//TODO randomize this choice
-			for(int ii = 0; ii < 6; ii++)
+			int dir;
+			boolean done = false;
+			ArrayList<Integer> dirs = new ArrayList<>(Arrays.asList(0,1,2,3,4,5));
+			do
 			{
-				neighb = hexmap.getHex(start.neighbor(ii));
-				if (neighb != null && ((neighb.getBiome() != null) && !neighb.getName().equals("basic")))
+				dir = dirs.get(rand.nextInt(dirs.size()));
+				dirs.remove(Integer.valueOf(dir));
+				neighb = hexmap.getHex(start.neighbor(dir));
+				if (neighb != null && ((neighb.getBiome() != null) && !neighb.getBiome().getBiomeName().equals("basic")))
 				{
 					type = neighb.getBiome();
-					//type = bweight.rollBiome(type); //This rolls from the neighbors biome, sometimes getting something unexpected
+					done=true;
+					//type = bc.rollBiome(neighb.getBiome()); //This rolls from the neighbors biome, sometimes getting something unexpected
 				}
 			}
-			
-			System.out.println("Starting biome: "+type);
+			while(dirs.size()>0 && !done);
 			start.setBiome(type);
-			iterativeWormThrough(start,bweight,type, rand);
+			iterativeWormThrough(start,bc,type, rand);
 		}
 	}
 	
-	public void iterativeWormThrough(FilledHex initial, BWeight bweight, Biome type, Random rand)
+	public void iterativeWormThrough(FilledHex initial, BiomeChooser bc, Biome type, Random rand)
 	{
 		FilledHex curr = initial;
 		FilledHex next = null, prev=null;
 		ArrayList<Integer> dirs = new ArrayList<>(Arrays.asList(0,1,2,3,4,5));
-		type = bweight.rollBiome(type);
+		type = bc.rollBiome(type);
 		int dir;
 		do
 		{
 			prev = curr;
+			//Choose a valid random direction
 			do
 			{		
 				dir = dirs.get(rand.nextInt(dirs.size()));
 				dirs.remove(Integer.valueOf(dir));
 				next = hexmap.getHex(curr.neighbor(dir));
-			}while((next == null || ( next.getBiome()!=null && !next.getName().equals("basic"))) && dirs.size()>0);			
+			}while((next == null || ( next.getBiome()!=null && !next.getBiome().getBiomeName().equals("basic"))) && dirs.size()>0);			
 			
-			if(next !=null && (next.getBiome() != null || next.getName().equals("basic")))
+			//if next is empty, replace.
+			if(next !=null && (next.getBiome() != null && next.getBiome().getBiomeName().equals("basic")))
 			{
 				curr = next;
 				curr.setBiome(type);
-				type = bweight.rollBiome(type);
+				type = bc.rollBiome(type);
 				dirs.clear();
 				dirs.addAll(Arrays.asList(0,1,2,3,4,5));
 			}
-		}while(!curr.equals(prev));
+		}while(!curr.equals(prev)); //Only happens if we get entirely through the empty loop.
 	}
 	
 

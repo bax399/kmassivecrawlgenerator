@@ -2,6 +2,7 @@ package model;
 import model.graphresource.*;
 import model.redblob.Hex;
 import model.redblob.Tuple;
+import model.redblob.Point;
 import java.util.*;
 //Citation: http://keekerdc.com/2011/03/hexagon-grids-coordinate-systems-and-distance-calculations/
 //Assuming corner is bottom-left (0,0,0)
