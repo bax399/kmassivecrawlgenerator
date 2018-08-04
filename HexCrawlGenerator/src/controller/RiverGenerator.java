@@ -41,7 +41,7 @@ public class RiverGenerator
 		Iterator<FilledHex> it2 = riverstarts.iterator();
 
 
-		while(it2.hasNext())
+		while(it2.hasNext()&&riverends.size()>0)
 		{
 			rn = new RiverNetwork(networks);								
 			FilledHex fh2 = it2.next();
