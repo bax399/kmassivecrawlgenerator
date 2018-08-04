@@ -12,13 +12,9 @@ public class RuntimeController
 {	
 	final static int screenwidth = 1920;
 	final static int screenheight = 1080;
-<<<<<<< HEAD
-	final static int size = 30;
-=======
 	final static int size = 10;
 	
 	
->>>>>>> refs/heads/hexstorage
 	public static void main(String[] args)
 	{ 
 		Random rand = new Random();
@@ -36,32 +32,19 @@ public class RuntimeController
 		//Layout lt = new Layout(Layout.pointy,new Point(size,size),new Point(size,size));//Rectangle Map
 		
 		//h,w
-<<<<<<< HEAD
-		MapController mc = new MapController(10, bw, lt); 
-		System.out.println("total connects: " + mc.hexmap.getConnections().size());
-=======
 		MapController mc = new MapController(30, bc, lt, rand); 
 		//System.out.println("total connects: " + mc.hexmap.getConnections().size());
->>>>>>> refs/heads/hexstorage
 		JFrame f = new JFrame("HexMap");
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-<<<<<<< HEAD
-				
-		MapDrawer ui = new MapDrawer(mc.hexmap);
-=======
 
 		//Deprecated
 		//Pathfinder pfa = new Riverfinder();
 		//Set<Connection> path = pfa.GreedyBFS(mc.hexmap, mc.getHexes().get(new Tuple(0,10)), mc.getHexes().get(new Tuple(0,-10)));		
 		
 		MapDrawer ui = new MapDrawer(mc.hexmap,mc.hexmap.getRiverConnections());
->>>>>>> refs/heads/hexstorage
 		f.add(ui);
 		f.setSize(screenwidth,screenheight);
 		f.setVisible(true);
-<<<<<<< HEAD
-=======
 		
->>>>>>> refs/heads/hexstorage
 	}
 }

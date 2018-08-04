@@ -5,12 +5,6 @@ import model.graphresource.Graph;
 public class ConnectedHexMap extends HexMap<FilledHex> {
 
 	Graph<FilledHex,Connection> neighbours; // Stores each hex's neighbouring cells in hexagonal coordinates
-<<<<<<< HEAD
-	Graph<FilledHex,Road> roads; // Stores road connections
-	Graph<FilledHex,River> rivers; // Stores river connections
-	
-	public ConnectedHexMap()
-=======
 	Set<RiverNetwork> rivernetworks;
 	public final int height;
 	public final int width;
@@ -19,15 +13,9 @@ public class ConnectedHexMap extends HexMap<FilledHex> {
 	Layout ly;
 	
 	public ConnectedHexMap(int w, int h, Layout l, Random r)
->>>>>>> refs/heads/hexstorage
 	{
 		super();
 		neighbours = new Graph<>();
-<<<<<<< HEAD
-		roads = new Graph<>();
-		rivers = new Graph<>();		
-		
-=======
 		rivernetworks = new HashSet<>();
 		width = w;
 		height = h;		
@@ -38,7 +26,6 @@ public class ConnectedHexMap extends HexMap<FilledHex> {
 	public void setNetworks(Set<RiverNetwork> rivers)
 	{
 		rivernetworks = rivers;
->>>>>>> refs/heads/hexstorage
 	}
 	
 	public void initializeNeighbours()

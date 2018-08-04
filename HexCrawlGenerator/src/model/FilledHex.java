@@ -12,13 +12,8 @@ public class FilledHex extends Hex
 	private Biome biome;
 	public Point center;
 	public Polygon shape = new Polygon();
-<<<<<<< HEAD
-	 
-	public static Biome basic = new Biome("basic",new int[] {0,40,255},0,0,1,0,0);
-=======
 	public int priority=0; //Editable field for pathfinding priority
 	public int rivertype=-1; //Editable field for creating rivers
->>>>>>> refs/heads/hexstorage
 	
 	//Points are stored to place worldobjects in exact locations
 	//Need a better way to store Points.
@@ -43,7 +38,6 @@ public class FilledHex extends Hex
 		super(q,r);
 		biome = b;
 	}
-	//Blahcomments
 
 	public FilledHex(Biome b, int q, int r)
 	{
@@ -58,8 +52,6 @@ public class FilledHex extends Hex
 		biome = BiomeConcrete.basic;
 	}
 
-<<<<<<< HEAD
-=======
 	//TODO setup structure storing in hexes, search all for object o.
 	public boolean contains(Object o)
 	{
@@ -78,7 +70,6 @@ public class FilledHex extends Hex
 		return river;
 	}
 	
->>>>>>> refs/heads/hexstorage
 	public void setBiome(Biome b)
 	{
 		biome = b;
@@ -88,32 +79,4 @@ public class FilledHex extends Hex
 	{
 		return biome;
 	}
-<<<<<<< HEAD
-	
-	public Color getColor()
-	{
-		return biome.color;
-	}
-	
-	public String getName()
-	{
-		return biome.name;
-	}
-	
-	public int getHeight()
-	{
-		return biome.height;
-	}
-	
-	public double getRiverOrigin()
-	{
-		return biome.riverorigin;
-	}
-	
-	public double getRiverEnd()
-	{
-		return biome.riverend;
-	}	
-=======
->>>>>>> refs/heads/hexstorage
 }
