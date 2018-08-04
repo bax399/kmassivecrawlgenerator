@@ -5,7 +5,7 @@ public class BiomeConcrete extends HasDescriptor implements Biome,BiomePropertie
 	public static final String[] setvalues = {"biome"};
 	public static final Set<String> tags = new HashSet<>(Arrays.asList(setvalues));
 	
-	public static BiomeConcrete basic = new BiomeConcrete("basic",new int[] {0,40,255},0,0,"1d0",0,0); //default biome.
+	public static BiomeConcrete basic = new BiomeConcrete("basic",new int[] {0,40,255},0,0,"1d0",0,0,0); //default biome.
 	
 	private final Color color;
 	private final int height;
@@ -15,6 +15,7 @@ public class BiomeConcrete extends HasDescriptor implements Biome,BiomePropertie
 	private final double riverend;
 	private final String biomename; //the unmodifiable name of the biome, must refer to this, not getName, as that can change.
 	private final String weight;
+	private final int validstart;
 	
 	public BiomeConcrete(Properties pp)
 	{
@@ -27,9 +28,10 @@ public class BiomeConcrete extends HasDescriptor implements Biome,BiomePropertie
 		riverend = Double.parseDouble(pp.getProperty("riverend"));
 		biomename=pp.getProperty("name");
 		weight=pp.getProperty("weight").toLowerCase();
+		validstart=Integer.parseInt(pp.getProperty("validstart"));
 	}
 	
-	public BiomeConcrete(String n, int[] c, int h, int tc, String sd, double ro, double re)
+	public BiomeConcrete(String n, int[] c, int h, int tc, String sd, double ro, double re,int v)
 	{
 		super(new WorldDescriptor(n,tags,n,0));
 		color = new Color(c[0],c[1],c[2]);
@@ -40,6 +42,7 @@ public class BiomeConcrete extends HasDescriptor implements Biome,BiomePropertie
 		spotdistance = sd;
 		biomename=n;
 		weight=n+":"+"1";
+		validstart=v;
 	}
 	
 	public Color parseColor(String rgb)
@@ -94,6 +97,11 @@ public class BiomeConcrete extends HasDescriptor implements Biome,BiomePropertie
 	{
 		return riverend;
 	}	
+	
+	public int getValidStart()
+	{
+		return validstart;
+	}
 	
 	public double getRiverOrigin()
 	{

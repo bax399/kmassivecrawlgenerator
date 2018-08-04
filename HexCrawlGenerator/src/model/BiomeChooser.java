@@ -6,6 +6,7 @@ public class BiomeChooser
 	
 	Map<Biome,RandomCollection<Biome>> weights;
 	Map<String,Biome> biomenames;
+	Set<Biome> validbiomes;
 	
 	private final Random rand;
 
@@ -14,7 +15,7 @@ public class BiomeChooser
 		rand = random;
 		weights = new HashMap<>();
 		biomenames = new HashMap<>();
-		
+		validbiomes = new HashSet<>();
 		//Add all true-names to list
 		for(Biome b: biomes)
 		{
@@ -24,9 +25,11 @@ public class BiomeChooser
 		//process weights now we have all.
 		for(Biome b: biomes)
 		{
-			initializeWeights(b);			
+			initializeWeights(b);
+			if (b.getValidStart() == 1) validbiomes.add(b);
 		}
 		
+		System.out.println(validbiomes);
 	}
 	
 	//Needed so that all is put at the end of the string.
@@ -64,7 +67,6 @@ public class BiomeChooser
 		return weightarray;
 	}
 	
-	//TODO COMPLETED: allow 'all' keyword to appear anywhere, seach in advance for exactly "all", then initialize all others first.
 	public void initializeWeights(Biome origin)
 	{
 		RandomCollection<Biome> bb = new RandomCollection<>(rand);
@@ -108,20 +110,21 @@ public class BiomeChooser
 	
 	public Biome rollBiome(Biome previous)
 	{
-		return weights.get(previous).next();
+		if (previous !=null) return weights.get(previous).next();
+		else return rollBiome();
 	}
 	
-	//TODO this rolls for a biome after randomizing a biome, this can potentially get a Desert->Abyss into a point that shouldnt be allowed
-	//TODO this shouldn't select rare biomes to potentially roll from, or is that OK?
+	//This just gets a random valid biome to start the head.
 	public Biome rollBiome()
 	{
-		int index = rand.nextInt(weights.size());
-		Iterator<Biome> it = weights.keySet().iterator();
+		int index = rand.nextInt(validbiomes.size());
+		Iterator<Biome> it = validbiomes.iterator();
+		Biome found = null;
 		for(int ii=0;ii<index;ii++)
 		{
-			it.next();
+			found = it.next();
 		}
-		return rollBiome(it.next());
+		return found;
 	}	
 	
 	public Biome rollBiome(String name)

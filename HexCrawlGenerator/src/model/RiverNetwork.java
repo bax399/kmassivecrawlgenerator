@@ -73,7 +73,7 @@ public class RiverNetwork {
 					}
 					else //It has a rivernode currently JOIN THE TWO NETWORKS TOGETHER
 					{
-						tempset = joinNetworks(fh.getRiverNode().getNetwork(), tempset);
+						if(!nodes.contains(fh.getRiverNode())) tempset = joinNetworks(fh.getRiverNode().getNetwork(), tempset);
 					}
 					
 				}				

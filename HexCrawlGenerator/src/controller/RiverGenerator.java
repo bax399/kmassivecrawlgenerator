@@ -47,7 +47,7 @@ public class RiverGenerator
 			FilledHex fh2 = it2.next();
 			int random=0;
 			
-			//Choosing a random ending that hasn't got a river			
+			//Choosing a random ending that isn't too close			
 			FilledHex fend=null;
 			
 			for(int ii = 0;ii<5;ii++)
@@ -55,7 +55,7 @@ public class RiverGenerator
 				
 				random = rand.nextInt(riverends.size());
 				fend = riverends.get(random);
-				if (fend.distance(fh2) > (int) mindistance*3) break;
+				if (fend.distance(fh2) > (int) mindistance*5) break;
 			}
 			riverends.remove(random);			
 						

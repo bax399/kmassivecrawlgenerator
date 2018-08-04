@@ -8,9 +8,9 @@ public class MapController{
 	//size,origin
 	Layout layout;// = new Layout(Layout.flat, new Point(20,20), new Point(200,200));	
 
-	public MapController(int h, int w, BiomeChooser bc, Layout lt)
+	public MapController(int h, int w, BiomeChooser bc, Layout lt,Random rand)
 	{
-		hexmap = new ConnectedHexMap(w,h);
+		hexmap = new ConnectedHexMap(w,h,lt,rand);
 		layout=lt;		
 		//createRectangleMap(w,h, bweight);
 		initializeRectangleMap(h,w);
@@ -33,9 +33,9 @@ public class MapController{
 		*/				
 	}
 	
-	public MapController(int r, BiomeChooser bc, Layout lt)
+	public MapController(int r, BiomeChooser bc, Layout lt, Random rand)
 	{
-		hexmap = new ConnectedHexMap(r,r);
+		hexmap = new ConnectedHexMap(r,r,lt,rand);
 		layout=lt;		
 		//createRectangleMap(w,h, bweight);
 		initializeSpiralMap(r);
@@ -88,6 +88,8 @@ public class MapController{
 		    }
 		}
 	}	
+
+		
 	
 	//TODO MOVE GENERATION TYPES INTO A NEW CLASS
 	public void wormWrapper(BiomeChooser bc)
@@ -114,7 +116,7 @@ public class MapController{
 				if (neighb != null && ((neighb.getBiome() != null) && !neighb.getBiome().getBiomeName().equals("basic")))
 				{
 					type = neighb.getBiome();
-					//type = bweight.rollBiome(type); //This rolls from the neighbors biome, sometimes getting something unexpected
+					//type = bc.rollBiome(neighb.getBiome()); //This rolls from the neighbors biome, sometimes getting something unexpected
 				}
 			}
 			
@@ -141,7 +143,7 @@ public class MapController{
 				next = hexmap.getHex(curr.neighbor(dir));
 			}while((next == null || ( next.getBiome()!=null && !next.getBiome().getBiomeName().equals("basic"))) && dirs.size()>0);			
 			
-			if(next !=null && (next.getBiome() != null || next.getBiome().getBiomeName().equals("basic")))
+			if(next !=null && (next.getBiome() != null && next.getBiome().getBiomeName().equals("basic")))
 			{
 				curr = next;
 				curr.setBiome(type);

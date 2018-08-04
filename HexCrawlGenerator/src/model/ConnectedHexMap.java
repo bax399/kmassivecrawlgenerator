@@ -9,13 +9,18 @@ public class ConnectedHexMap extends HexMap<FilledHex> {
 	public final int height;
 	public final int width;
 	
-	public ConnectedHexMap(int w, int h)
+	Random rand;
+	Layout ly;
+	
+	public ConnectedHexMap(int w, int h, Layout l, Random r)
 	{
 		super();
 		neighbours = new Graph<>();
 		rivernetworks = new HashSet<>();
 		width = w;
 		height = h;		
+		ly = l;
+		rand = r;
 	}
 	
 	public void setNetworks(Set<RiverNetwork> rivers)
@@ -29,17 +34,24 @@ public class ConnectedHexMap extends HexMap<FilledHex> {
 		while(it.hasNext())
 		{
 			FilledHex each = it.next();
-			neighbours.addVertex(each);
-			for(int ii = 0; ii<6;ii++)
+			if(each != null)
 			{
-				FilledHex n = getHex(each.neighbor(ii));
-				
-				if (n!=null && super.containsHex(n))
+				neighbours.addVertex(each);
+				for(int ii = 0; ii<6;ii++)
 				{
-					neighbours.addEdge(new Connection(each, n,(int)(each.getBiome().getTravelCost()+n.getBiome().getTravelCost())/2));
-				}
-				
-				
+					FilledHex n = getHex(each.neighbor(ii));
+					
+					if (n!=null && containsHex(n))
+					{
+						each.getBiome();
+						each.getBiome().getTravelCost();
+						n.getBiome();
+						n.getBiome().getTravelCost();
+						neighbours.addEdge(new Connection(each, n,(int)(each.getBiome().getTravelCost()+n.getBiome().getTravelCost())/2));
+					}
+					
+					
+				}	
 			}
 		}
 	}			
@@ -57,9 +69,28 @@ public class ConnectedHexMap extends HexMap<FilledHex> {
 	
 	public Point getRandomPoint(FilledHex origin)
 	{
-		return origin.center;
+		return randomPoint(origin,rand,ly);
 	}
 	
+	public Point randomPoint(FilledHex h,Random rand, Layout ly)
+	{
+		Point point;
+		double a1 = Math.max(rand.nextDouble()-0.3d,0);
+		double a2 = Math.max(rand.nextDouble()-0.3d,0);
+		Point center = h.center;
+		int firstcorner=rand.nextInt(6);
+		int secondcorner;
+		if (firstcorner==5) secondcorner=0;
+		else secondcorner=firstcorner++;
+		Point v1 = ly.hexCornerOffset(firstcorner).scalarMultiple(a1);
+		Point v2 = ly.hexCornerOffset(secondcorner).scalarMultiple(a2);
+		
+		point = new Point((v1.x+v2.x)/2,(v1.y+v2.y)/2);
+		point = new Point(point.x+center.x,point.y+center.y);
+		
+		return point;
+	}			
+
 	public Set<Connection> getConnections()
 	{
 		return Collections.unmodifiableSet(neighbours.getEdges());

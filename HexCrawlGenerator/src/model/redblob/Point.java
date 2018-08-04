@@ -9,4 +9,10 @@ public class Point{
     }
     public final double x;
     public final double y;
+
+    public Point scalarMultiple(double ratio)
+    {
+    	return new Point(this.x*ratio,this.y*ratio);
+    }
+    
 }

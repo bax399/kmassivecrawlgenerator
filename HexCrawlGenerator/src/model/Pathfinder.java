@@ -36,6 +36,7 @@ public abstract class Pathfinder {
 		    //for rivers...
 		    if (current.getBiome().getRiverEnd() > 0d)
 		    {
+		    	System.out.println("terminating on river");
 		    	goal = current;
 		    	break;
 		    }

@@ -3,6 +3,7 @@ name=abyss
 color=255,0,0
 travelcost=3
 weight=desert:5,rough:5
+validstart=0
 
 TYPE=biome
 name=reef
@@ -22,11 +23,11 @@ riverend=0.025
 
 TYPE=biome
 name=mountains
-color=192,192,192
+color=160,160,160
 travelcost=100
 height=100
 weight=all:1,reef:0,water:0,abyss:0,rough:5,mountains:500
-riverorigin=0.2
+riverorigin=0.05
 
 TYPE=biome
 name=plain
