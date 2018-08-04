@@ -89,13 +89,13 @@ public class BiomeChooser
 			if(bname.equals("all"))
 			{
 				//Add all with >=1 weight.
-				if (weight > 0)
-				{
+				//if (weight > 0)
+				//{
 					for(Map.Entry<String,Biome> map : biomenames.entrySet())
 					{
 						bb.add(weight, map.getValue());
 					}
-				}
+				//}
 			}
 			else
 			{
@@ -110,7 +110,13 @@ public class BiomeChooser
 	
 	public Biome rollBiome(Biome previous)
 	{
-		if (previous !=null) return weights.get(previous).next();
+		if (previous !=null) 
+		{
+			
+			Biome next = weights.get(previous).next();
+			//System.out.println(previous.getBiomeName() +" into "+ next.getBiomeName());
+			return next;
+		}
 		else return rollBiome();
 	}
 	
@@ -120,7 +126,7 @@ public class BiomeChooser
 		int index = rand.nextInt(validbiomes.size());
 		Iterator<Biome> it = validbiomes.iterator();
 		Biome found = null;
-		for(int ii=0;ii<index;ii++)
+		for(int ii=-1;ii<index;ii++)
 		{
 			found = it.next();
 		}
