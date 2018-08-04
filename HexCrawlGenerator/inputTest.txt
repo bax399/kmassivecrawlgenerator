@@ -4,7 +4,7 @@ color=102,178,255
 travelcost=5
 height=0
 weight=ocean:10000,all:1,reef:5,water:0,abyss:0
-riverend=0.01
+riverend=1
 
 TYPE=biome
 name=abyss
@@ -19,7 +19,7 @@ color=80,100,250
 travelcost=4
 height=0
 weight=ocean:10,reef:10
-riverend=0.025
+riverend=1
 
 TYPE=biome
 name=water
@@ -27,7 +27,7 @@ color=10,100,255
 travelcost=5
 height=0
 weight=all:1,mountains:0,abyss:0,water:50,reef:0,ocean:0
-riverend=0.025
+riverend=1
 
 TYPE=biome
 name=mountains

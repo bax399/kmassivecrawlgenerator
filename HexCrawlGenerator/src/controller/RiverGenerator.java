@@ -32,7 +32,7 @@ public class RiverGenerator
 				riverstarts.add(fh);
 			}
  
-			if (fh.getBiome().getRiverOrigin()>0d)
+			if (Double.compare(fh.getBiome().getRiverEnd(),1d)>=0)
 			{
 				riverends.add(fh);
 			}
@@ -49,15 +49,17 @@ public class RiverGenerator
 			
 			//Choosing a random ending that isn't too close			
 			FilledHex fend=null;
-			
+			random = rand.nextInt(riverends.size());
+			fend = riverends.get(random);
+			riverends.remove(random);	
+			/*
 			for(int ii = 0;ii<5;ii++)
 			{
 				
-				random = rand.nextInt(riverends.size());
-				fend = riverends.get(random);
+
 				if (fend.distance(fh2) > (int) mindistance*5) break;
-			}
-			riverends.remove(random);			
+			}*/
+		
 						
 			rn.createRiver(chm, fend, fh2);
 			networks.add(rn);

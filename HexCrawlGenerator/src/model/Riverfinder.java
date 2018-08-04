@@ -5,7 +5,7 @@ public class Riverfinder extends Pathfinder {
 	@Override
 	public int heuristic(ConnectedHexMap chm, FilledHex goal, FilledHex current, FilledHex next)
 	{
-		return /*goal.distance(current)+*/getCost(chm,current,next);
+		return goal.distance(current)+getCost(chm,current,next);
 	}
 	
 	@Override

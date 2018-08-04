@@ -6,7 +6,7 @@ public class BiomeModifier extends HasDescriptor implements Biome,BiomeModifierP
 	public static final Set<String> tags = new HashSet<>(Arrays.asList(setvalues));	
 	
 											//modname,color,height,travel,spotd,rivero,rivere
-	public static BiomeModifier river = new BiomeModifier("River",new int[]{1,2,3},0,0,"",0d,1.0d); //river runs through here
+	public static BiomeModifier river = new BiomeModifier("River",new int[]{1,2,3},0,0,"",0d,0.5d); //river runs through here
 	//public static BiomeModifier mouth = new BiomeModifier("River Mouth",new int[]{1,2,3},0,5,"",0d,1.0d);
 	
 	private Biome next;
