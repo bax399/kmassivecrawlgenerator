@@ -28,13 +28,14 @@ public class BWeight
 		String biomename;
 		ArrayList<Integer> weightings;
 		//get ordering from bweights.name
-
 		ArrayList<String> nameorder = parseOrdering(bweights.getProperty("name"));
+			
 		//Initialise quick access of biomes based on name
 		for(int ii = 0; ii<biomes.size();ii++)
 		{
-			biomenames.put(biomes.get(ii).getName(),biomes.get(ii));
+			biomenames.put(biomes.get(ii).name,biomes.get(ii));
 		}
+		
 		//put biomes into order based on the nameorder
 		for(int ii = 0; ii<nameorder.size();ii++)
 		{
@@ -46,7 +47,7 @@ public class BWeight
 		for(int ii = 0; ii<ordering.size();ii++)
 		{
 			biomenum = ordering.get(biomes.get(ii));
-			biomename = biomes.get(ii).getName();
+			biomename = biomes.get(ii).name;
 			weightings = parseWeights(bweights.getProperty(biomename));
 			weights.put(biomenum, weightings);
 			rollweights.put(biomenum, incrementWeights(weightings));
@@ -54,7 +55,7 @@ public class BWeight
 	}
 
 	
-	private ArrayList<String> parseOrdering(String csv)
+	public ArrayList<String> parseOrdering(String csv)
 	{
 		String[] each = csv.split(",");
 		ArrayList<String> output = new ArrayList<>();
@@ -66,7 +67,7 @@ public class BWeight
 		return output;	
 	}	
 	
-	private ArrayList<Integer> parseWeights(String csv)
+	public ArrayList<Integer> parseWeights(String csv)
 	{
 		String[] each = csv.split(",");
 		ArrayList<Integer> output = new ArrayList<>();
@@ -78,7 +79,7 @@ public class BWeight
 		return output;
 	}
 	
-	private static ArrayList<Integer> incrementWeights(ArrayList<Integer> weights)
+	public static ArrayList<Integer> incrementWeights(ArrayList<Integer> weights)
 	{
 		ArrayList<Integer> incremented = new ArrayList<>();
 		
@@ -99,7 +100,7 @@ public class BWeight
 		return incremented;
 	}
 	
-	private int rollWeights(ArrayList<Integer> incremented)
+	public int rollWeights(ArrayList<Integer> incremented)
 	{
 		int min = 1;
 		int max = 1;
@@ -115,7 +116,7 @@ public class BWeight
 		return randInt(min,max);
 	}
 	
-	private static int indexWeight(ArrayList<Integer> incremented, int weight)
+	public static int indexWeight(ArrayList<Integer> incremented, int weight)
 	{
 		int index = 0;
 		for(int ii = 0; ii < incremented.size();ii++)
@@ -136,8 +137,7 @@ public class BWeight
 		return biomeid.get(nextnum);
 	}
 	
-	//TODO this rolls for a biome after randomizing a biome, this can potentially get a Desert->Abyss into a point that shouldnt be allowed
-	//TODO this shouldn't select rare biomes to potentially roll from, or is that OK?
+	//TODO this rolls for a biome after reandomizing a biome, this can potentially get a Desert->Abyss into a point that shouldnt be allowed
 	public Biome rollBiome()
 	{
 		int index = rand.nextInt(biomeid.size());
@@ -148,7 +148,7 @@ public class BWeight
 		return biomeid.get(nextnum);
 	}	
 	
-	private int randInt(int min, int max)
+	public int randInt(int min, int max)
 	{		
 		return rand.nextInt((max-min)+1)+min;		
 	}
