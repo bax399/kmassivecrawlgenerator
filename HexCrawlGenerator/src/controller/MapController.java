@@ -3,18 +3,23 @@ import java.util.*;
 import model.*;
 import model.redblob.*;
 
-public class MapController{
+public class MapController
+{
+	PropertiesReader pstorage;
 	ConnectedHexMap hexmap;
 	//size,origin
 	Layout layout;// = new Layout(Layout.flat, new Point(20,20), new Point(200,200));	
 
-	public MapController(int h, int w, BiomeChooser bc, Layout lt,Random rand)
+	public MapController(int h, int w,PropertiesReader ptr , Layout lt,Random rand)
 	{
+
 		hexmap = new ConnectedHexMap(w,h,lt,rand);
 		layout=lt;		
 		//createRectangleMap(w,h, bweight);
 		initializeRectangleMap(h,w);
-		BiomeGenerator bg = new BiomeGenerator(hexmap,bc,rand);
+		
+		pstorage=ptr;		
+		BiomeGenerator bg = new BiomeGenerator(hexmap,ptr.getTypeList("biome"),rand);
 		bg.wormWrapper();
 		
 		getPolygons();
@@ -22,7 +27,11 @@ public class MapController{
 		
 		RiverGenerator rg = new RiverGenerator(hexmap,new Random());
 
-		hexmap.setNetworks(rg.initializeRivers());
+		hexmap.setNetworks(rg.generateRivers());
+		
+		TownGenerator tg = new TownGenerator(hexmap,ptr.getTypeList("town"),bg.getBiomeMap(),rand);
+		tg.generateTowns();
+		
 	}
 
 	//TODO setup observer pattern.
@@ -39,14 +48,15 @@ public class MapController{
 		*/				
 	}
 	
-	public MapController(int r, BiomeChooser bc, Layout lt, Random rand)
+	public MapController(int r,PropertiesReader ptr, Layout lt, Random rand)
 	{
 		hexmap = new ConnectedHexMap(r,r,lt,rand);
 		layout=lt;		
 		//createRectangleMap(w,h, bweight);
 		initializeSpiralMap(r);
 		
-		BiomeGenerator bg = new BiomeGenerator(hexmap,bc,rand);
+		pstorage=ptr;		
+		BiomeGenerator bg = new BiomeGenerator(hexmap,ptr.getTypeList("biome"),rand);
 		bg.wormWrapper();
 		
 		getPolygons();
@@ -54,7 +64,10 @@ public class MapController{
 		
 		RiverGenerator rg = new RiverGenerator(hexmap,new Random());
 
-		hexmap.setNetworks(rg.initializeRivers());
+		hexmap.setNetworks(rg.generateRivers());
+		
+		TownGenerator tg = new TownGenerator(hexmap,ptr.getTypeList("town"),bg.getBiomeMap(),rand);
+		tg.generateTowns();		
 	}
 	
 	

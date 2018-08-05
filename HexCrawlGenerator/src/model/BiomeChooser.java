@@ -8,7 +8,7 @@ public class BiomeChooser
 	Map<String,Biome> biomenames;
 	Set<Biome> validbiomes;
 	
-	private final Random rand;
+	Random rand;
 
 	public BiomeChooser(ArrayList<Biome> biomes, Random random)
 	{
@@ -26,10 +26,15 @@ public class BiomeChooser
 		for(Biome b: biomes)
 		{
 			initializeWeights(b);
-			if (b.getValidStart() == 1) validbiomes.add(b);
+			if (b.isValidStart()) validbiomes.add(b);
 		}
 		
 		System.out.println(validbiomes);
+	}
+	
+	public Map<String,Biome> getBMap()
+	{
+		return Collections.unmodifiableMap(biomenames);
 	}
 	
 	//Needed so that all is put at the end of the string.

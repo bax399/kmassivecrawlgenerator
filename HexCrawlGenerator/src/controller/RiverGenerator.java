@@ -2,19 +2,19 @@ package controller;
 import java.util.*;
 import model.*;
 import model.ConnectedHexMap;
-public class RiverGenerator 
+public class RiverGenerator extends Generator
 {
 	ConnectedHexMap hexmap;	
-	Random rand;
+
 	
 	public RiverGenerator(ConnectedHexMap chm, Random rd)
 	{
+		super(rd);
 		hexmap = chm;
-		rand = rd;
 	}
 	
 	
-	public Set<RiverNetwork> initializeRivers()
+	public Set<RiverNetwork> generateRivers()
 	{
 		List<FilledHex> riverstarts = new ArrayList<>();
 
@@ -29,12 +29,11 @@ public class RiverGenerator
 			FilledHex fh =it.next();
 			
 			//Start
-			if (rollRiver(fh.getBiome().getRiverOrigin()))
+			if (rollChance(fh.getBiome().getRiverOrigin()))
 			{
 				riverstarts.add(fh);
 			}
- 
-			if (Double.compare(fh.getBiome().getRiverEnd(),1d)>=0)
+			else if (Double.compare(fh.getBiome().getRiverEnd(),1d)>=0)
 			{
 				riverends.add(fh);
 			}
@@ -69,17 +68,4 @@ public class RiverGenerator
 						
 		return networks;
 	}
-	
-	public boolean rollRiver(double chance)
-	{
-		boolean river = false;
-		double randd = rand.nextDouble();
-		
-		if(Double.compare(chance,0d)>0 && Double.compare(chance, 1d)<0)
-		{
-			river = (Double.compare(randd,chance) < 0);
-		}
-		
-		return river;
-	}	
 }

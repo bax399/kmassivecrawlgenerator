@@ -1,6 +1,7 @@
 package view;
 import java.util.*;
 
+import model.worldobjects.*;
 import model.redblob.Tuple;
 import model.redblob.Point;
 import java.awt.*;
@@ -37,12 +38,12 @@ public class MapDrawer extends JPanel
 		super.paintComponent(g);
 		this.setBackground(Color.WHITE); 
 		Font font = new Font("Courier New",Font.PLAIN,11); 
-		Set<Tuple> ss = hexes.getHexes().keySet();
-		Iterator<Tuple> it = ss.iterator();
+		Font symbols = new Font("Wingdings",Font.BOLD,11); 
+
 		g.setFont(font);
-		while (it.hasNext())
+		for(Map.Entry<Tuple,FilledHex> entry : hexes.getHexes().entrySet())
 		{
-			FilledHex hh = hexes.getHex(it.next());
+			FilledHex hh = hexes.getHex(entry.getValue());
 			
 			//Change offset to be relative to layout size 
 			g.setColor(hh.getBiome().getColor());
@@ -59,8 +60,9 @@ public class MapDrawer extends JPanel
 			//**Coords**//
 			//g.drawString(""+hh.q,(int)hh.center.x-3, (int)hh.center.y-3);
 			//g.drawString(""+hh.r,(int)hh.center.x-3, (int)hh.center.y+5);
-			
+
 		}
+		
 		Iterator<Set<Connection>> isc = ccs.iterator();
 		g2d.setColor(Color.CYAN);
 		g2d.setStroke(new BasicStroke(2.0f));
@@ -91,6 +93,20 @@ public class MapDrawer extends JPanel
 				//g2d.drawOval((int)fn.x, (int)fn.y, 1, 1);
 			}
 		}
+		for(Map.Entry<Tuple,FilledHex> entry : hexes.getHexes().entrySet())
+		{
+			FilledHex hh = hexes.getHex(entry.getValue());
+			//**Towns**//
+			for(HexTown t:hh.getTowns())
+			{
+				g.setFont(symbols);
+				g.setColor(Color.RED);
+				g2d.fillOval((int)t.getPosition().x, (int)t.getPosition().y, 5, 5);
+				g.setColor(Color.BLACK);
+				g.drawString(Town.symbol+"", (int)t.getPosition().x, (int)t.getPosition().y);
+			}			
+		}
+
 		
 	}
 }

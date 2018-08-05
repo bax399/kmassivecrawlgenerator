@@ -59,7 +59,7 @@ public class RiverNetwork {
 					if(fh.getRiverNode()==null)
 					{
 						RiverNode rn = new RiverNode(this, chm.getRandomPoint(fh));						
-						fh.addRiverNode(rn); //add river node to the hex
+						fh.add(rn); //add river node to the hex
 						
 						//Adds a river modifier to the hex.
 						

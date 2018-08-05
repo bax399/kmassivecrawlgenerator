@@ -2,24 +2,36 @@ package controller;
 import java.util.*;
 
 import model.*;
-public class BiomeGenerator 
+public class BiomeGenerator extends Generator
 {
 	ConnectedHexMap hexmap;
 	BiomeChooser bchoose;
-	Random rand;
+	ArrayList<Biome> biomes;
 	
-	public BiomeGenerator(ConnectedHexMap chm, BiomeChooser bc, Random r)
+	public BiomeGenerator(ConnectedHexMap chm, ArrayList<Properties> bprops, Random r)
 	{
+		super(r);
+		PropertiesFactory pf = new PropertiesFactory();
+		biomes = pf.processProperties(bprops);
+		bchoose = new BiomeChooser(biomes,r);
 		hexmap=chm;
-		bchoose=bc;
-		rand=r;
+		
+	}
+	
+	public ArrayList<Biome> getBiomeList()
+	{
+		return biomes;
+	}
+	
+	public Map<String,Biome> getBiomeMap()
+	{
+		return bchoose.getBMap();
 	}
 	
 	public void wormWrapper()
 	{
 		ArrayList<FilledHex> nullhexes = new ArrayList<>(hexmap.getHexes().values());
 		Iterator<FilledHex> it = nullhexes.iterator();
-		Random rand = new Random();
 		while(it.hasNext())
 		{
 			wormStart(it.next());

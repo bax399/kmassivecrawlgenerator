@@ -23,11 +23,6 @@ public class PropertiesReader {
 		propsdefault.put("biome",new Properties());		
 		loadDefault(fr,"biome");
 		
-		//defaultbweight = 
-		propsdefault.put("bweight", new Properties());		
-		loadDefault(fr,"bweight");
-		
-
 		//defaultworldobject = 
 		propsdefault.put("worldobject", new Properties());		
 		loadDefault(fr, "worldobject");

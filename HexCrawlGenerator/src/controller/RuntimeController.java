@@ -12,7 +12,7 @@ public class RuntimeController
 {	
 	final static int screenwidth = 1920;
 	final static int screenheight = 1080;
-	final static int size = 5;
+	final static int size = 10;
 	
 	
 	public static void main(String[] args)
@@ -23,16 +23,12 @@ public class RuntimeController
 		FileProcessor fp = new FileProcessor();
 		PropertiesReader ptr = new PropertiesReader();
 		fp.processFile("inputTest.txt", ptr);
-		
-		PropertiesFactory pf = new PropertiesFactory();
-		//BWeight bw = new BWeight(ptr.getTypeList("bweight").get(0),pf.processBiomes(ptr.getTypeList("biome")));
-		BiomeChooser bc = new BiomeChooser(pf.processBiomes(ptr.getTypeList("biome")),rand);
 
 		Layout lt = new Layout(Layout.pointy,new Point(size,size),new Point(screenwidth/2,screenheight/2)); //Spiral Map
 		//Layout lt = new Layout(Layout.pointy,new Point(size,size),new Point(size,size));//Rectangle Map
 		
 		//h,w
-		MapController mc = new MapController(60, bc, lt, rand); 
+		MapController mc = new MapController(30, ptr, lt, rand); 
 		//System.out.println("total connects: " + mc.hexmap.getConnections().size());
 		JFrame f = new JFrame("HexMap");
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

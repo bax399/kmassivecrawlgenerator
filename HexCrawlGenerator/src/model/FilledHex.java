@@ -20,7 +20,7 @@ public class FilledHex extends Hex
 	//These are ONLY ITEMS THAT EXIST WITHIN THE HEX
 	private Set<Lair> lairs;
 	private Set<Dungeon> dungeons;
-	private Set<Town> towns;
+	private Set<HexTown> towns = new HashSet<>();
 	private Set<Landmark> landmarks;
 	private Set<Nomad> nomads;
 	private RiverNode river = null;
@@ -52,6 +52,17 @@ public class FilledHex extends Hex
 		biome = BiomeConcrete.basic;
 	}
 
+	public void add(HexTown t)
+	{
+		towns.add(t);
+	}
+	
+	public Set<HexTown> getTowns()
+	{
+		return Collections.unmodifiableSet(towns);
+	}
+	
+	
 	//TODO setup structure storing in hexes, search all for object o.
 	public boolean contains(Object o)
 	{
@@ -60,7 +71,7 @@ public class FilledHex extends Hex
 		
 	}
 	
-	public void addRiverNode(RiverNode rn)
+	public void add(RiverNode rn)
 	{
 		river = rn;
 	}

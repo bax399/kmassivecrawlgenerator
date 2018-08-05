@@ -71,9 +71,9 @@ public class BiomeModifier extends HasDescriptor implements Biome,BiomeModifierP
 	}
 	
 	@Override
-	public int getValidStart()
+	public boolean isValidStart()
 	{
-		return next.getValidStart();
+		return next.isValidStart();
 	}
 	
 	@Override

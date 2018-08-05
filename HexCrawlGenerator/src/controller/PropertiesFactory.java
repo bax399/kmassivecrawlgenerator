@@ -1,25 +1,37 @@
 package controller;
 import java.util.*;
 import model.*;
+import model.worldobjects.*;
 public class PropertiesFactory
 {
 	
-//	public ArrayList<V> processPropertyList(ArrayList<Properties> )
-	
-	
-	public ArrayList<Biome> processBiomes(ArrayList<Properties> biomeprops)
+	public <V extends Object> ArrayList<V> processProperties(ArrayList<Properties> pps)
 	{
-		ArrayList<Biome> biomelist = new ArrayList<>();
-		Biome b = null;
-		Iterator<Properties> iter = biomeprops.iterator();
+		ArrayList<V> objectlist = new ArrayList<>();
+		Iterator<Properties> iter = pps.iterator();
 		while(iter.hasNext())
 		{
-			Properties p = iter.next();
-			b = new BiomeConcrete(p);
-			biomelist.add(b);
+			Properties pp = iter.next();
+
+			objectlist.add(chooseType(pp));
 		}
 		
-		return biomelist;
+		return objectlist;
+	}	
+	
+	public <V extends Object> V chooseType(Properties pp)
+	{
+		String type = pp.getProperty("TYPE");
+		V created = null; 
+		if (type.equals("biome"))
+		{	
+			created = (V) new BiomeConcrete(pp);
+		}
+		else if(type.equals("town"))
+		{
+			created = (V) new Town(pp);
+		}
+		return created;
 	}
 	
 	//Make this generic ^
