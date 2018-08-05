@@ -12,6 +12,8 @@ public abstract class Pathfinder {
 		}
 	};
 	
+	public abstract FilledHex earlyTermination(ConnectedHexMap chm, FilledHex goal, FilledHex curr);
+	
 	public abstract int getCost(ConnectedHexMap chm, FilledHex current, FilledHex next);
 	
 	public abstract int heuristic(ConnectedHexMap chm, FilledHex goal, FilledHex current, FilledHex next);
@@ -28,16 +30,11 @@ public abstract class Pathfinder {
 		{
 			current = frontier.poll();
 			
+			goal = earlyTermination(chm,goal,current);
+			
 		    if (current.equals(goal))
 		    {
 			   break;
-		    }
-		    
-		    //for rivers...
-		    if (current.getBiome().getRiverEnd() > 0d)
-		    {
-		    	goal = current;
-		    	break;
 		    }
 		    
 		    Iterator<FilledHex> it = chm.neighbours(current).iterator();

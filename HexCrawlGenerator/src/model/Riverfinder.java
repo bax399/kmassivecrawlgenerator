@@ -3,6 +3,18 @@ import java.util.*;
 public class Riverfinder extends Pathfinder {
 
 	@Override
+	public FilledHex earlyTermination(ConnectedHexMap chm, FilledHex goal, FilledHex current)
+	{
+		FilledHex fh = goal;
+	    //for rivers...
+	    if (current.getBiome().getRiverEnd() > 0d)
+	    {	    	
+	    	fh=current;
+	    }		
+	    
+	    return fh;
+	}
+	@Override
 	public int heuristic(ConnectedHexMap chm, FilledHex goal, FilledHex current, FilledHex next)
 	{
 		return goal.distance(current)+getCost(chm,current,next);

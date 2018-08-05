@@ -6,9 +6,8 @@ public class BiomeModifier extends HasDescriptor implements Biome,BiomeModifierP
 	public static final Set<String> tags = new HashSet<>(Arrays.asList(setvalues));	
 	
 											//modname,color,height,travel,spotd,rivero,rivere
-	public static BiomeModifier river = new BiomeModifier("River",new int[]{1,2,3},0,0,"",0d,0.5d); //river runs through here
-	//public static BiomeModifier mouth = new BiomeModifier("River Mouth",new int[]{1,2,3},0,5,"",0d,1.0d);
-	
+	public static BiomeModifier river = new BiomeModifier("river",new int[]{1,2,3},0,2,"",0d,0.5d); //river runs through here
+
 	private Biome next;
 
 	private final Color color;
@@ -18,11 +17,10 @@ public class BiomeModifier extends HasDescriptor implements Biome,BiomeModifierP
 	private final double riverorigin;
 	private final double riverend;
 	private final String modname;	
-	private final String biomes;
-	private final double originchance;
-	
-	private Set<Biome> validbiomes;
 
+	
+
+	
 	public BiomeModifier(BiomeModifier bm, Biome nextb)
 	{
 		super(new WorldDescriptor(bm.modname, BiomeConcrete.tags, bm.modname, 0));
@@ -33,8 +31,7 @@ public class BiomeModifier extends HasDescriptor implements Biome,BiomeModifierP
 		riverorigin = bm.riverorigin;
 		riverend = bm.riverend;
 		modname=bm.modname;
-		originchance=bm.originchance;
-		biomes=bm.biomes;	
+
 	}
 	
 	public BiomeModifier(Properties pp)
@@ -47,8 +44,7 @@ public class BiomeModifier extends HasDescriptor implements Biome,BiomeModifierP
 		riverorigin = Double.parseDouble(pp.getProperty("riverorigin"));
 		riverend = Double.parseDouble(pp.getProperty("riverend"));
 		modname=pp.getProperty("name");
-		originchance=Double.parseDouble(pp.getProperty("originchance"));
-		biomes=pp.getProperty("validbiomes");
+
 	}
 
 	public BiomeModifier(String n, int[] c, int h, int tc, String sd, double ro, double re)
@@ -61,8 +57,7 @@ public class BiomeModifier extends HasDescriptor implements Biome,BiomeModifierP
 		riverend = re;
 		spotdistance = sd;
 		modname = n;
-		originchance=0.0;
-		biomes=null;
+
 	}
 	
 	public void setNext(Biome b)
@@ -87,12 +82,7 @@ public class BiomeModifier extends HasDescriptor implements Biome,BiomeModifierP
 		return next.parseColor(rgb);
 	}
 	
-	@Override
-	public Set<Biome> getValidBiomes()
-	{
-		return validbiomes;
-	}
-	
+
 	@Override
 	public String getBiomeName()
 	{
@@ -146,16 +136,7 @@ public class BiomeModifier extends HasDescriptor implements Biome,BiomeModifierP
 		return next.getRiverEnd()+riverend;
 	}
 
-	@Override
-	public String getBiomes() {
-		return biomes;
-	}
-	
-	@Override
-	public double getOriginChance()
-	{
-		return originchance;
-	}
+
 
 	@Override
 	public String getWeight()

@@ -4,15 +4,17 @@ import model.*;
 import model.ConnectedHexMap;
 public class RiverGenerator 
 {
+	ConnectedHexMap hexmap;	
 	Random rand;
 	
-	public RiverGenerator(Random rd)
+	public RiverGenerator(ConnectedHexMap chm, Random rd)
 	{
+		hexmap = chm;
 		rand = rd;
 	}
 	
 	
-	public Set<RiverNetwork> initializeRivers(ConnectedHexMap chm, double mindistance)
+	public Set<RiverNetwork> initializeRivers()
 	{
 		List<FilledHex> riverstarts = new ArrayList<>();
 
@@ -21,7 +23,7 @@ public class RiverGenerator
 		RiverNetwork rn;
 		Set<RiverNetwork> networks = new HashSet<>();
 		
-		Iterator<FilledHex> it = chm.getHexes().values().iterator();
+		Iterator<FilledHex> it = hexmap.getHexes().values().iterator();
 		while(it.hasNext())
 		{
 			FilledHex fh =it.next();
@@ -61,7 +63,7 @@ public class RiverGenerator
 			}*/
 		
 						
-			rn.createRiver(chm, fend, fh2);
+			rn.createRiver(hexmap, fend, fh2);
 			networks.add(rn);
 		}
 						
