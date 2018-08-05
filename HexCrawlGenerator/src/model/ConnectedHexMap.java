@@ -6,6 +6,7 @@ public class ConnectedHexMap extends HexMap<FilledHex> {
 
 	Graph<FilledHex,Connection> neighbours; // Stores each hex's neighbouring cells in hexagonal coordinates
 	Set<RiverNetwork> rivernetworks;
+	Set<RoadNetwork> roadnetworks;
 	public final int height;
 	public final int width;
 	
@@ -17,6 +18,7 @@ public class ConnectedHexMap extends HexMap<FilledHex> {
 		super();
 		neighbours = new Graph<>();
 		rivernetworks = new HashSet<>();
+		roadnetworks = new HashSet<>();
 		width = w;
 		height = h;		
 		ly = l;
@@ -55,6 +57,17 @@ public class ConnectedHexMap extends HexMap<FilledHex> {
 			}
 		}
 	}			
+	
+	public Set<Set<Connection>> getRoadConnections()
+	{
+		Set<Set<Connection>> roadconnections = new HashSet<>();
+		for(RoadNetwork rn : roadnetworks)
+		{
+			 roadconnections.add(rn.getConnections());
+		}
+		
+		return  roadconnections;
+	}	
 	
 	public Set<Set<Connection>> getRiverConnections()
 	{

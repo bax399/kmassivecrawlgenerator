@@ -24,7 +24,7 @@ public class FilledHex extends Hex
 	private Set<Landmark> landmarks;
 	private Set<Nomad> nomads;
 	private RiverNode river = null;
-	private Set<RoadNode> roads;
+	private RoadNode road=null;
 	
 	//Stores the random points for each item it contains, rivers and roads store their own.
 	private Map<WorldObject, Point> points;
@@ -69,6 +69,31 @@ public class FilledHex extends Hex
 		
 		return false;
 		
+	}
+	
+	public void add(RoadNode rn)
+	{
+		road=rn;
+	}
+	
+	public RoadNode getRoadNode()
+	{
+		return road;
+	}
+	
+	public HexTown getLargestTown()
+	{
+		int c=0;
+		HexTown largest=null;
+		for(HexTown t: towns)
+		{
+			if (t.getConnectivity() > c)
+			{
+				c = t.getConnectivity();
+				largest=t;
+			}
+		}
+		return largest;
 	}
 	
 	public void add(RiverNode rn)

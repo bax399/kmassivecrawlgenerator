@@ -12,7 +12,7 @@ public class Town extends WorldObject implements TownProperties
 	public static final String[] setvalues = {"town"};
 	public static final Set<String> tags = new HashSet<>(Arrays.asList(setvalues));
 	
-	public static final Character symbol ='U';
+	public static final Character symbol ='U'; //TODO fix this town symbol...
 	
 	private final String vbiomes;
 	private final int connectivity; //how much road it can make (size of town)
