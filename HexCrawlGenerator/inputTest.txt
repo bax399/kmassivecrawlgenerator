@@ -1,9 +1,26 @@
 TYPE=town
 name=mountain_town
 validbiomes=mountains
-max=100
+max=5
+connectivity=40
 
 TYPE=town
+name=small_town
+connectivity=10
+max=10
+validbiomes=plain,hills,scrub
+
+TYPE=town
+name=village
+connectivity=5
+validbiomes=plain,hills,forest,scrub
+max=20
+
+TYPE=town
+name=capital
+connectivity=200
+validbiomes=plain,scrub
+max=1
 
 TYPE=biome
 name=ocean
@@ -41,7 +58,7 @@ validstart=0
 TYPE=biome
 name=mountains
 color=160,160,160
-travelcost=100
+travelcost=10
 height=100
 weight=all:10,reef:0,water:0,abyss:0,rough:50,mountains:5000,ocean:1,marsh:0,snowymountains:100
 riverorigin=0.01

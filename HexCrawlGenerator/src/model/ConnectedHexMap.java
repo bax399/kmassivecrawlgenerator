@@ -25,9 +25,14 @@ public class ConnectedHexMap extends HexMap<FilledHex> {
 		rand = r;
 	}
 	
-	public void setNetworks(Set<RiverNetwork> rivers)
+	public void setRiverNetworks(Set<RiverNetwork> rivers)
 	{
 		rivernetworks = rivers;
+	}
+	
+	public void setRoadNetworks(Set<RoadNetwork> roads)
+	{
+		roadnetworks = roads;
 	}
 	
 	public void initializeNeighbours()
@@ -116,7 +121,7 @@ public class ConnectedHexMap extends HexMap<FilledHex> {
 	
 	public int adjTravelCost(FilledHex curr, FilledHex next)
 	{
-		int cost = Integer.MAX_VALUE;
+		int cost = 1000000;
 		if (neighbours(curr).contains(next))
 		{
 			cost = (int) (curr.getBiome().getTravelCost()+next.getBiome().getTravelCost())/2;

@@ -15,6 +15,7 @@ public class RoadNetwork
 		connects = new HashSet<>();
 		hexes = new HashSet<>();
 		nodes = new HashSet<>();
+		towns = new HashSet<>();
 		allroads = ar;
 	}
 	
@@ -57,8 +58,15 @@ public class RoadNetwork
 				{
 					if(fh.getRoadNode()==null) //No roads currently on it.
 					{
-						RoadNode rn = new RoadNode(this, fh.center);						
-						
+						RoadNode rn;
+						if (fh.getLargestTown() !=null)
+						{
+							rn = new RoadNode(this, fh.getLargestTown().getPosition());						
+						}
+						else
+						{
+							rn = new RoadNode(this, chm.getRandomPoint(fh));
+						}
 						fh.add(rn); //add road node to the hex
 						
 						nodes.add(rn);
@@ -76,18 +84,58 @@ public class RoadNetwork
 		 
 	}	
 	
+	public RoadNetwork addTownNode(ConnectedHexMap chm, FilledHex fh)
+	{
+		RoadNetwork currRN;
+		if(fh.getRoadNode()!=null)
+			currRN = fh.getRoadNode().getNetwork();
+		else
+		{
+			RoadNode rn;
+			currRN=this;
+			if (fh.getLargestTown() !=null)
+			{
+				rn = new RoadNode(this, fh.getLargestTown().getPosition());						
+			}
+			else
+			{
+				rn = new RoadNode(this, chm.getRandomPoint(fh));
+			}
+			
+			fh.add(rn); //add road node to the hex
+			
+			nodes.add(rn);
+
+			
+			if (fh.getTowns().size() > 0)
+			{
+				//Add towns from fh to the network.
+				towns.addAll(fh.getTowns());
+			}
+		}
+		
+		return currRN;
+	}
+	
 	public void createRoad(ConnectedHexMap chm, FilledHex destination, FilledHex origin)
 	{
 		//create BFS path from origin to destination
 		Pathfinder rf = new Roadfinder();
 
 		//add all connections to set
-		int resource = destination.getLargestTown().stats.getConnectivity()+origin.getLargestTown().stats.getConnectivity();
-		connects = rf.AStar(chm, destination, origin,resource);
+		int resource = origin.getLargestTown().getConnectivity();
+		MutableInt rr = new MutableInt(resource);		
+
+		Set<Connection> pathconnects = rf.AStar(chm, destination, origin,rr);
+		origin.getLargestTown().setConnectivity(rr.value);
+		
+
+		
+		
 		Set<Connection> tempset = new HashSet<>();
-		tempset.addAll(connects);
+		tempset.addAll(pathconnects);
 		//add all hexes to set (get from connections)
-		for(Connection cc : connects)
+		for(Connection cc : pathconnects)
 		{
 			//create river nodes and add to set,
 			FilledHex fh;
@@ -100,7 +148,15 @@ public class RoadNetwork
 				{
 					if(fh.getRoadNode()==null) //No roads currently on it.
 					{
-						RoadNode rn = new RoadNode(this, fh.center);						
+						RoadNode rn;
+						if (fh.getLargestTown() !=null)
+						{
+							rn = new RoadNode(this, fh.getLargestTown().getPosition());						
+						}
+						else
+						{
+							rn = new RoadNode(this, chm.getRandomPoint(fh));
+						}
 						
 						fh.add(rn); //add road node to the hex
 						
@@ -114,13 +170,14 @@ public class RoadNetwork
 					
 					if (fh.getTowns().size() > 0)
 					{
+						//Add towns from fh to the network.
 						towns.addAll(fh.getTowns());
 					}
 				}				
 			}
 		}
 		
-		connects = tempset;
+		connects.addAll(tempset);
 		 
 	}
 	

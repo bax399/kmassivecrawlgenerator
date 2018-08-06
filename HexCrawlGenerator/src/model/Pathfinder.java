@@ -72,7 +72,7 @@ public abstract class Pathfinder {
 	}
 	
 	//Tests if can reach goal in < resource distance.
-	public Set<Connection> AStar(ConnectedHexMap chm, FilledHex goal, FilledHex start, int resource)
+	public Set<Connection> AStar(ConnectedHexMap chm, FilledHex goal, FilledHex start, MutableInt resource)
 	{
 		PriorityQueue<FilledHex> frontier = new PriorityQueue<>(costComparator);
 		frontier.add(start);
@@ -90,7 +90,16 @@ public abstract class Pathfinder {
 		
 		    if (current.equals(goal))
 		    {
-			   break;
+		    	if(came_from.get(current).equals(current))
+		    	{
+		    		System.out.println("equal");
+		    		resource.value=0;
+		    	}
+		    	else
+		    	{
+		    		resource.value-=cost_so_far.get(came_from.get(current))+getCost(chm,came_from.get(current),current);
+		    	}
+		    	break;
 		    }
 		   
 		    Iterator<FilledHex> it = chm.neighbours(current).iterator();
@@ -98,23 +107,22 @@ public abstract class Pathfinder {
 		    {
 		    	next = it.next();
 		    	new_cost = cost_so_far.get(current) + getCost(chm, current, next);
-		    	if ((!cost_so_far.containsKey(next) || new_cost < cost_so_far.get(next)) && new_cost < resource) // stop if travelled too far.
+		    	if ((!cost_so_far.containsKey(next) || new_cost < cost_so_far.get(next)) && new_cost < resource.value) // stop if travelled too far.
 		    	{
 		    		cost_so_far.put(next, new_cost);
 				    next.priority = new_cost + heuristic(chm,goal,current,next);
 				    frontier.add(next);
-				    came_from.put(next,current);						   
+				    came_from.put(next,current);		
 		    	}
 		    }
 		}
 		
 		
 		Set<Connection> path_from = new HashSet<>();		
-		if (came_from.containsKey(goal))
-		{
+		if (goal != null && came_from.containsKey(goal))
+		{		
 			boolean foundstart = false;
 			current = goal;
-			
 			while(!foundstart)
 			{
 				next = came_from.get(current);
@@ -126,9 +134,12 @@ public abstract class Pathfinder {
 				}
 				current = next;
 			}
+			
+			resource.value-=cost_so_far.get(current);				
 		}
 		else //did not find its goal.
 		{
+			resource.value=0;
 			path_from=null;
 		}
 	
@@ -136,7 +147,7 @@ public abstract class Pathfinder {
 	}	
 	
 	//Gets earliest termination within resource.
-	public FilledHex Dijkstra(ConnectedHexMap chm, FilledHex start, int resource, Integer totalcost)
+	public FilledHex Dijkstra(ConnectedHexMap chm, FilledHex start, MutableInt resource)
 	{
 		PriorityQueue<FilledHex> frontier = new PriorityQueue<>(costComparator);
 		frontier.add(start);
@@ -148,16 +159,20 @@ public abstract class Pathfinder {
 		FilledHex goal = null;
 		FilledHex current,next;
 		int new_cost;
-		Connection startconnection = new Connection(start,start,0);
+		int distance = resource.value;
+		
 		while (frontier.size() > 0)
 		{
 		    current = frontier.poll();
 		
-		    goal = earlyTermination(chm,goal,current);
+		    if(!current.equals(start))
+		    {
+		    	goal = earlyTermination(chm,start,current);
+		    }
 		    
 		    if (current.equals(goal))
-		    {
-			   break; //found a roadnode.
+		    {	    	
+		    	break; //found a roadnode.
 		    }
 		   
 		    Iterator<FilledHex> it = chm.neighbours(current).iterator();
@@ -165,8 +180,9 @@ public abstract class Pathfinder {
 		    {
 		    	next = it.next();
 		    	new_cost = cost_so_far.get(current) + getCost(chm, current, next);
-		    	if ((!cost_so_far.containsKey(next) || new_cost < cost_so_far.get(next)) && new_cost < resource)
+		    	if ((!cost_so_far.containsKey(next) || new_cost < cost_so_far.get(next)) && new_cost < distance)
 		    	{
+		    		//System.out.println(new_cost +" vs "+distance);
 		    		cost_so_far.put(next, new_cost);
 				    next.priority = new_cost;
 				    frontier.add(next);
@@ -189,10 +205,8 @@ public abstract class Pathfinder {
 				}
 				current = next;
 			}
-			
-			totalcost = cost_so_far.get(goal);
-				
 		}
+		
 		
 	    return goal;
 	    

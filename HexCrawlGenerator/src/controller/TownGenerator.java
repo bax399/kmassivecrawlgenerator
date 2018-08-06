@@ -31,10 +31,15 @@ public class TownGenerator extends Generator
 	public void generateTowns()
 	{
 		Iterator<FilledHex> it = hexmap.getHexes().values().iterator();
-		while(it.hasNext())
-		{	
-			FilledHex curr = it.next();
-			
+		//TODO must change this so it randomly places them anywhere.
+		List<FilledHex> list = new ArrayList<FilledHex>(hexmap.getHexes().values());
+		
+		while(list.size() > 0)
+		{
+			int randomindex = rand.nextInt(list.size());
+			FilledHex curr = list.get(randomindex);
+			list.remove(randomindex);
+
 			for(Town t:townlist)
 			{
 				if (!t.limitReached())

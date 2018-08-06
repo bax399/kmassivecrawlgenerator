@@ -27,11 +27,13 @@ public class MapController
 		
 		RiverGenerator rg = new RiverGenerator(hexmap,new Random());
 
-		hexmap.setNetworks(rg.generateRivers());
+		hexmap.setRiverNetworks(rg.generateRivers());
 		
 		TownGenerator tg = new TownGenerator(hexmap,ptr.getTypeList("town"),bg.getBiomeMap(),rand);
 		tg.generateTowns();
 		
+		RoadGenerator rag = new RoadGenerator(hexmap,rand);
+		hexmap.setRoadNetworks(rag.generateRoads());
 	}
 
 	//TODO setup observer pattern.
@@ -64,10 +66,13 @@ public class MapController
 		
 		RiverGenerator rg = new RiverGenerator(hexmap,new Random());
 
-		hexmap.setNetworks(rg.generateRivers());
+		hexmap.setRiverNetworks(rg.generateRivers());
 		
 		TownGenerator tg = new TownGenerator(hexmap,ptr.getTypeList("town"),bg.getBiomeMap(),rand);
 		tg.generateTowns();		
+		
+		RoadGenerator rag = new RoadGenerator(hexmap,rand);
+		hexmap.setRoadNetworks(rag.generateRoads());		
 	}
 	
 	

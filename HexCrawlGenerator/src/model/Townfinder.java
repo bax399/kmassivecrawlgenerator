@@ -1,26 +1,16 @@
 package model;
 import java.util.*;
-public class Roadfinder extends Pathfinder {
+public class Townfinder extends Pathfinder {
 
 	@Override
 	public FilledHex earlyTermination(ConnectedHexMap chm, FilledHex start, FilledHex current)
 	{
 		FilledHex fh = null;
 		//Terminate if you hit a town not in your set
-	    if(current.getRoadNode() == null)
-	    {
-	    	if(current.getLargestTown() !=null)
-	    	{
-	    		fh=current;
-	    	}
-	    }
-	    else //end if the existing road not is NOT in set.
-	    {
-	    	if (!start.getRoadNode().getNetwork().equals(current.getRoadNode().getNetwork()))
-	    	{
-	    		fh=current;
-	    	}
-	    }
+    	if(current.getLargestTown() !=null)
+    	{
+    		fh=current;
+    	}
 	    
 	    return fh;
 	}

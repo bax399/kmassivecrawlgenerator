@@ -6,7 +6,7 @@ import model.redblob.Point;
 public class RoadNode 
 {
 	private Point pos;
-	private RoadNetwork owner;
+	private RoadNetwork owner=null;
 	
 	public RoadNode(RoadNetwork rn, Point p)
 	{

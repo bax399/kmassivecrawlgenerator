@@ -38,7 +38,6 @@ public class MapDrawer extends JPanel
 		super.paintComponent(g);
 		this.setBackground(Color.WHITE); 
 		Font font = new Font("Courier New",Font.PLAIN,11); 
-		Font symbols = new Font("Wingdings",Font.BOLD,11); 
 
 		g.setFont(font);
 		for(Map.Entry<Tuple,FilledHex> entry : hexes.getHexes().entrySet())
@@ -63,7 +62,7 @@ public class MapDrawer extends JPanel
 
 		}
 		
-		Iterator<Set<Connection>> isc = ccs.iterator();
+		Iterator<Set<Connection>> isc = hexes.getRiverConnections().iterator();
 		g2d.setColor(Color.CYAN);
 		g2d.setStroke(new BasicStroke(2.0f));
 		while(isc.hasNext())
@@ -93,19 +92,54 @@ public class MapDrawer extends JPanel
 				//g2d.drawOval((int)fn.x, (int)fn.y, 1, 1);
 			}
 		}
+		
+		//** ROADS **//
+		Iterator<Set<Connection>> irc = hexes.getRoadConnections().iterator();
+		g2d.setColor(Color.CYAN);
+		g2d.setStroke(new BasicStroke(2.0f));
+		while(irc.hasNext())
+		{
+			//**RANDOMIZE COLOURS**//
+			//g2d.setColor(new Color(rand.nextInt(100)+1,rand.nextInt(100)+1,rand.nextInt(100)+156));
+			
+			//**Draw from Center**//
+			/*for(Connection edge : isc.next())
+			{
+				Point st = edge.getVertexes().get(0).center;
+				Point fn = edge.getVertexes().get(1).center;
+				g2d.drawLine((int)st.x, (int)st.y, (int)fn.x, (int)fn.y);
+			}*/
+			
+			//**Draw from Point**//
+			for(Connection edge: irc.next())
+			{
+				g2d.setColor(Color.BLACK);
+				g2d.setStroke(new BasicStroke(1.0f));				
+				Point st = edge.getVertexes().get(0).getRoadNode().getPosition();
+				Point fn = edge.getVertexes().get(1).getRoadNode().getPosition();
+				g2d.drawLine((int)st.x, (int)st.y, (int)fn.x, (int)fn.y);	
+				
+				//**Draw Points**//
+				//g2d.drawOval((int)st.x, (int)st.y, 1, 1);
+				//g2d.drawOval((int)fn.x, (int)fn.y, 1, 1);
+			}
+		}
+				
+		//**Towns**//		
 		for(Map.Entry<Tuple,FilledHex> entry : hexes.getHexes().entrySet())
 		{
 			FilledHex hh = hexes.getHex(entry.getValue());
-			//**Towns**//
+
 			for(HexTown t:hh.getTowns())
 			{
-				g.setFont(symbols);
 				g.setColor(Color.RED);
-				g2d.fillOval((int)t.getPosition().x, (int)t.getPosition().y, 5, 5);
+				g2d.fillOval((int)t.getPosition().x-3, (int)t.getPosition().y-3, 6, 6);
 				g.setColor(Color.BLACK);
-				g.drawString(Town.symbol+"", (int)t.getPosition().x, (int)t.getPosition().y);
+				g.drawString("*", (int)t.getPosition().x-3, (int)t.getPosition().y+5);
+				g.drawString(t.getConnectivity()+"", (int)t.getPosition().x+5, (int)t.getPosition().y);
 			}			
 		}
+		
 
 		
 	}
