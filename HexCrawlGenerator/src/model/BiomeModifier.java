@@ -6,8 +6,9 @@ public class BiomeModifier extends HasDescriptor implements Biome,BiomeModifierP
 	public static final Set<String> tags = new HashSet<>(Arrays.asList(setvalues));	
 	
 											//modname,color,height,travel,spotd,rivero,rivere
-	public static BiomeModifier river = new BiomeModifier("river",new int[]{1,2,3},0,2,"",0d,0.5d); //river runs through here
-
+	public static BiomeModifier river = new BiomeModifier("river",new int[]{1,2,3},-1,2,"",0d,0.5d); //river runs through here
+	public static BiomeModifier road =  new BiomeModifier("road",new int[]{1,2,3},0,-2,"",0d,0d);
+	
 	private Biome next;
 
 	private final Color color;
@@ -136,11 +137,23 @@ public class BiomeModifier extends HasDescriptor implements Biome,BiomeModifierP
 		return next.getRiverEnd()+riverend;
 	}
 
-
-
 	@Override
 	public String getWeight()
 	{
 		return next.getWeight();
-	}	
+	}
+	
+	@Override
+	public Biome getBiome()
+	{
+		return next.getBiome();
+	}
+	
+	@Override
+	public Set<Biome> getBiomes()
+	{
+		Set<Biome> me = next.getBiomes();
+		me.add(this);
+		return me;
+	}
 }

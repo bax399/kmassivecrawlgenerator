@@ -11,6 +11,6 @@ public interface TownProperties extends HasProperties
 	public int getMax();
 	public int getVisibility();
 	public int getConnectivity();
-	public boolean needsWater(); //if it must spawn near water. 1=must.
+	public boolean needsRiver(); //if it must spawn near water. 1=must.
 	public double getChance();
 }

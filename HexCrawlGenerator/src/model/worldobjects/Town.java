@@ -16,7 +16,7 @@ public class Town extends WorldObject implements TownProperties
 	
 	private final String vbiomes;
 	private final int connectivity; //how much road it can make (size of town)
-	private final boolean water; //if the town must generate near water
+	private final boolean needsriver; //if the town must generate near water
 	private final double spawnchance; //if validbiome, chance to spawn.
 	
 	private int counter=0; //Used for ensuring we never get too much.
@@ -27,7 +27,7 @@ public class Town extends WorldObject implements TownProperties
 				Integer.parseInt(pp.getProperty("visibility")),Integer.parseInt(pp.getProperty("max")));
 		connectivity=Integer.parseInt(pp.getProperty("connectivity"));
 		vbiomes=pp.getProperty("validbiomes").toLowerCase();
-		water=PFunctions.convertToBoolean(pp.getProperty("nearwater"));
+		needsriver=PFunctions.convertToBoolean(pp.getProperty("needriver"));
 		spawnchance=Double.parseDouble(pp.getProperty("spawnchance"));
 
 	}
@@ -38,7 +38,7 @@ public class Town extends WorldObject implements TownProperties
 		
 		connectivity=con;
 		vbiomes=vb;
-		water=wa;
+		needsriver=wa;
 		spawnchance=sc;
 	}
 	
@@ -78,8 +78,8 @@ public class Town extends WorldObject implements TownProperties
 	}
 	
 	@Override
-	public boolean needsWater()
+	public boolean needsRiver()
 	{
-		return water;
+		return needsriver;
 	}
 }

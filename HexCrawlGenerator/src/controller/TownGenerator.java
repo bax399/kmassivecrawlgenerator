@@ -30,8 +30,7 @@ public class TownGenerator extends Generator
 	
 	public void generateTowns()
 	{
-		Iterator<FilledHex> it = hexmap.getHexes().values().iterator();
-		//TODO must change this so it randomly places them anywhere.
+		
 		List<FilledHex> list = new ArrayList<FilledHex>(hexmap.getHexes().values());
 		
 		while(list.size() > 0)
@@ -40,22 +39,35 @@ public class TownGenerator extends Generator
 			FilledHex curr = list.get(randomindex);
 			list.remove(randomindex);
 
+
+			
 			for(Town t:townlist)
 			{
-				if (!t.limitReached())
+				rollTown(t,curr);
+			}
+		}
+	}
+		
+	public void rollTown(Town t, FilledHex curr)
+	{
+		if (!t.limitReached())
+		{
+			//getBiome().getBiome() will get the base biomes, ignoring modifiers.
+			if (validbiomes.get(t).contains(curr.getBiome().getBiome()))
+			{
+				if(rollChance(t.getChance()))
 				{
-					if (validbiomes.get(t).contains(curr.getBiome()))
+					if(t.needsRiver() && (curr.getRiverNode() != null))
 					{
-						if(rollChance(t.getChance()))
-						{
-							t.createTown(curr, hexmap.getRandomPoint(curr));
-							//System.out.println("created " + t.getName() + " @ " + curr.getBiome());
-						}
+						t.createTown(curr, hexmap.getRandomPoint(curr));
+					}
+					else if (!t.needsRiver())
+					{
+						t.createTown(curr, hexmap.getRandomPoint(curr));
 					}
 				}
 			}
-		}
-		
+		}			
 	}
 	
 	public Set<Biome> processValidBiomes(String weight)

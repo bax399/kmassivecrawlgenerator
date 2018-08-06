@@ -41,7 +41,7 @@ public class RiverGenerator extends Generator
 		
 		Iterator<FilledHex> it2 = riverstarts.iterator();
 
-
+		Pathfinder rf = new Riverfinder();
 		while(it2.hasNext()&&riverends.size()>0)
 		{
 			rn = new RiverNetwork(networks);								
@@ -61,8 +61,8 @@ public class RiverGenerator extends Generator
 				if (fend.distance(fh2) > (int) mindistance*5) break;
 			}*/
 		
-						
-			rn.createRiver(hexmap, fend, fh2);
+			Set<Connection> path = rf.GreedyBFS(hexmap, fend, fh2);
+			rn.createRiver(hexmap, path);
 			networks.add(rn);
 		}
 						

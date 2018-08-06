@@ -76,7 +76,7 @@ public class PropertiesReader {
 	//this is only called when there is just 1 type to process from bufferedreader.
 	public void processType(BufferedReader br) 
 	{
-		Scanner sc = new Scanner(br).useDelimiter("\n\r");
+		Scanner sc = new Scanner(br).useDelimiter("(\n\r)+");
 		String line=null;
 		String typeh=null;
 		StringReader sr=null;

@@ -50,11 +50,18 @@ public abstract class Pathfinder {
 			         				
 		    }
 		}
+
+		Set<Connection> path_from = getPath(chm,goal,start,came_from);
 		
-		//TODO add this to a method
+	    return path_from;		
+	
+	}
+	
+	public Set<Connection> getPath(ConnectedHexMap chm,FilledHex goal, FilledHex start, Map<FilledHex,FilledHex>came_from)
+	{
 		Set<Connection> path_from = new HashSet<>();
 		boolean foundstart = false;
-		current = goal;
+		FilledHex current = goal,next;
 		while(!foundstart)
 		{
 			next = came_from.get(current);
@@ -62,13 +69,11 @@ public abstract class Pathfinder {
 			if(next.equals(start))
 			{
 				foundstart = true;
-				path_from.add(startconnection);
 			}
 			current = next;
 		}
 		
-	    return path_from;		
-	
+	    return path_from;			
 	}
 	
 	//Tests if can reach goal in < resource distance.
@@ -83,22 +88,13 @@ public abstract class Pathfinder {
 		
 		FilledHex current,next;
 		int new_cost;
-		Connection startconnection = new Connection(start,start,0);
 		while (frontier.size() > 0)
 		{
 		    current = frontier.poll();
 		
 		    if (current.equals(goal))
 		    {
-		    	if(came_from.get(current).equals(current))
-		    	{
-		    		System.out.println("equal");
-		    		resource.value=0;
-		    	}
-		    	else
-		    	{
-		    		resource.value-=cost_so_far.get(came_from.get(current))+getCost(chm,came_from.get(current),current);
-		    	}
+		    	resource.value-=cost_so_far.get(came_from.get(current))+getCost(chm,came_from.get(current),current);
 		    	break;
 		    }
 		   
@@ -118,30 +114,7 @@ public abstract class Pathfinder {
 		}
 		
 		
-		Set<Connection> path_from = new HashSet<>();		
-		if (goal != null && came_from.containsKey(goal))
-		{		
-			boolean foundstart = false;
-			current = goal;
-			while(!foundstart)
-			{
-				next = came_from.get(current);
-				path_from.add(new Connection(current,next,getCost(chm, current, next)));
-				if(next.equals(start))
-				{
-					foundstart = true;
-					path_from.add(startconnection);
-				}
-				current = next;
-			}
-			
-			resource.value-=cost_so_far.get(current);				
-		}
-		else //did not find its goal.
-		{
-			resource.value=0;
-			path_from=null;
-		}
+		Set<Connection> path_from = getPath(chm,goal,start,came_from);
 	
 	    return path_from;		
 	}	
@@ -190,23 +163,6 @@ public abstract class Pathfinder {
 		    	}
 		    }
 		}
-		
-		if (goal !=null && came_from.containsKey(goal))
-		{
-			boolean foundstart = false;
-			current = goal;
-			
-			while(!foundstart)
-			{
-				next = came_from.get(current);
-				if(next.equals(start))
-				{
-					foundstart = true;
-				}
-				current = next;
-			}
-		}
-		
 		
 	    return goal;
 	    

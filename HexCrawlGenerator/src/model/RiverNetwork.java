@@ -35,13 +35,9 @@ public class RiverNetwork {
 		hexes.add(fh);
 	}	
 	
-	public void createRiver(ConnectedHexMap chm, FilledHex destination, FilledHex origin)
+	public void createRiver(ConnectedHexMap chm, Set<Connection> path)
 	{
-		//create BFS path from origin to destination
-		Pathfinder rf = new Riverfinder();
-
-		//add all connections to set
-		connects = rf.GreedyBFS(chm, destination, origin);
+		connects = path;
 		Set<Connection> tempset = new HashSet<>();
 		tempset.addAll(connects);
 		//add all hexes to set (get from connections)
@@ -59,11 +55,10 @@ public class RiverNetwork {
 					if(fh.getRiverNode()==null)
 					{
 						RiverNode rn = new RiverNode(this, chm.getRandomPoint(fh));						
-						fh.add(rn); //add river node to the hex
-						
+						fh.add(rn);
 						//Adds a river modifier to the hex.
 						
-						if (!fh.getBiome().equals(BiomeModifier.river))
+						if (!fh.getBiomes().contains(BiomeModifier.river))
 						{
 							BiomeModifier b = new BiomeModifier(BiomeModifier.river,fh.getBiome());							
 							b.setNext(fh.getBiome());

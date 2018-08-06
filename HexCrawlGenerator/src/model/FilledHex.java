@@ -115,4 +115,9 @@ public class FilledHex extends Hex
 	{
 		return biome;
 	}
+	
+	public Set<Biome> getBiomes()
+	{
+		return biome.getBiomes();
+	}
 }

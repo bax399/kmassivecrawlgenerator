@@ -38,51 +38,7 @@ public class RoadNetwork
 	{
 		hexes.add(fh);
 	}	
-	
-	public void initialRoad(ConnectedHexMap chm, Set<Connection> path)
-	{
-		connects = path;
-		Set<Connection> tempset = new HashSet<>();
-		tempset.addAll(connects);
-		//add all hexes to set (get from connections)
-		for(Connection cc : connects)
-		{
-			//create river nodes and add to set,
-			FilledHex fh;
-			
-			//if added to the set, create a river node at a random point
-			for(int ii=0; ii<2; ii++)
-			{
-				fh = cc.getVertexes().get(ii);				
-				if(hexes.add(fh))
-				{
-					if(fh.getRoadNode()==null) //No roads currently on it.
-					{
-						RoadNode rn;
-						if (fh.getLargestTown() !=null)
-						{
-							rn = new RoadNode(this, fh.getLargestTown().getPosition());						
-						}
-						else
-						{
-							rn = new RoadNode(this, chm.getRandomPoint(fh));
-						}
-						fh.add(rn); //add road node to the hex
-						
-						nodes.add(rn);
-					}
-					
-					if (fh.getTowns().size() > 0)
-					{
-						towns.addAll(fh.getTowns());
-					}
-				}				
-			}
-		}
-		
-		connects = tempset;
-		 
-	}	
+
 	
 	public RoadNetwork addTownNode(ConnectedHexMap chm, FilledHex fh)
 	{
@@ -137,7 +93,6 @@ public class RoadNetwork
 		//add all hexes to set (get from connections)
 		for(Connection cc : pathconnects)
 		{
-			//create river nodes and add to set,
 			FilledHex fh;
 			
 			//if added to the set, create a river node at a random point
@@ -160,9 +115,10 @@ public class RoadNetwork
 						
 						fh.add(rn); //add road node to the hex
 						
+
 						nodes.add(rn);
 					}
-					else //It has a rivernode currently JOIN THE TWO NETWORKS TOGETHER
+					else //It has a roadnode currently JOIN THE TWO NETWORKS TOGETHER
 					{
 						if(!nodes.contains(fh.getRoadNode())) tempset = joinNetworks(fh.getRoadNode().getNetwork(), tempset);
 					}
@@ -197,7 +153,7 @@ public class RoadNetwork
 		allroads.remove(rne);
 		return tempset;
 	}
-	
+}
 	/*Future stuff 
  
 	//check if a crossing of road->river exists at this hex
@@ -247,6 +203,51 @@ public class RoadNetwork
 		//if it only has one, return all towns in the set except the ones in the origin hex.
 		return null;
 	}
-	*/
 	
-}
+	
+	//OLD STUFF
+	public void initialRoad(ConnectedHexMap chm, Set<Connection> path)
+	{
+		connects = path;
+		Set<Connection> tempset = new HashSet<>();
+		tempset.addAll(connects);
+		//add all hexes to set (get from connections)
+		for(Connection cc : connects)
+		{
+			//create river nodes and add to set,
+			FilledHex fh;
+			
+			//if added to the set, create a river node at a random point
+			for(int ii=0; ii<2; ii++)
+			{
+				fh = cc.getVertexes().get(ii);				
+				if(hexes.add(fh))
+				{
+					if(fh.getRoadNode()==null) //No roads currently on it.
+					{
+						RoadNode rn;
+						if (fh.getLargestTown() !=null)
+						{
+							rn = new RoadNode(this, fh.getLargestTown().getPosition());						
+						}
+						else
+						{
+							rn = new RoadNode(this, chm.getRandomPoint(fh));
+						}
+						fh.add(rn); //add road node to the hex
+												
+						nodes.add(rn);
+					}
+					
+					if (fh.getTowns().size() > 0)
+					{
+						towns.addAll(fh.getTowns());
+					}
+				}				
+			}
+		}
+		
+		connects = tempset;
+		 
+	}		
+	*/

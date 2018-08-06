@@ -111,5 +111,17 @@ public class BiomeConcrete extends HasDescriptor implements Biome,BiomePropertie
 		return super.getName();
 	}
 	
+	@Override
+	public Biome getBiome()
+	{
+		return this;
+	}
 	
+	@Override 
+	public Set<Biome> getBiomes()
+	{
+		Set<Biome> me = new HashSet<>();
+		me.add(this);
+		return me;
+	}
 }

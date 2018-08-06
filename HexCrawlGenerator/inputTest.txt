@@ -1,30 +1,35 @@
 TYPE=town
 name=mountain_town
 validbiomes=mountains
-max=5
-connectivity=40
-
-TYPE=town
-name=small_town
-connectivity=10
 max=10
-validbiomes=plain,hills,scrub
+connectivity=40
+needriver=yes
+spawnchance=0.3
+
 
 TYPE=town
 name=village
-connectivity=5
+connectivity=10
 validbiomes=plain,hills,forest,scrub
 max=20
 
 TYPE=town
+name=small_town
+connectivity=20
+max=10
+validbiomes=plain,hills,scrub
+
+TYPE=town
 name=capital
-connectivity=200
-validbiomes=plain,scrub
+connectivity=100
 max=1
+needriver=yes
+spawnchance=1.0
+validbiomes=plain,scrub
 
 TYPE=biome
 name=ocean
-color=102,178,255
+color=10,100,255
 travelcost=5
 height=0
 weight=ocean:200000,all:1,reef:50,water:0,abyss:0
@@ -48,10 +53,10 @@ riverend=1
 
 TYPE=biome
 name=water
-color=10,100,255
+color=102,178,255
 travelcost=5
 height=0
-weight=all:1,mountains:0,abyss:0,water:50,reef:0,ocean:0
+weight=all:1,mountains:0,abyss:0,water:30,reef:0,ocean:2
 riverend=1
 validstart=0
 
@@ -107,7 +112,7 @@ weight=all:10,forest:0,rough:50,desert:1500,water:0,reef:0,abyss:1,ocean:1
 TYPE=biome
 name=hills
 color=0,250,0
-travelcost=2
+travelcost=5
 height=5
 weight=all:10,plain:1000,forest:1000,hills:5000,mountains:1000,abyss:0,reef:0,ocean:1
 riverorigin=0.1

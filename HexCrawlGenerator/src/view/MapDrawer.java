@@ -49,7 +49,7 @@ public class MapDrawer extends JPanel
 			g.fillPolygon(hh.shape);
 
 			//**Outline**//
-			//g.setColor(Color.BLACK);
+			//g.setColor(new Color(0,0,0,50));
 			//g.drawPolygon(hh.shape);
 			
 			//**Name**//
@@ -114,7 +114,7 @@ public class MapDrawer extends JPanel
 			for(Connection edge: irc.next())
 			{
 				g2d.setColor(Color.BLACK);
-				g2d.setStroke(new BasicStroke(1.0f));				
+				g2d.setStroke(new BasicStroke(2.0f));				
 				Point st = edge.getVertexes().get(0).getRoadNode().getPosition();
 				Point fn = edge.getVertexes().get(1).getRoadNode().getPosition();
 				g2d.drawLine((int)st.x, (int)st.y, (int)fn.x, (int)fn.y);	
@@ -136,7 +136,7 @@ public class MapDrawer extends JPanel
 				g2d.fillOval((int)t.getPosition().x-3, (int)t.getPosition().y-3, 6, 6);
 				g.setColor(Color.BLACK);
 				g.drawString("*", (int)t.getPosition().x-3, (int)t.getPosition().y+5);
-				g.drawString(t.getConnectivity()+"", (int)t.getPosition().x+5, (int)t.getPosition().y);
+				g.drawString(t.stats.getConnectivity()+"", (int)t.getPosition().x+5, (int)t.getPosition().y);
 			}			
 		}
 		
