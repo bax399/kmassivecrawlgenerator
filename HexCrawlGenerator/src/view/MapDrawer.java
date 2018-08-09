@@ -49,7 +49,7 @@ public class MapDrawer extends JPanel
 			g.fillPolygon(hh.shape);
 
 			//**Outline**//
-			g.setColor(new Color(0,0,0,10));
+			g.setColor(new Color(0,0,0,50));
 			g.drawPolygon(hh.shape);
 			
 			//**Name**//
@@ -63,7 +63,7 @@ public class MapDrawer extends JPanel
 		}
 		
 		Iterator<Set<Connection>> isc = hexes.getRiverConnections().iterator();
-		g2d.setColor(Color.CYAN);
+		g2d.setColor(Color.BLUE);
 		g2d.setStroke(new BasicStroke(2.0f));
 		while(isc.hasNext())
 		{
@@ -81,7 +81,7 @@ public class MapDrawer extends JPanel
 			//**Draw from Point**//
 			for(Connection edge: isc.next())
 			{
-				g2d.setColor(Color.CYAN);
+				g2d.setColor(Color.BLUE);
 				Point st = edge.getVertexes().get(0).getRiverNode().getPosition();
 				Point fn = edge.getVertexes().get(1).getRiverNode().getPosition();
 				g2d.drawLine((int)st.x, (int)st.y, (int)fn.x, (int)fn.y);	

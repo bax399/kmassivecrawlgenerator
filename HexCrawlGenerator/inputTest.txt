@@ -65,7 +65,7 @@ name=mountains
 color=160,160,160
 travelcost=10
 height=100
-weight=all:10,reef:0,water:0,abyss:0,rough:50,mountains:5000,ocean:1,marsh:0,snowymountains:100
+weight=all:10,reef:0,water:0,abyss:0,rough:50,mountains:2000,ocean:1,marsh:0,snowymountains:50
 riverorigin=0.01
 
 TYPE=biome
@@ -73,7 +73,7 @@ name=snowymountains
 color=200,200,200
 travelcost=150
 height=120
-weight=all:0,mountains:1,snowymountains:4
+weight=all:0,mountains:100,snowymountains:1000
 riverorigin=0.005
 validstart=0
 
