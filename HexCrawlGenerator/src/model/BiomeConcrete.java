@@ -77,7 +77,7 @@ public class BiomeConcrete extends HasDescriptor implements Biome,BiomePropertie
 
 	public int getTravelCost()
 	{
-		return travelcost;
+		return Math.max(travelcost,0);
 	}
 	
 	public int getHeight()

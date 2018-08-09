@@ -60,6 +60,13 @@ public class RoadNetwork
 			
 			fh.add(rn); //add road node to the hex
 			
+			if (!fh.getBiomes().contains(BiomeModifier.road))
+			{
+				BiomeModifier b = new BiomeModifier(BiomeModifier.road,fh.getBiome());							
+				b.setNext(fh.getBiome());
+				fh.setBiome(b);
+			}			
+			
 			nodes.add(rn);
 
 			
@@ -84,7 +91,7 @@ public class RoadNetwork
 
 		Set<Connection> pathconnects = rf.AStar(chm, destination, origin,rr);
 		origin.getLargestTown().setConnectivity(rr.value);
-		
+		//destination.getLargestTown().setConnectivity(destination.getLargestTown().getConnectivity()-rr.value);
 
 		
 		
@@ -115,7 +122,13 @@ public class RoadNetwork
 						
 						fh.add(rn); //add road node to the hex
 						
-
+						if (!fh.getBiomes().contains(BiomeModifier.road))
+						{
+							BiomeModifier b = new BiomeModifier(BiomeModifier.road,fh.getBiome());							
+							b.setNext(fh.getBiome());
+							fh.setBiome(b);
+						}			
+						
 						nodes.add(rn);
 					}
 					else //It has a roadnode currently JOIN THE TWO NETWORKS TOGETHER

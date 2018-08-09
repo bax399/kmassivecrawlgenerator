@@ -15,18 +15,16 @@ public class Townfinder extends Pathfinder {
 	    return fh;
 	}
 	
-	
-	
 	@Override
 	public int heuristic(ConnectedHexMap chm, FilledHex goal, FilledHex current, FilledHex next)
 	{
-		return goal.distance(current)+getCost(chm,current,next);
+		return goal.distance(current) + next.getBiome().getTravelCost();
 	}
 	
 	@Override
 	public int getCost(ConnectedHexMap chm, FilledHex current, FilledHex next) 
 	{
-		return chm.adjTravelCost(current, next);
+		return next.distance(current) + next.getBiome().getTravelCost();//chm.adjTravelCost(current, next);
 	}
 
 }

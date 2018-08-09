@@ -10,4 +10,14 @@ public class PFunctions
 	        returnValue = true;
 	    return returnValue;
 	}
+	
+	public static void outputString( String data)
+	{
+		System.out.println("Came from: Static Class |Message: " + data);
+	}
+	
+	public static void outputString(Object oo, String data)
+	{
+		System.out.println("Came from: " + oo.getClass().getSimpleName() + ".java |Message: " + data);
+	}	
 }

@@ -49,8 +49,8 @@ public class MapDrawer extends JPanel
 			g.fillPolygon(hh.shape);
 
 			//**Outline**//
-			//g.setColor(new Color(0,0,0,50));
-			//g.drawPolygon(hh.shape);
+			g.setColor(new Color(0,0,0,10));
+			g.drawPolygon(hh.shape);
 			
 			//**Name**//
 			//g.setColor(Color.BLACK);
@@ -136,7 +136,7 @@ public class MapDrawer extends JPanel
 				g2d.fillOval((int)t.getPosition().x-3, (int)t.getPosition().y-3, 6, 6);
 				g.setColor(Color.BLACK);
 				g.drawString("*", (int)t.getPosition().x-3, (int)t.getPosition().y+5);
-				g.drawString(t.stats.getConnectivity()+"", (int)t.getPosition().x+5, (int)t.getPosition().y);
+				g.drawString(t.getConnectivity()+"", (int)t.getPosition().x+5, (int)t.getPosition().y);
 			}			
 		}
 		

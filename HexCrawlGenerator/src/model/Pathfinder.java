@@ -1,5 +1,6 @@
 package model;
 import java.util.*;
+import static functions.PFunctions.*;
 import java.lang.*;
 public abstract class Pathfinder {
 	
@@ -25,7 +26,7 @@ public abstract class Pathfinder {
 		Map<FilledHex,FilledHex> came_from = new HashMap<>();
 		came_from.put(start,start);
 		FilledHex current,next;
-		Connection startconnection = new Connection(start,start,0);		
+
 		while (frontier.size() > 0)
 		{
 			current = frontier.poll();
@@ -91,10 +92,10 @@ public abstract class Pathfinder {
 		while (frontier.size() > 0)
 		{
 		    current = frontier.poll();
-		
 		    if (current.equals(goal))
 		    {
 		    	resource.value-=cost_so_far.get(came_from.get(current))+getCost(chm,came_from.get(current),current);
+		    	
 		    	break;
 		    }
 		   
@@ -136,6 +137,7 @@ public abstract class Pathfinder {
 		
 		while (frontier.size() > 0)
 		{
+			
 		    current = frontier.poll();
 		
 		    if(!current.equals(start))

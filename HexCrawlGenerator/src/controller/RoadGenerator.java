@@ -66,14 +66,10 @@ public class RoadGenerator extends Generator
 				//System.out.println("After " + fh.getLargestTown().getConnectivity());
 				hexHasTowns.add(fh); //Re-add hex to townlist to go again.	
 			}
-			else
-			{
-				//System.out.println("ended town-road building");
-			}
-			
 		}
 		
 		//Town finder, finds neighbouring towns and shores up shoddy connections from before.
+		
 		
 		/*
 		Pathfinder tf = new Townfinder();
@@ -107,14 +103,18 @@ public class RoadGenerator extends Generator
 				rn.createRoad(hexmap,goal,fh);		
 				networks.add(rn);
 				hexHasTowns.add(fh); //Re-add hex to townlist to go again.	
-			}
-			else
-			{
-				//System.out.println("ended town-neighbour building");
-			}			
+			}	
 		}
 		*/
-
+		
+		//TODO branch cleaner, 
+		//if one connection has nothing (no branches or towns) (simple)
+		//and starts and ends in the same place as another connection, destroy it.
+		//Therefore, will delete branches that aren't as important.
+		//Get each roadnode, if >2 connections, follow each connection
+		//step on each connection until a town or branch is reached. If a branch is reached, this is no longer a simple branch and cannot be deleted.
+		//	This branch continues until a town OR meets a node on a different branch, but cannot delete itself.
+		//	if any two+ connections end in the same node, delete the simple path (with most distance).
 						
 		return networks;
 	}

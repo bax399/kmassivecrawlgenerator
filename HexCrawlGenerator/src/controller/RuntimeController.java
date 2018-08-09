@@ -8,17 +8,20 @@ import java.nio.file.Paths;
 import java.util.*;
 
 import javax.swing.JFrame;
+
+import functions.PFunctions;
 public class RuntimeController 
 {	
 	final static int screenwidth = 1920;
 	final static int screenheight = 1080;
-	final static int size = 10;
+	final static int size = 20;
 	
 	
 	public static void main(String[] args)
 	{ 
 		Random rand = new Random();
 		
+		PFunctions.outputString("Abc");
 		
 		FileProcessor fp = new FileProcessor();
 		PropertiesReader ptr = new PropertiesReader();
@@ -28,7 +31,7 @@ public class RuntimeController
 		//Layout lt = new Layout(Layout.pointy,new Point(size,size),new Point(size,size));//Rectangle Map
 		
 		//h,w
-		MapController mc = new MapController(30, ptr, lt, rand); 
+		MapController mc = new MapController(15, ptr, lt, rand); 
 		//System.out.println("total connects: " + mc.hexmap.getConnections().size());
 		JFrame f = new JFrame("HexMap");
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
