@@ -6,7 +6,6 @@ connectivity=40
 needriver=yes
 spawnchance=0.3
 
-
 TYPE=town
 name=village
 connectivity=10
@@ -32,7 +31,7 @@ name=ocean
 color=10,100,255
 travelcost=500
 height=0
-weight=ocean:100000,all:1,reef:50,water:0,abyss:0
+weight=ocean:5000,all:1,reef:50,water:0,abyss:0
 riverend=1
 validstart=1
 
@@ -65,7 +64,7 @@ name=mountains
 color=160,160,160
 travelcost=10
 height=100
-weight=all:10,reef:0,water:0,abyss:0,rough:50,mountains:5000,ocean:1,marsh:0,snowymountains:100
+weight=all:10,reef:0,water:0,abyss:0,rough:50,mountains:3000,ocean:1,marsh:0,snowymountains:100
 riverorigin=0.01
 
 TYPE=biome

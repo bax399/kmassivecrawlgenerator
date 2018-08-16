@@ -1,5 +1,5 @@
 package model;
-import java.util.*;
+
 public class Riverfinder extends Pathfinder {
 
 	@Override

@@ -1,5 +1,5 @@
 package tests;
-import java.util.*;
+
 public class TestPathFinding {
 
 	public static void main(String[] args) {

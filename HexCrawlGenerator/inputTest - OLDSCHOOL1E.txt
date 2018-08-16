@@ -64,15 +64,15 @@ color=0,250,0
 travelcost=5
 height=5
 weight=all:1,scrub:2,forest:2,rough:2,hills:6,mountains:2,pond:2
-riverorigin=0.2
+riverorigin=0.01
 
 TYPE=biome
 name=mountains
-color=4,4,100
+color=160,160,160
 travelcost=10
 height=100
 weight=all:1,marsh:0,rough:2,hills:4,mountains:8
-riverorigin=0.4
+riverorigin=0.1
 
 TYPE=biome
 name=marsh

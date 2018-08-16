@@ -1,5 +1,5 @@
 package model.redblob;
-import java.util.*;
+import java.util.ArrayList;
 public class FractionalHex {
    public FractionalHex(double q, double r, double s)
     {

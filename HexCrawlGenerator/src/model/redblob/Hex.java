@@ -1,6 +1,7 @@
 package model.redblob;
-import model.graphresource.*;
-import java.util.*;
+import java.util.ArrayList;
+
+import model.graphresource.Vertex;
 public class Hex extends Vertex
 {	
 	//Cube

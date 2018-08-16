@@ -1,7 +1,6 @@
 package tests;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
 
 import controller.FileProcessor;
 import controller.PropertiesReader;

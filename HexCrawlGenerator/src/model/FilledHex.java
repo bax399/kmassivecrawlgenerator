@@ -1,11 +1,20 @@
 package model;
 
-import java.util.*;
-import model.worldobjects.*;
-import java.awt.Color;
 import java.awt.Polygon;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 import model.redblob.Hex;
 import model.redblob.Point;
+import model.worldobjects.Dungeon;
+import model.worldobjects.HexTown;
+import model.worldobjects.Lair;
+import model.worldobjects.Landmark;
+import model.worldobjects.Nomad;
+import model.worldobjects.RoadNode;
+import model.worldobjects.WorldObject;
 
 public class FilledHex extends Hex 
 {

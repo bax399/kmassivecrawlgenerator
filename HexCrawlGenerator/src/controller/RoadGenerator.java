@@ -1,7 +1,17 @@
 package controller;
-import java.util.*;
-import model.*;
-import model.worldobjects.RoadNode;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.PriorityQueue;
+import java.util.Random;
+import java.util.Set;
+
+import model.ConnectedHexMap;
+import model.FilledHex;
+import model.MutableInt;
+import model.Pathfinder;
+import model.RoadNetwork;
+import model.Roadfinder;
 public class RoadGenerator extends Generator
 {
 	ConnectedHexMap hexmap;	
@@ -115,7 +125,6 @@ public class RoadGenerator extends Generator
 		//step on each connection until a town or branch is reached. If a branch is reached, this is no longer a simple branch and cannot be deleted.
 		//	This branch continues until a town OR meets a node on a different branch, but cannot delete itself.
 		//	if any two+ connections end in the same node, delete the simple path (with most distance).
-						
 		return networks;
 	}
 }

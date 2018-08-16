@@ -1,7 +1,13 @@
 package model;
-import java.util.*;
-import model.redblob.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Random;
+import java.util.Set;
+
 import model.graphresource.Graph;
+import model.redblob.Layout;
+import model.redblob.Point;
 public class ConnectedHexMap extends HexMap<FilledHex> {
 
 	Graph<FilledHex,Connection> neighbours; // Stores each hex's neighbouring cells in hexagonal coordinates

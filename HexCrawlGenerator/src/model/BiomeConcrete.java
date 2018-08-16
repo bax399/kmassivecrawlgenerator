@@ -1,8 +1,15 @@
 package model;
 import java.awt.Color;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Properties;
+import java.util.Set;
 
 import functions.PFunctions;
+/**
+ * @author Keeley
+ *
+ */
 public class BiomeConcrete extends HasDescriptor implements Biome,BiomeProperties{
 	public static final String[] setvalues = {"biome"};
 	public static final Set<String> tags = new HashSet<>(Arrays.asList(setvalues));
@@ -58,6 +65,7 @@ public class BiomeConcrete extends HasDescriptor implements Biome,BiomePropertie
 		}
 		return new Color(Irgb[0],Irgb[1],Irgb[2]);
 	}
+	
 	
 	public String getWeight()
 	{

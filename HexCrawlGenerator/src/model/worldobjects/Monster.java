@@ -1,9 +1,15 @@
 package model.worldobjects;
-import java.awt.Color;
-import model.*;
-import model.worldobjects.*;
-import model.redblob.*;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Random;
+import java.util.Set;
+
+import model.Biome;
+import model.FilledHex;
+import model.MonsterProperties;
 public class Monster extends WorldObject implements MonsterProperties {
 	public final String[] setvalues = {"monster"};
 	public final Set<String> tags = new HashSet<>(Arrays.asList(setvalues));

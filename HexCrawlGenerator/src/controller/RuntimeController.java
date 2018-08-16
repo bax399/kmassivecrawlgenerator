@@ -1,21 +1,19 @@
 package controller;
-import model.*;
-import model.redblob.*;
-import view.MapDrawer;
-
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.*;
+import java.util.Map;
+import static functions.PFunctions.outputString;
+import java.util.Random;
 
 import javax.swing.JFrame;
 
 import functions.PFunctions;
+import model.redblob.Layout;
+import model.redblob.Point;
+import view.MapDrawer;
 public class RuntimeController 
 {	
 	final static int screenwidth = 1920;
 	final static int screenheight = 1080;
-	final static int size = 10;
-	
+	final static int size = 30; //mc 30
 	
 	public static void main(String[] args)
 	{ 
@@ -28,10 +26,12 @@ public class RuntimeController
 		fp.processFile("inputTest.txt", ptr);
 
 		Layout lt = new Layout(Layout.pointy,new Point(size,size),new Point(screenwidth/2,screenheight/2)); //Spiral Map
-		//Layout lt = new Layout(Layout.pointy,new Point(size,size),new Point(size,size));//Rectangle Map
+		MapController mc = new MapController(10, ptr, lt, rand); 
 		
+		//Layout lt = new Layout(Layout.pointy,new Point(size,size),new Point(size,size));//Rectangle Map
+		//MapController mc = new MapController(300,500, ptr, lt, rand); 
 		//h,w
-		MapController mc = new MapController(30, ptr, lt, rand); 
+		
 		//System.out.println("total connects: " + mc.hexmap.getConnections().size());
 		JFrame f = new JFrame("HexMap");
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -44,6 +44,8 @@ public class RuntimeController
 		f.add(ui);
 		f.setSize(screenwidth,screenheight);
 		f.setVisible(true);
+		
+		outputString("total hexes:" + mc.getHexes().size());
 		
 	}
 }

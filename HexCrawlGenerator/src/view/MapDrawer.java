@@ -1,16 +1,21 @@
 package view;
-import java.util.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
-import model.worldobjects.*;
-import model.redblob.Tuple;
-import model.redblob.Point;
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import model.FilledHex;
+import javax.swing.JPanel;
+
 import model.ConnectedHexMap;
-import model.HexMap;
-import model.*;
+import model.Connection;
+import model.FilledHex;
+import model.redblob.Point;
+import model.redblob.Tuple;
+import model.worldobjects.HexTown;
 //Panel draws to screen.
 public class MapDrawer extends JPanel 
 {
@@ -57,8 +62,13 @@ public class MapDrawer extends JPanel
 			//g.drawString(hh.getBiome().getBiomeName().substring(0,2), (int)hh.center.x-5, (int)hh.center.y+5);
 			
 			//**Coords**//
+			//g.setColor(Color.BLACK);
 			//g.drawString(""+hh.q,(int)hh.center.x-3, (int)hh.center.y-3);
 			//g.drawString(""+hh.r,(int)hh.center.x-3, (int)hh.center.y+5);
+			
+			//**Coords**//
+			//g.setColor(Color.BLACK);
+			//g.drawString(""+hh.getBiome().getHeight(),(int)hh.center.x-10, (int)hh.center.y+5);
 
 		}
 		

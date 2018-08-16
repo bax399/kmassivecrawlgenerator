@@ -1,6 +1,9 @@
 package model;
 import java.awt.Color;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Properties;
+import java.util.Set;
 public class BiomeModifier extends HasDescriptor implements Biome,BiomeModifierProperties {
 	public static final String[] setvalues = {"biomemodifier"};
 	public static final Set<String> tags = new HashSet<>(Arrays.asList(setvalues));	
@@ -19,9 +22,6 @@ public class BiomeModifier extends HasDescriptor implements Biome,BiomeModifierP
 	private final double riverend;
 	private final String modname;	
 
-	
-
-	
 	public BiomeModifier(BiomeModifier bm, Biome nextb)
 	{
 		super(new WorldDescriptor(bm.modname, BiomeConcrete.tags, bm.modname, 0));
@@ -93,11 +93,6 @@ public class BiomeModifier extends HasDescriptor implements Biome,BiomeModifierP
 	@Override
 	public String getName() {
 		return modname + next.getName();
-	}
-
-	public String getModName()
-	{
-		return modname;
 	}
 	
 	@Override

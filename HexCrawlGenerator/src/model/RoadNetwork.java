@@ -1,7 +1,10 @@
 package model;
 
-import model.worldobjects.*;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
+
+import model.worldobjects.HexTown;
+import model.worldobjects.RoadNode;
 public class RoadNetwork
 {
 	private Set<Connection> connects;

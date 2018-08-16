@@ -1,7 +1,5 @@
 package model;
-import model.graphresource.*;
-import model.redblob.Hex;
-import model.redblob.Point;
+import model.graphresource.Edge;
 public class Connection extends Edge<FilledHex>{
 	public Connection(FilledHex v1, FilledHex v2, int weight)
 	{

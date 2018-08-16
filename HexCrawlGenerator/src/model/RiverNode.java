@@ -1,6 +1,5 @@
 package model;
 import model.redblob.Point;
-import java.util.*;
 public class RiverNode 
 {
 	private Point pos;

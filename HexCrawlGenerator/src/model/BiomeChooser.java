@@ -1,5 +1,15 @@
 package model;
-import java.util.*;
+import static functions.PFunctions.outputString;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Random;
+import java.util.Set;
+
 import model.frorcommon.RandomCollection;
 public class BiomeChooser 
 {
@@ -29,7 +39,7 @@ public class BiomeChooser
 			if (b.isValidStart()) validbiomes.add(b);
 		}
 		
-		System.out.println(validbiomes);
+		outputString(this, validbiomes.toString());
 	}
 	
 	public Map<String,Biome> getBMap()
@@ -105,7 +115,7 @@ public class BiomeChooser
 			else
 			{
 				Biome bfound=biomenames.get(bname);
-				if(bfound==null) System.out.println("invalid biome weight");//throw new IllegalArgumentException("Biome weight invalid in: " +origin.getBiomeName());	
+				if(bfound==null) outputString(this,"Biome weight invalid in: " +origin.getBiomeName());//throw new IllegalArgumentException("Biome weight invalid in: " +origin.getBiomeName());	
 				if(bfound!=null) bb.add(weight,bfound);				
 			}
 		}

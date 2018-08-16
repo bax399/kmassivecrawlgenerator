@@ -1,5 +1,7 @@
 package model;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Properties;
+import java.util.Set;
 public class BiomeModifierGeneration extends BiomeModifier implements BiomeModifierGenerationProperties
 {
 	public static BiomeModifierGeneration coastal = new BiomeModifierGeneration("coastal", new int[] {1,2,3},-2,0,"",0d,0d,0.1d,
@@ -9,6 +11,7 @@ public class BiomeModifierGeneration extends BiomeModifier implements BiomeModif
 	public static BiomeModifierGeneration forested = new BiomeModifierGeneration("forested",new int[] {1,2,3},0,2,"",0d,0d,0.1d,
 													"forest","all");
 	
+	//How are these defined? Functionally these can be input via files instead.
 	
 	private Set<Biome> validbiomes = new HashSet<>();
 	private Set<Biome> originbiomes = new HashSet<>();

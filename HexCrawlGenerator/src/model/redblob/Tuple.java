@@ -1,8 +1,6 @@
 package model.redblob;
 import java.util.Arrays;
 
-import java.util.Arrays;
-
 public class Tuple
 {
     public final int[] values = new int[3];

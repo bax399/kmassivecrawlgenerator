@@ -1,9 +1,7 @@
 package controller;
-import java.util.*;
-import java.io.*;
-
-import model.*;
-import view.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 public abstract class AbstractDataReader<E> 
 {

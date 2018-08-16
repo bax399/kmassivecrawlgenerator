@@ -1,7 +1,4 @@
 package model.worldobjects;
-import java.awt.Color;
-import java.util.*;
-
 import model.HasProperties;
 
 //Anything that properties input, the object is expected to use.

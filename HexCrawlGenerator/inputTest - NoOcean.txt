@@ -6,7 +6,6 @@ connectivity=40
 needriver=yes
 spawnchance=0.3
 
-
 TYPE=town
 name=village
 connectivity=10
@@ -28,13 +27,10 @@ spawnchance=1.0
 validbiomes=plain,scrub
 
 TYPE=biome
-name=ocean
-color=10,100,255
-travelcost=500
-height=0
-weight=ocean:100000,all:1,reef:50,water:0,abyss:0
-riverend=1
-validstart=1
+name=rough
+color=172,145,11
+height=2
+weight=all:10,rough:50,desert:100,marsh:0,water:0,abyss:1
 
 TYPE=biome
 name=abyss
@@ -44,19 +40,11 @@ weight=desert:5,rough:5
 validstart=0
 
 TYPE=biome
-name=reef
-color=147,112,239
-travelcost=500
-height=0
-weight=ocean:10,reef:10
-riverend=1
-
-TYPE=biome
 name=water
 color=102,178,255
 travelcost=500
 height=0
-weight=all:1,mountains:0,abyss:0,water:30,reef:0,ocean:2
+weight=all:1,mountains:0,abyss:0,water:30
 riverend=1
 validstart=0
 
@@ -65,7 +53,7 @@ name=mountains
 color=160,160,160
 travelcost=10
 height=100
-weight=all:10,reef:0,water:0,abyss:0,rough:50,mountains:5000,ocean:1,marsh:0,snowymountains:100
+weight=all:10,water:0,abyss:0,rough:50,mountains:5000,marsh:0,snowymountains:100
 riverorigin=0.01
 
 TYPE=biome
@@ -81,40 +69,34 @@ TYPE=biome
 name=plain
 color=185,250,72
 height=1
-weight=plain:5000,scrub:100,forest:100,all:10,abyss:0,reef:0,ocean:1
+weight=plain:5000,scrub:100,forest:100,all:10,abyss:0
 
 TYPE=biome
 name=scrub
 color=186,220,126
 height=1
-weight=plain:100,scrub:5000,all:10,abyss:0,reef:0,ocean:1
+weight=plain:100,scrub:5000,all:10,abyss:0
 
 TYPE=biome
 name=forest
 color=16,172,11
 travelcost=2
 height=1
-weight=plain:100,scrub:100,forest:5000,all:10,abyss:0,reef:0,ocean:1
-
-TYPE=biome
-name=rough
-color=172,145,11
-height=2
-weight=all:10,rough:50,desert:100,marsh:0,reef:0,water:0,abyss:1,ocean:1
+weight=plain:100,scrub:100,forest:5000,all:10,abyss:0
 
 TYPE=biome
 name=desert
 color=245,245,30
 travelcost=2
 height=2
-weight=all:10,forest:0,rough:50,desert:1500,water:0,reef:0,abyss:1,ocean:1
+weight=all:10,forest:0,rough:50,desert:1500,water:0,abyss:1
 
 TYPE=biome
 name=hills
 color=0,250,0
 travelcost=5
 height=5
-weight=all:10,plain:1000,forest:1000,hills:5000,mountains:1000,abyss:0,reef:0,ocean:1
+weight=all:10,plain:1000,forest:1000,hills:5000,mountains:1000,abyss:0
 riverorigin=0.1
 
 TYPE=biome
@@ -122,6 +104,6 @@ name=marsh
 color=60,4,60
 travelcost=3
 height=1
-weight=all:0,marsh:400,water:60,ocean:5
+weight=all:0,marsh:400,water:60
 riverend=0.01
 validstart=0

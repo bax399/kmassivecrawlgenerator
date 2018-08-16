@@ -1,7 +1,11 @@
 package tests;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
-import model.frorcommon.*;
+import model.frorcommon.RandomSelector;
 public class TestRandomSelector 
 {
 	static Random random = new Random();	

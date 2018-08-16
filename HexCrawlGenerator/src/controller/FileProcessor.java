@@ -1,20 +1,19 @@
 package controller;
-import java.util.*;
-import java.lang.*;
-import java.io.*;
+import static functions.PFunctions.outputString;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 public class FileProcessor {
 	
 	public void processFile(String filename, PropertiesReader ptr)
 	{
 		FileReader fr = null;
 		BufferedReader br = null;
-		String line = null;
-		PropertiesReader tr = null;	
 		//read until a line exists that isn't a comment or empty.
 		try
 		{
-			System.out.println("Reading file: " + filename);
+			outputString(this, "Reading file: " + filename);
 			fr = new FileReader(filename);
 			br = new BufferedReader(fr);
 			ptr.processType(br);

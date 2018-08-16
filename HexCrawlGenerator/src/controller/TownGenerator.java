@@ -1,7 +1,17 @@
 package controller;
-import java.util.*;
-import model.*;
-import model.worldobjects.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Random;
+import java.util.Set;
+
+import model.Biome;
+import model.ConnectedHexMap;
+import model.FilledHex;
+import model.worldobjects.Town;
 public class TownGenerator extends Generator
 {
 	Map<Town,Set<Biome>> validbiomes;

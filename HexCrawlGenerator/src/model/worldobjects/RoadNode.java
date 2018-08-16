@@ -1,5 +1,4 @@
 package model.worldobjects;
-import java.util.*;
 import model.RoadNetwork;
 import model.redblob.Point;
 

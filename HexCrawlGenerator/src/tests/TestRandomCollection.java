@@ -1,5 +1,4 @@
 package tests;
-import java.util.*;
 import model.frorcommon.RandomCollection;
 public class TestRandomCollection {
 

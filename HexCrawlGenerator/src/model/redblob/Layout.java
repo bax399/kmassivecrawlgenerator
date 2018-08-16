@@ -50,7 +50,7 @@ public class Layout {
 
 	            Point offset = hexCornerOffset(i);	        	
 	            //corners.add(new Point(center.x + offset.x, center.y + offset.y));
-	            corners.addPoint((int)(center.x+offset.x),  (int)(center.y+offset.y));
+	            corners.addPoint((int)Math.round(center.x+offset.x),  (int)Math.round(center.y+offset.y));
 	        }
 	        return corners;
 	    }

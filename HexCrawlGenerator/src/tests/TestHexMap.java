@@ -1,13 +1,4 @@
 package tests;
-import model.*;
-import view.*;
-import javax.swing.*;
-
-import controller.MapController;
-
-import java.awt.*;
-import java.util.Iterator;
-import java.util.Set;
 
 public class TestHexMap {
 /*

@@ -1,7 +1,17 @@
 package controller;
-import java.util.*;
-import model.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
+
 import model.ConnectedHexMap;
+import model.Connection;
+import model.FilledHex;
+import model.Pathfinder;
+import model.RiverNetwork;
+import model.Riverfinder;
 public class RiverGenerator extends Generator
 {
 	ConnectedHexMap hexmap;	

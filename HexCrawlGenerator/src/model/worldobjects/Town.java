@@ -1,12 +1,13 @@
 package model.worldobjects;
-import java.awt.Color;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Properties;
+import java.util.Set;
 
-import java.util.*;
-import model.FilledHex;
-import model.redblob.Point;
 import functions.PFunctions;
-import model.BiomeConcrete;
+import model.FilledHex;
 import model.WorldDescriptor;
+import model.redblob.Point;
 public class Town extends WorldObject implements TownProperties
 {
 	public static final String[] setvalues = {"town"};

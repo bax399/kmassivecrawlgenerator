@@ -7,10 +7,12 @@ reasonably nice graphs/trees/diagrams. Feel free to
 improve upon it!
  */
 package zdeprececated;
-import java.util.*;
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.util.ArrayList;
+
+import javax.swing.JFrame;
 
 public class GraphDraw extends JFrame {
     int width;

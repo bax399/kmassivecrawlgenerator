@@ -1,5 +1,5 @@
 package model;
-import java.util.*;
+
 public class Townfinder extends Pathfinder {
 
 	@Override

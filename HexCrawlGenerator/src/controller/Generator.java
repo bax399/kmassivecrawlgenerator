@@ -1,5 +1,5 @@
 package controller;
-import java.util.*;
+import java.util.Random;
 public abstract class Generator 
 {
 	Random rand;

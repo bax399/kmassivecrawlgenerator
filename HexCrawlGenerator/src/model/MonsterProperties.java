@@ -1,6 +1,5 @@
 package model;
-import java.awt.Color;
-import java.util.*;
+import java.util.Map;
 
 //Anything that properties input, the object is expected to use.
 public interface MonsterProperties extends HasProperties

@@ -1,8 +1,16 @@
 package controller;
-import java.util.*;
-import model.*;
-import model.redblob.*;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Random;
+import java.util.Set;
 
+import model.ConnectedHexMap;
+import model.FilledHex;
+import model.redblob.Hex;
+import model.redblob.Layout;
+import model.redblob.Tuple;
+import static functions.PFunctions.outputString;
 public class MapController
 {
 	PropertiesReader pstorage;

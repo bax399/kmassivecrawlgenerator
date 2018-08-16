@@ -1,6 +1,6 @@
 package model.worldobjects;
-import java.util.*;
-import model.*;
+import model.HasDescriptor;
+import model.WorldDescriptor;
 public abstract class WorldObject extends HasDescriptor implements WorldProperties
 {
 	private int visibility;

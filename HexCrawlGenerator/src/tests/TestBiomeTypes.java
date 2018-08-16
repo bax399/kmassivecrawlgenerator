@@ -1,17 +1,5 @@
 package tests;
-import model.*;
-import view.MapDrawer;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.*;
-
-import javax.swing.JFrame;
-
-import controller.FileProcessor;
-import controller.MapController;
-import controller.PropertiesFactory;
-import controller.PropertiesReader;
 public class TestBiomeTypes {
 	/*
 	public static void main(String[] args)

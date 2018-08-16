@@ -1,5 +1,9 @@
 package zdeprececated;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Random;
 
 import model.Biome;
 

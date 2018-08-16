@@ -1,6 +1,4 @@
 package model.worldobjects;
-import java.util.*;
-
 import model.FilledHex;
 import model.HasDescriptor;
 import model.WorldDescriptor;

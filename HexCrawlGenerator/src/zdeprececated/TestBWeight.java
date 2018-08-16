@@ -1,5 +1,6 @@
 package zdeprececated;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 public class TestBWeight 
 {
 	public static void main(String[] args)

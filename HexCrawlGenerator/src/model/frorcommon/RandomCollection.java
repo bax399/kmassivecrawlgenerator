@@ -1,8 +1,12 @@
 //https://stackoverflow.com/questions/6409652/random-weighted-selection-in-java/30362366
 package model.frorcommon;
 
-import java.util.*;
+import java.util.HashSet;
 import java.util.Map.Entry;
+import java.util.NavigableMap;
+import java.util.Random;
+import java.util.Set;
+import java.util.TreeMap;
 
 public class RandomCollection<E> {
     private final NavigableMap<Double, E> map = new TreeMap<Double, E>();

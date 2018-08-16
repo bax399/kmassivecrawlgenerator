@@ -1,5 +1,6 @@
 package model;
-import java.util.*;
+import java.util.Collection;
+import java.util.Set;
 public abstract class HasDescriptor 
 {
 	private WorldDescriptor descriptor;

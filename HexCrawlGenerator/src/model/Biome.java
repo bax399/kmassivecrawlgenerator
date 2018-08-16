@@ -1,6 +1,6 @@
 package model;
 import java.awt.Color;
-import java.util.*;
+import java.util.Set;
 public interface Biome extends BiomeProperties
 {
 	public Color parseColor(String rgb);

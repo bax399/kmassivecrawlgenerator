@@ -1,8 +1,16 @@
 package controller;
-import java.util.*;
-import java.io.*;
-import java.nio.file.Paths;
-import java.nio.file.Path;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Scanner;
+import java.util.Set;
 public class PropertiesReader {
 
 	

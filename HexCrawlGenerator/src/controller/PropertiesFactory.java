@@ -1,7 +1,10 @@
 package controller;
-import java.util.*;
-import model.*;
-import model.worldobjects.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Properties;
+
+import model.BiomeConcrete;
+import model.worldobjects.Town;
 public class PropertiesFactory
 {
 	
