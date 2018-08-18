@@ -1,11 +1,13 @@
 package controller;
 import java.io.BufferedReader;
+import static functions.PFunctions.*;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
@@ -19,11 +21,12 @@ public class PropertiesReader {
 	
 	//Type,Storage
 	Map<String, ArrayList<Properties>> storage;
-	
+	Set<String> uniquenames;
 	//TODO change seperate defaultPropertie variables to just be accessed by the map.
 	public PropertiesReader() 
 	{
 		storage = new HashMap<String, ArrayList<Properties>>();
+		uniquenames = new HashSet<String>();
 		FileReader fr=null;
 		//Add all defaults to a map for accessing
 		//DEFAULTS		
@@ -90,7 +93,7 @@ public class PropertiesReader {
 		StringReader sr=null;
 		Properties defaulttype=null,f=null;
 		//BAD REGEX, MUST HAVE A BLANK/COMMENTED LINE, CALLED EVERY LINE 
-
+		String checkname=null;
 		//Starts with "type"
 		while(sc.hasNext())
 		{
@@ -111,13 +114,22 @@ public class PropertiesReader {
 			{
 				//Loads all the property information contained into f
 				f.load(sr);
-				storage.get(typeh).add(f);
-				//System.out.println("Added "+typeh+": " + f.getProperty("name"));
-				//System.out.println(f.stringPropertyNames());
+				
+				//checks that f's name is unique
+				checkname = f.getProperty("name");
+				if(!uniquenames.add(checkname))
+				{
+					outputString(this, "Failed to create Worldobject (non-unique name): " + f.getProperty("name"));
+				}
+				else //Adds f to the correct property list.
+				{
+					storage.get(typeh).add(f);
+				}
+				
 			}
 			catch(IOException e)
 			{
-				System.out.println("Failed to create WorldObject: "+typeh);
+				outputString(this,"Failed to create WorldObject: "+typeh);
 			}
 		}
 		sc.close();

@@ -25,11 +25,11 @@ public class RuntimeController
 		PropertiesReader ptr = new PropertiesReader();
 		fp.processFile("inputTest.txt", ptr);
 
-		Layout lt = new Layout(Layout.pointy,new Point(size,size),new Point(screenwidth/2,screenheight/2)); //Spiral Map
-		MapController mc = new MapController(10, ptr, lt, rand); 
+		//Layout lt = new Layout(Layout.pointy,new Point(size,size),new Point(screenwidth/2,screenheight/2)); //Spiral Map
+		//MapController mc = new MapController(10, ptr, lt, rand); 
 		
-		//Layout lt = new Layout(Layout.pointy,new Point(size,size),new Point(size,size));//Rectangle Map
-		//MapController mc = new MapController(300,500, ptr, lt, rand); 
+		Layout lt = new Layout(Layout.pointy,new Point(size,size),new Point(size,size));//Rectangle Map
+		MapController mc = new MapController(10,10, ptr, lt, rand); 
 		//h,w
 		
 		//System.out.println("total connects: " + mc.hexmap.getConnections().size());
