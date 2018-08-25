@@ -1,10 +1,11 @@
 package model;
 import java.util.*;
 
-import model.worldobjects.Town;
 import model.worldobjects.WorldObject;
 public class Region extends WorldObject implements RegionProperties 
 {
+
+	
 	public static final String[] setvalues = {"region"};
 	public static final Set<String> tags = new HashSet<>(Arrays.asList(setvalues));
 

@@ -6,11 +6,11 @@ public abstract class WorldObject extends HasDescriptor implements WorldProperti
 	private int visibility;
 	private int max;
 	
-	public WorldObject(WorldDescriptor wd, int vis, int m)
+	public WorldObject(WorldDescriptor wd, int visibility, int max)
 	{
 		super(wd);
-		visibility = vis;
-		max = m;
+		this.visibility = visibility;
+		this.max = max;
 	}
 	
 	public int getMax()
@@ -23,13 +23,13 @@ public abstract class WorldObject extends HasDescriptor implements WorldProperti
 		return visibility;
 	}
 	
-	public void setMax(int m)
+	public void setMax(int max)
 	{
-		max = m;
+		this.max = max;
 	}
 	
-	public void setVisibility(int vis)
+	public void setVisibility(int visibility)
 	{
-		visibility = vis;
+		this.visibility = visibility;
 	}
 }

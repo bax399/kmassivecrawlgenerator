@@ -14,7 +14,7 @@ public class RuntimeController
 {	
 	final static int screenwidth = 1920;
 	final static int screenheight = 1080;
-	final static int size = 10; //mc 30
+	final static int size = 60; //mc 30
 	
 	public static void main(String[] args)
 	{ 
@@ -25,7 +25,7 @@ public class RuntimeController
 		fp.processFile("inputTest.txt", ptr);
 
 		Layout lt = new Layout(Layout.pointy,new Point(size,size),new Point(screenwidth/2,screenheight/2)); //Spiral Map
-		MapController mc = new MapController(30, ptr, lt, rand); 
+		MapController mc = new MapController(5, ptr, lt, rand); 
 		
 		//Layout lt = new Layout(Layout.pointy,new Point(size,size),new Point(size,size)); //Rectangle Map
 		//MapController mc = new MapController(20,30, ptr, lt, rand); //h,w

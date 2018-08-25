@@ -15,4 +15,5 @@ public interface Biome extends BiomeProperties
 	public double getRiverOrigin();
 	public Biome getConcreteBiome();
 	public Set<Biome> getBiomes();
+	public Set<Biome> getValidRegionBiomes();
 }

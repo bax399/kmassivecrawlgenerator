@@ -35,6 +35,8 @@ public class FilledHex extends Hex
 	private RiverNode river = null;
 	private RoadNode road=null;
 	
+	private HexRegion region;
+	
 	//Stores the random points for each item it contains, rivers and roads store their own.
 	private Map<WorldObject, Point> points;
 	
@@ -46,12 +48,14 @@ public class FilledHex extends Hex
 	{
 		super(q,r);
 		biome = b;
+		region = null;
 	}
 
 	public FilledHex(Biome b, int q, int r)
 	{
 		super(q,r);
 		biome = b;
+		region = null;
 	}
 	
 	//Can create FilledHexes using default biome values.
@@ -59,6 +63,7 @@ public class FilledHex extends Hex
 	{
 		super(q,r);
 		biome = BiomeConcrete.basic;
+		region = null;
 	}
 
 	public void add(HexTown t)
@@ -110,6 +115,16 @@ public class FilledHex extends Hex
 		river = rn;
 	}
 	
+	public HexRegion getRegion()
+	{
+		return region;
+	}
+	
+	public void setRegion(HexRegion region)
+	{
+		this.region = region;
+	}
+	
 	public RiverNode getRiverNode()
 	{
 		return river;
@@ -128,5 +143,10 @@ public class FilledHex extends Hex
 	public Set<Biome> getBiomes()
 	{
 		return biome.getBiomes();
+	}
+	
+	public Set<FilledHex> getNeighbours()
+	{
+		return null;
 	}
 }
