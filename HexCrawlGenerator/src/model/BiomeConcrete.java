@@ -120,7 +120,7 @@ public class BiomeConcrete extends HasDescriptor implements Biome,BiomePropertie
 	}
 	
 	@Override
-	public Biome getBiome()
+	public Biome getConcreteBiome()
 	{
 		return this;
 	}

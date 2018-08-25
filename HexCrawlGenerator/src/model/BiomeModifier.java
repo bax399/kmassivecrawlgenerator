@@ -139,9 +139,9 @@ public class BiomeModifier extends HasDescriptor implements Biome,BiomeModifierP
 	}
 	
 	@Override
-	public Biome getBiome()
+	public Biome getConcreteBiome()
 	{
-		return next.getBiome();
+		return next.getConcreteBiome();
 	}
 	
 	@Override

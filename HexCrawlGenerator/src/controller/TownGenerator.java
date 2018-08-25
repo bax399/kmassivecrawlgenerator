@@ -63,7 +63,7 @@ public class TownGenerator extends Generator
 		if (!t.limitReached())
 		{
 			//getBiome().getBiome() will get the base biomes, ignoring modifiers.
-			if (validbiomes.get(t).contains(curr.getBiome().getBiome()))
+			if (validbiomes.get(t).contains(curr.getBiome().getConcreteBiome()))
 			{
 				if(rollChance(t.getChance()))
 				{

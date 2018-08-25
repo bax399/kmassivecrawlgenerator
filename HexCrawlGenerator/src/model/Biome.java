@@ -13,6 +13,6 @@ public interface Biome extends BiomeProperties
 	public String getDescription();
 	public double getRiverEnd();
 	public double getRiverOrigin();
-	public Biome getBiome();
+	public Biome getConcreteBiome();
 	public Set<Biome> getBiomes();
 }

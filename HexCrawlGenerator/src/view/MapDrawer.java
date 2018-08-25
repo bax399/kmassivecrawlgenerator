@@ -54,9 +54,11 @@ public class MapDrawer extends JPanel
 			g.fillPolygon(hh.shape);
 
 			//**Outline**//
-			g.setColor(new Color(0,0,0,50));
-			g.drawPolygon(hh.shape);
-			
+			if (hexes.getHexes().size() < 2000)
+			{
+				g.setColor(new Color(0,0,0,50));
+				g.drawPolygon(hh.shape);
+			}
 			//**Name**//
 			//g.setColor(Color.BLACK);
 			//g.drawString(hh.getBiome().getBiomeName().substring(0,2), (int)hh.center.x-5, (int)hh.center.y+5);
