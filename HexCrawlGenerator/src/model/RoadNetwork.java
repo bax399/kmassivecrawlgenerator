@@ -20,7 +20,7 @@ public class RoadNetwork
 		nodes = new HashSet<>();
 		towns = new HashSet<>();
 		allroads = ar;
-	}
+	} 
 	
 	public Set<Connection> getConnections()
 	{

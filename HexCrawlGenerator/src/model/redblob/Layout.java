@@ -1,5 +1,9 @@
 package model.redblob;
 import java.awt.Polygon;
+import java.util.HashSet;
+import java.util.Set;
+import merowech.ConcaveHull.Point;
+import model.HexRegion;
 public class Layout {
 	   public Layout(Orientation orientation, Point size, Point origin)
 	    {
@@ -18,7 +22,7 @@ public class Layout {
 	        Orientation M = orientation;
 	        double x = (M.f0 * h.q + M.f1 * h.r) * size.x;
 	        double y = (M.f2 * h.q + M.f3 * h.r) * size.y;
-	        return new Point(x + origin.x, y + origin.y);
+	        return new Point(x + origin.x, y + origin.y); 
 	    }
 
 
@@ -53,5 +57,12 @@ public class Layout {
 	            corners.addPoint((int)Math.round(center.x+offset.x),  (int)Math.round(center.y+offset.y));
 	        }
 	        return corners;
+	    }
+	    
+	    public Point pointCorner(Hex h, int ii)
+	    {
+	    	Point center = hexToPixel(h);
+	    	Point offset = hexCornerOffset(ii);
+	    	return new Point(center.x+offset.x, center.y+offset.y);
 	    }
 }

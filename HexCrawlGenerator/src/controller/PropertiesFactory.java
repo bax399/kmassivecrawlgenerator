@@ -21,7 +21,7 @@ public class PropertiesFactory
 		
 		return objectlist;
 	}	
-	
+	 
 	public <V extends Object> V chooseType(Properties pp)
 	{
 		String type = pp.getProperty("TYPE");

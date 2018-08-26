@@ -10,10 +10,10 @@ import java.util.Set;
 
 import javax.swing.JPanel;
 
+import merowech.ConcaveHull.Point;
 import model.ConnectedHexMap;
 import model.Connection;
 import model.FilledHex;
-import model.redblob.Point;
 import model.redblob.Tuple;
 import model.worldobjects.HexTown;
 //Panel draws to screen.
@@ -31,7 +31,7 @@ public class MapDrawer extends JPanel
 
 	public MapDrawer(ConnectedHexMap h, Set<Set<Connection>> cs)
 	{
-		hexes=h;
+		hexes=h; 
 		ccs=cs;
 	}	
 	
@@ -51,13 +51,13 @@ public class MapDrawer extends JPanel
 			
 			//Change offset to be relative to layout size 
 			g.setColor(hh.getBiome().getColor());
-			g.fillPolygon(hh.shape);
+			g.fillPolygon(hh.getShape());
 
 			//**Outline**//
 			if (hexes.getHexes().size() < 2000)
 			{
 				g.setColor(new Color(0,0,0,50));
-				g.drawPolygon(hh.shape);
+				g.drawPolygon(hh.getShape());
 			}
 			//**Name**//
 			//g.setColor(Color.BLACK);
@@ -96,7 +96,7 @@ public class MapDrawer extends JPanel
 				g2d.setColor(Color.BLUE);
 				Point st = edge.getVertexes().get(0).getRiverNode().getPosition();
 				Point fn = edge.getVertexes().get(1).getRiverNode().getPosition();
-				g2d.drawLine((int)st.x, (int)st.y, (int)fn.x, (int)fn.y);	
+				g2d.drawLine(st.x.intValue(), st.y.intValue(), fn.x.intValue(), fn.y.intValue());	
 				g2d.setColor(Color.BLUE);
 				
 				//**Draw Points**//
@@ -129,7 +129,7 @@ public class MapDrawer extends JPanel
 				g2d.setStroke(new BasicStroke(2.0f));				
 				Point st = edge.getVertexes().get(0).getRoadNode().getPosition();
 				Point fn = edge.getVertexes().get(1).getRoadNode().getPosition();
-				g2d.drawLine((int)st.x, (int)st.y, (int)fn.x, (int)fn.y);	
+				g2d.drawLine(st.x.intValue(), st.y.intValue(), fn.x.intValue(), fn.y.intValue());	
 				
 				//**Draw Points**//
 				//g2d.drawOval((int)st.x, (int)st.y, 1, 1);
@@ -145,10 +145,10 @@ public class MapDrawer extends JPanel
 			for(HexTown t:hh.getTowns())
 			{
 				g.setColor(Color.RED);
-				g2d.fillOval((int)t.getPosition().x-3, (int)t.getPosition().y-3, 6, 6);
+				g2d.fillOval(t.getPosition().x.intValue()-3, t.getPosition().y.intValue()-3, 6, 6);
 				g.setColor(Color.BLACK);
-				g.drawString("*", (int)t.getPosition().x-3, (int)t.getPosition().y+5);
-				g.drawString(t.getConnectivity()+"", (int)t.getPosition().x+5, (int)t.getPosition().y);
+				g.drawString("*", t.getPosition().x.intValue()-3, t.getPosition().y.intValue()+5);
+				g.drawString(t.getConnectivity()+"", t.getPosition().x.intValue()+5, t.getPosition().y.intValue());
 			}			
 		}
 		

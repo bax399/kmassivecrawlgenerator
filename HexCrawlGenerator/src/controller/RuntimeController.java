@@ -1,20 +1,19 @@
 package controller;
-import java.awt.GraphicsEnvironment;
-import java.util.Map;
 import static functions.PFunctions.outputString;
+
+import java.awt.GraphicsEnvironment;
 import java.util.Random;
 
 import javax.swing.JFrame;
 
-import functions.PFunctions;
+import merowech.ConcaveHull.Point;
 import model.redblob.Layout;
-import model.redblob.Point;
 import view.MapDrawer;
 public class RuntimeController 
 {	
-	final static int screenwidth = 1920;
-	final static int screenheight = 1080;
-	final static int size = 60; //mc 30
+	final static double screenwidth = 1920d;
+	final static double screenheight = 1080d;
+	final static double size = 60d; //mc 30
 	
 	public static void main(String[] args)
 	{ 
@@ -23,7 +22,7 @@ public class RuntimeController
 		FileProcessor fp = new FileProcessor();
 		PropertiesReader ptr = new PropertiesReader();
 		fp.processFile("inputTest.txt", ptr);
-
+ 
 		Layout lt = new Layout(Layout.pointy,new Point(size,size),new Point(screenwidth/2,screenheight/2)); //Spiral Map
 		MapController mc = new MapController(5, ptr, lt, rand); 
 		
@@ -42,7 +41,7 @@ public class RuntimeController
 		
 		MapDrawer ui = new MapDrawer(mc.hexmap,mc.hexmap.getRiverConnections());
 		f.add(ui);
-		f.setSize(screenwidth,screenheight);
+		f.setSize((int)screenwidth,(int)screenheight);
 		f.setVisible(true);
 		
 		outputString("total hexes:" + mc.getHexes().size());

@@ -32,7 +32,7 @@ public class PropertiesReader {
 		//DEFAULTS		
 		//defaultbiome = 
 		propsdefault.put("biome",new Properties());		
-		loadDefault(fr,"biome");
+        loadDefault(fr,"biome");
 		
 		//defaultworldobject = 
 		propsdefault.put("worldobject", new Properties());		

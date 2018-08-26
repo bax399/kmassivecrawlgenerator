@@ -61,7 +61,7 @@ public class BiomeGenerator extends Generator
 		
 		frontier.add(startHex);
 		came_from.put(startHex, startBiome);
-		visited.add(startHex);
+		visited.add(startHex); 
 		
 		while(!frontier.isEmpty())
 		{

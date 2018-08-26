@@ -1,6 +1,8 @@
 package model;
 import java.util.HashSet;
 import java.util.Set;
+
+import model.worldobjects.RiverNode;
 public class RiverNetwork {
 
 	private Set<Connection> connects;
@@ -42,7 +44,7 @@ public class RiverNetwork {
 		Set<Connection> tempset = new HashSet<>();
 		tempset.addAll(connects);
 		//add all hexes to set (get from connections)
-		for(Connection cc : connects)
+		for(Connection cc : connects) 
 		{
 			//create river nodes and add to set,
 			FilledHex fh;

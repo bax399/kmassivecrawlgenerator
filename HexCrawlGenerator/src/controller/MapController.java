@@ -93,7 +93,7 @@ public class MapController
 		{
 			FilledHex hh = hexmap.getHex(it.next());
 			
-			hh.shape = layout.polygonCorners(hh);
+			hh.setShape(layout.polygonCorners(hh));
 			hh.center = layout.hexToPixel(hh);
 		}
 	} 

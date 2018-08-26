@@ -79,7 +79,7 @@ public class Hex extends Vertex
 
     public int length()
     {
-        return (int)((Math.abs(q) + Math.abs(r) + Math.abs(s)) / 2);
+        return (int)((Math.abs(q) + Math.abs(r) + Math.abs(s)) / 2); 
     }
 
 

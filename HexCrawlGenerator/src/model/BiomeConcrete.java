@@ -31,7 +31,7 @@ public class BiomeConcrete extends HasDescriptor implements Biome,BiomePropertie
 		super(new WorldDescriptor(pp.getProperty("name"), BiomeConcrete.tags, pp.getProperty("name"), 10));
 		color = parseColor(pp.getProperty("color"));
 		height = Integer.parseInt(pp.getProperty("height"));
-		travelcost = Integer.parseInt(pp.getProperty("travelcost"));
+		travelcost = Integer.parseInt(pp.getProperty("travelcost")); 
 		spotdistance = pp.getProperty("spotdistance");
 		riverorigin = Double.parseDouble(pp.getProperty("riverorigin"));
 		riverend = Double.parseDouble(pp.getProperty("riverend"));
@@ -132,4 +132,7 @@ public class BiomeConcrete extends HasDescriptor implements Biome,BiomePropertie
 		me.add(this);
 		return me;
 	}
+	
+	@Override
+	public Set<Biome> getValidRegionBiomes() { return null;} //TODO create valid biomes category.
 }

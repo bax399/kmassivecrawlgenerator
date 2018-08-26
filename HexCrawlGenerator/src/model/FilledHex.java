@@ -1,18 +1,21 @@
 package model;
 
 import java.awt.Polygon;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import merowech.ConcaveHull.Point;
 import model.redblob.Hex;
-import model.redblob.Point;
 import model.worldobjects.Dungeon;
 import model.worldobjects.HexTown;
 import model.worldobjects.Lair;
 import model.worldobjects.Landmark;
 import model.worldobjects.Nomad;
+import model.worldobjects.RiverNode;
 import model.worldobjects.RoadNode;
 import model.worldobjects.WorldObject;
 
@@ -20,10 +23,12 @@ public class FilledHex extends Hex
 {
 	private Biome biome;
 	public Point center;
-	public Polygon shape = new Polygon();
+	
 	public int priority=0; //Editable field for pathfinding priority
 	public int rivertype=-1; //Editable field for creating rivers
 	
+	
+	private Polygon shape;	
 	//Points are stored to place worldobjects in exact locations
 	//Need a better way to store Points.
 	//These are ONLY ITEMS THAT EXIST WITHIN THE HEX
@@ -33,8 +38,8 @@ public class FilledHex extends Hex
 	private Set<Landmark> landmarks;
 	private Set<Nomad> nomads;
 	private RiverNode river = null;
-	private RoadNode road=null;
-	
+	private RoadNode road=null; 
+	 
 	private HexRegion region;
 	
 	//Stores the random points for each item it contains, rivers and roads store their own.
@@ -145,8 +150,31 @@ public class FilledHex extends Hex
 		return biome.getBiomes();
 	}
 	
-	public Set<FilledHex> getNeighbours()
+	public List<FilledHex> getNeighbours(ConnectedHexMap chm)
 	{
-		return null;
+		List<FilledHex> neighbours = new ArrayList<>();
+		for(int ii = 0; ii < 6; ii++)
+		{
+			if (getNeighbour(chm,ii) != null) 
+			{
+				neighbours.add(getNeighbour(chm,ii)); 
+			}
+		}
+		return neighbours;
+	}
+	
+	public FilledHex getNeighbour(ConnectedHexMap chm, int index)
+	{
+		return chm.getHex(this.neighbor(index)); 
+	}	
+	
+	public void setShape(Polygon shape)
+	{
+		this.shape = shape;
+	}
+	
+	public Polygon getShape()
+	{
+		return this.shape;
 	}
 }

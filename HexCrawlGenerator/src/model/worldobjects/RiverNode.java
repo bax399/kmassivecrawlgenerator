@@ -1,5 +1,6 @@
-package model;
-import model.redblob.Point;
+package model.worldobjects;
+import merowech.ConcaveHull.Point;
+import model.RiverNetwork;
 public class RiverNode 
 {
 	private Point pos;

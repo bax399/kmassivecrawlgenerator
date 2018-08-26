@@ -8,11 +8,11 @@ public class BiomeModifier extends HasDescriptor implements Biome,BiomeModifierP
 	public static final String[] setvalues = {"biomemodifier"};
 	public static final Set<String> tags = new HashSet<>(Arrays.asList(setvalues));	
 	
-											//modname,color,height,travel,spotd,rivero,rivere
+											//modname,color,height,travel,spotd,rivero,rivere 
 	public static BiomeModifier river = new BiomeModifier("river",new int[]{1,2,3},-2,2,"",0d,0.5d); //river runs through here
 	public static BiomeModifier road =  new BiomeModifier("road",new int[]{1,2,3},0,-1,"",0d,0d);
 	
-	private Biome next;
+	private Biome next; 
 
 	private final Color color;
 	private final int height;
@@ -151,4 +151,7 @@ public class BiomeModifier extends HasDescriptor implements Biome,BiomeModifierP
 		me.add(this);
 		return me;
 	}
+	
+	@Override
+	public Set<Biome> getValidRegionBiomes() { return null;} //TODO create valid biomes category.
 }

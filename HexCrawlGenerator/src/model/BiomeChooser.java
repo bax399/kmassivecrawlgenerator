@@ -21,15 +21,15 @@ public class BiomeChooser
 	Random rand;
 
 	public BiomeChooser(ArrayList<Biome> biomes, Random random)
-	{
-		rand = random;
+    {
+		rand = random; 
 		weights = new HashMap<>();
 		biomenames = new HashMap<>();
 		validbiomes = new HashSet<>();
 		//Add all true-names to list
 		for(Biome b: biomes)
 		{
-			biomenames.put(b.getBiomeName(),b);
+			biomenames.put(b.getBiomeName(),b); 
 		}
 		
 		//process weights now we have all.

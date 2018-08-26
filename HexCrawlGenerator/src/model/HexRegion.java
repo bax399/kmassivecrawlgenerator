@@ -1,12 +1,22 @@
 package model;
-import java.util.*;
+import java.awt.Polygon;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
-import model.worldobjects.Town;
+import merowech.ConcaveHull;
+import merowech.ConcaveHull.Point;
+import model.redblob.Layout;
+
 public class HexRegion 
 {
 	
 	public final Region stats; //what this monster references whenever it is ask for anything.
 
+	private Polygon shape = null;	
+	
 	private Set<FilledHex> regionhexes;
 	private Set<FilledHex> edgehexes;
 	private Set<FilledHex> neighbourhexes;
@@ -17,11 +27,12 @@ public class HexRegion
 	//private int tallestheight;
 	private int majoritysize;
 	private int regionsize;
-	
-	public HexRegion(Region type, FilledHex origin)
+	private Layout lt;
+	private ConnectedHexMap chm;
+	public HexRegion(Region type, FilledHex origin, Layout lt,ConnectedHexMap chm)
 	{
 		stats = type;
-		
+		this.lt = lt;
 		regionhexes = new HashSet<>();
 		edgehexes = new HashSet<>();
 		neighbourhexes = new HashSet<>();
@@ -31,13 +42,14 @@ public class HexRegion
 		majoritybiome = origin.getBiome().getConcreteBiome();
 		majoritysize = 1; //Set to 1 to bias original concrete biome as the majority biome.
 		regionsize=0;
+		this.chm = chm;
 		addhex(origin);
 	}
 
 	public HexRegion(FilledHex origin)
 	{
 		stats = null;
-		
+		 
 		regionhexes = new HashSet<>();
 		edgehexes = new HashSet<>();
 		neighbourhexes = new HashSet<>();
@@ -47,7 +59,7 @@ public class HexRegion
 		//Get concrete biome of origin
 		majoritybiome = origin.getBiome().getConcreteBiome();
 		majoritysize = 1; //Set to 1 to bias original concrete biome as the majority biome.
-		regionsize=0;
+		regionsize=0; 
 		addhex(origin);
 	}	
 	
@@ -92,7 +104,8 @@ public class HexRegion
 		}
 		
 		//If the hex's neighbours are not all in the regionhex set, this hex is an edge hex, need to add new neighbours too.
-		Set<FilledHex> newfrontier = hh.getNeighbours(); //CURRENTLY NULL
+		Set<FilledHex> newfrontier = new HashSet<>();
+		newfrontier.addAll(hh.getNeighbours(chm));
 		if (!regionhexes.containsAll(newfrontier))
 		{			
 			edgehexes.add(hh);
@@ -156,7 +169,8 @@ public class HexRegion
 	{
 		for(FilledHex eh : regionhexes)
 		{	
-			Set<FilledHex> updatedfrontier = eh.getNeighbours();
+			Set<FilledHex> updatedfrontier = new HashSet<>();
+			updatedfrontier.addAll(eh.getNeighbours(chm));
 			if (regionhexes.containsAll(updatedfrontier))
 			{
 				edgehexes.remove(eh);
@@ -172,7 +186,8 @@ public class HexRegion
 	{
 		for(FilledHex eh : edgehexes)
 		{
-			Set<FilledHex> frontier = eh.getNeighbours();
+			Set<FilledHex> frontier = new HashSet<>();
+			frontier.addAll(eh.getNeighbours(chm));
 			for(FilledHex fh : frontier)
 			{
 				if (!regionhexes.contains(fh))
@@ -184,6 +199,26 @@ public class HexRegion
 					neighbourhexes.remove(fh);
 				}
 			}
+		}
+	}
+	
+	public void calculateShape() 
+	{
+		ConcaveHull ch = new ConcaveHull();
+		ArrayList<Point> edgepoints = new ArrayList<>();
+		for(FilledHex h : edgehexes)
+		{
+			for(int ii=0;ii<6;ii++)
+			{
+				Point pp = lt.pointCorner(h,ii);
+				edgepoints.add(pp);
+			}
+		}
+		ArrayList<Point> points = ch.calculateConcaveHull(edgepoints, 8);
+		shape = new Polygon();
+		for(int ii = 0; ii < points.size();ii++)
+		{
+			shape.addPoint((int)Math.round(points.get(ii).x), (int)Math.round(points.get(ii).y));
 		}
 	}
 	

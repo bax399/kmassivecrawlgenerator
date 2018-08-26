@@ -1,8 +1,8 @@
 package model.worldobjects;
+import merowech.ConcaveHull.Point;
 import model.FilledHex;
 import model.HasDescriptor;
 import model.WorldDescriptor;
-import model.redblob.Point;
 public class HexTown extends HasDescriptor 
 {
 	public final Town stats; //what this monster references whenever it is ask for anything.

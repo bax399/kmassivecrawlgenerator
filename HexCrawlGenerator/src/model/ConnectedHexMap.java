@@ -5,9 +5,9 @@ import java.util.Iterator;
 import java.util.Random;
 import java.util.Set;
 
+import merowech.ConcaveHull.Point;
 import model.graphresource.Graph;
 import model.redblob.Layout;
-import model.redblob.Point;
 public class ConnectedHexMap extends HexMap<FilledHex> {
 
 	Graph<FilledHex,Connection> neighbours; // Stores each hex's neighbouring cells in hexagonal coordinates
@@ -28,7 +28,7 @@ public class ConnectedHexMap extends HexMap<FilledHex> {
 		width = w;
 		height = h;		
 		ly = l;
-		rand = r;
+		rand = r; 
 	}
 	
 	public void setRiverNetworks(Set<RiverNetwork> rivers)

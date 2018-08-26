@@ -30,14 +30,14 @@ public class Region extends WorldObject implements RegionProperties
 	
 	@Override
 	public int getMax() {
-		// TODO Auto-generated method stub
 		return max;
-	}
+	}  
 
 	@Override
 	public int getMin() {
-		// TODO Auto-generated method stub
 		return min;
 	}
+	
+	
 	
 }

@@ -1,5 +1,8 @@
 package controller;
 import java.util.Random;
+
+import model.ConnectedHexMap;
+import model.FilledHex;
 public abstract class Generator 
 {
 	Random rand;
@@ -8,6 +11,7 @@ public abstract class Generator
 	{
 		rand=rd;
 	}
+
 	
 	public boolean rollChance(double chance)
 	{
@@ -23,7 +27,7 @@ public abstract class Generator
 			succeeds=true; //auto success if chance is >1.0 (100%)
 		}
 		else
-		if(Double.compare(chance,0d)>0 && Double.compare(chance, 1d)<0)
+		if(Double.compare(chance,0d)>0 && Double.compare(chance, 1d)<0) 
 		{
 			succeeds = (Double.compare(randd,chance) < 0); //if random int is within 0->chance range, succeeds.
 		}

@@ -25,7 +25,7 @@ public class RegionGenerator extends Generator
 		public int compare(HexRegion r1, HexRegion r2)
 		{
 			return (int)(r1.getRegionSize() - r2.getRegionSize());
-		}
+		} 
 	};		
 	
 	public RegionGenerator(ConnectedHexMap chm, Random r)
@@ -46,10 +46,11 @@ public class RegionGenerator extends Generator
 		while(it.hasNext())
 		{
 			FilledHex hh = it.next();
-			if (hh.getRegion() == null)
+			if (hh.getRegion() == null) 
 			{
 				found = false;
-				Set<FilledHex> nh = hh.getNeighbours();
+				Set<FilledHex> nh = new HashSet<>();
+				nh.addAll(hh.getNeighbours(hexmap));
 				
 				Iterator<FilledHex> it2 = nh.iterator();
 				while(it2.hasNext() && !found) //Look for neighbouring hex that has a region
