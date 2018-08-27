@@ -2,11 +2,12 @@ package model.redblob;
 import java.awt.Polygon;
 import java.util.HashSet;
 import java.util.Set;
-import merowech.ConcaveHull.Point;
+
 import model.HexRegion;
+import model.merowech.ConcaveHull.Point;
 public class Layout {
 	   public Layout(Orientation orientation, Point size, Point origin)
-	    {
+	    { 
 	        this.orientation = orientation;
 	        this.size = size;
 	        this.origin = origin;

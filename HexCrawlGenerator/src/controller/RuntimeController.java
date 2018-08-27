@@ -6,7 +6,7 @@ import java.util.Random;
 
 import javax.swing.JFrame;
 
-import merowech.ConcaveHull.Point;
+import model.merowech.ConcaveHull.Point;
 import model.redblob.Layout;
 import view.MapDrawer;
 public class RuntimeController 
@@ -39,7 +39,7 @@ public class RuntimeController
 		//Pathfinder pfa = new Riverfinder();
 		//Set<Connection> path = pfa.GreedyBFS(mc.hexmap, mc.getHexes().get(new Tuple(0,10)), mc.getHexes().get(new Tuple(0,-10)));		
 		
-		MapDrawer ui = new MapDrawer(mc.hexmap,mc.hexmap.getRiverConnections());
+		MapDrawer ui = new MapDrawer(mc.hexmap, lt);
 		f.add(ui);
 		f.setSize((int)screenwidth,(int)screenheight);
 		f.setVisible(true);

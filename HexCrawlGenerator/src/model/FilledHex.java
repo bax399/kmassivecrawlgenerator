@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import merowech.ConcaveHull.Point;
+import model.merowech.ConcaveHull.Point;
 import model.redblob.Hex;
 import model.worldobjects.Dungeon;
 import model.worldobjects.HexTown;
@@ -160,7 +160,7 @@ public class FilledHex extends Hex
 				neighbours.add(getNeighbour(chm,ii)); 
 			}
 		}
-		return neighbours;
+		return neighbours; 
 	}
 	
 	public FilledHex getNeighbour(ConnectedHexMap chm, int index)

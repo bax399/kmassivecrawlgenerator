@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
+
+import functions.PFunctions;
 public class BiomeModifier extends HasDescriptor implements Biome,BiomeModifierProperties {
 	public static final String[] setvalues = {"biomemodifier"};
 	public static final Set<String> tags = new HashSet<>(Arrays.asList(setvalues));	
@@ -22,6 +24,7 @@ public class BiomeModifier extends HasDescriptor implements Biome,BiomeModifierP
 	private final double riverend;
 	private final String modname;	
 
+	
 	public BiomeModifier(BiomeModifier bm, Biome nextb)
 	{
 		super(new WorldDescriptor(bm.modname, BiomeConcrete.tags, bm.modname, 0));
@@ -32,13 +35,12 @@ public class BiomeModifier extends HasDescriptor implements Biome,BiomeModifierP
 		riverorigin = bm.riverorigin;
 		riverend = bm.riverend;
 		modname=bm.modname;
-
 	}
 	
 	public BiomeModifier(Properties pp)
 	{
 		super(new WorldDescriptor(pp.getProperty("name"), BiomeConcrete.tags, pp.getProperty("name"), 10));
-		color = parseColor(pp.getProperty("color"));
+		color = PFunctions.parseColor(pp.getProperty("color"));
 		height = Integer.parseInt(pp.getProperty("height"));
 		travelcost = Integer.parseInt(pp.getProperty("travelcost"));
 		spotdistance = pp.getProperty("spotdistance");
@@ -58,7 +60,6 @@ public class BiomeModifier extends HasDescriptor implements Biome,BiomeModifierP
 		riverend = re;
 		spotdistance = sd;
 		modname = n;
-
 	}
 	
 	public void setNext(Biome b)
@@ -76,23 +77,16 @@ public class BiomeModifier extends HasDescriptor implements Biome,BiomeModifierP
 	{
 		return next.isValidStart();
 	}
-	
-	@Override
-	public Color parseColor(String rgb)
-	{
-		return next.parseColor(rgb);
-	}
-	
 
 	@Override
-	public String getBiomeName()
+	public String getConcreteBiomeName()
 	{
-		return next.getBiomeName();
+		return next.getConcreteBiomeName();
 	}
 	
 	@Override
-	public String getName() {
-		return modname + next.getName();
+	public String getPrintName() {
+		return modname + " " + next.getPrintName();
 	}
 	
 	@Override
@@ -153,5 +147,16 @@ public class BiomeModifier extends HasDescriptor implements Biome,BiomeModifierP
 	}
 	
 	@Override
-	public Set<Biome> getValidRegionBiomes() { return null;} //TODO create valid biomes category.
+	public Set<String> getStrBiomes()
+	{
+		Set<String> me = next.getStrBiomes();
+		me.add(this.modname);
+		return me;
+	}	
+	
+	@Override
+	public Set<String> getValidRegionBiomes() 
+	{ 
+		return next.getValidRegionBiomes();
+	} //TODO create valid biomes category.
 }

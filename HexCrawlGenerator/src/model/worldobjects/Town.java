@@ -5,9 +5,9 @@ import java.util.Properties;
 import java.util.Set;
 
 import functions.PFunctions;
-import merowech.ConcaveHull.Point;
 import model.FilledHex;
 import model.WorldDescriptor;
+import model.merowech.ConcaveHull.Point;
 public class Town extends WorldObject implements TownProperties
 {
 	public static final String[] setvalues = {"town"};

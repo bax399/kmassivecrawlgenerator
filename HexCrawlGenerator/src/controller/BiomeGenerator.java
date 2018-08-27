@@ -108,7 +108,7 @@ public class BiomeGenerator extends Generator
 	private void wormStart(FilledHex start)
 	{
 		//Need to find a nearby hex to pull its biome from.
-		if (start.getBiome() == null || start.getBiome().getBiomeName().equals("basic"))
+		if (start.getBiome() == null || start.getBiome().getConcreteBiomeName().equals("basic"))
 		{
 			Biome type = bchoose.rollBiome();
 			FilledHex neighb;
@@ -120,7 +120,7 @@ public class BiomeGenerator extends Generator
 				dir = dirs.get(rand.nextInt(dirs.size()));
 				dirs.remove(Integer.valueOf(dir));
 				neighb = hexmap.getHex(start.neighbor(dir));
-				if (neighb != null && ((neighb.getBiome() != null) && !neighb.getBiome().getBiomeName().equals("basic")))
+				if (neighb != null && ((neighb.getBiome() != null) && !neighb.getBiome().getConcreteBiomeName().equals("basic")))
 				{
 					type = neighb.getBiome();
 					done=true;
@@ -149,10 +149,10 @@ public class BiomeGenerator extends Generator
 				dir = dirs.get(rand.nextInt(dirs.size()));
 				dirs.remove(Integer.valueOf(dir));
 				next = hexmap.getHex(curr.neighbor(dir));
-			}while(dirs.size()>0 && (next == null || ( next.getBiome()!=null && !next.getBiome().getBiomeName().equals("basic"))));			
+			}while(dirs.size()>0 && (next == null || ( next.getBiome()!=null && !next.getBiome().getConcreteBiomeName().equals("basic"))));			
 			
 			//if next is empty, replace.
-			if(next !=null && (next.getBiome() != null && next.getBiome().getBiomeName().equals("basic")))
+			if(next !=null && (next.getBiome() != null && next.getBiome().getConcreteBiomeName().equals("basic")))
 			{
 				curr = next;
 				curr.setBiome(type);

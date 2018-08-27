@@ -24,12 +24,15 @@ public class BiomeConcrete extends HasDescriptor implements Biome,BiomePropertie
 	private final double riverend;
 	private final String biomename; //the unmodifiable name of the biome, must refer to this, not getName, as that can change.
 	private final String weight;
+	private final Set<String> validregion;
+	
 	private final boolean validstart;
+	
 	
 	public BiomeConcrete(Properties pp)
 	{
 		super(new WorldDescriptor(pp.getProperty("name"), BiomeConcrete.tags, pp.getProperty("name"), 10));
-		color = parseColor(pp.getProperty("color"));
+		color = PFunctions.parseColor(pp.getProperty("color"));
 		height = Integer.parseInt(pp.getProperty("height"));
 		travelcost = Integer.parseInt(pp.getProperty("travelcost")); 
 		spotdistance = pp.getProperty("spotdistance");
@@ -38,6 +41,7 @@ public class BiomeConcrete extends HasDescriptor implements Biome,BiomePropertie
 		biomename=pp.getProperty("name");
 		weight=pp.getProperty("weight").toLowerCase();
 		validstart=PFunctions.convertToBoolean(pp.getProperty("validstart"));
+		validregion = PFunctions.processStringtoSet(pp.getProperty("validregion"));
 	}
 	
 	public BiomeConcrete(String n, int[] c, int h, int tc, String sd, double ro, double re,boolean v)
@@ -52,18 +56,8 @@ public class BiomeConcrete extends HasDescriptor implements Biome,BiomePropertie
 		biomename=n;
 		weight=n+":"+"1";
 		validstart=v;
-	}
-	
-	public Color parseColor(String rgb)
-	{
-		String[] cc = rgb.split(",");
-		int[] Irgb = new int[3];
+		validregion = PFunctions.processStringtoSet(n);		
 		
-		for(int ii=0;ii<3;ii++)
-		{
-			Irgb[ii]=Integer.parseInt(cc[ii]);
-		}
-		return new Color(Irgb[0],Irgb[1],Irgb[2]);
 	}
 	
 	
@@ -72,8 +66,13 @@ public class BiomeConcrete extends HasDescriptor implements Biome,BiomePropertie
 		return weight;
 	}
 	
+	public String getPrintName()
+	{
+		return biomename;
+	}
+	
 	//returns the "true" biome name, the one made at creation. this can't be modified!
-	public String getBiomeName()
+	public String getConcreteBiomeName()
 	{
 		return biomename;
 	}
@@ -134,5 +133,16 @@ public class BiomeConcrete extends HasDescriptor implements Biome,BiomePropertie
 	}
 	
 	@Override
-	public Set<Biome> getValidRegionBiomes() { return null;} //TODO create valid biomes category.
+	public Set<String> getStrBiomes()
+	{
+		Set<String> me = new HashSet<>();
+		me.add(this.getConcreteBiomeName());
+		return me;		
+	}
+	
+	@Override
+	public Set<String> getValidRegionBiomes() 
+	{
+		return validregion;
+	} //TODO create valid biomes category.
 }

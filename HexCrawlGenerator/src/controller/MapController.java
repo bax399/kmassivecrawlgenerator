@@ -42,6 +42,8 @@ public class MapController
 		
 		RoadGenerator rag = new RoadGenerator(hexmap,rand);
 		hexmap.setRoadNetworks(rag.generateRoads());
+		
+
 	}
 
 	//TODO setup observer pattern.
@@ -81,6 +83,9 @@ public class MapController
 		
 		RoadGenerator rag = new RoadGenerator(hexmap,rand);
 		hexmap.setRoadNetworks(rag.generateRoads());		
+		
+		RegionGenerator reg = new RegionGenerator(hexmap,rand);
+		hexmap.setRegions(reg.initializeRegions());		
 	}
 	
 	

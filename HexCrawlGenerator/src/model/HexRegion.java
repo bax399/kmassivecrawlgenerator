@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-import merowech.ConcaveHull;
-import merowech.ConcaveHull.Point;
+import model.merowech.ConcaveHull;
+import model.merowech.ConcaveHull.Point;
 import model.redblob.Layout;
 
 public class HexRegion 
@@ -27,12 +27,12 @@ public class HexRegion
 	//private int tallestheight;
 	private int majoritysize;
 	private int regionsize;
-	private Layout lt;
+
 	private ConnectedHexMap chm;
-	public HexRegion(Region type, FilledHex origin, Layout lt,ConnectedHexMap chm)
+	public HexRegion(Region type, FilledHex origin,ConnectedHexMap chm)
 	{
 		stats = type;
-		this.lt = lt;
+
 		regionhexes = new HashSet<>();
 		edgehexes = new HashSet<>();
 		neighbourhexes = new HashSet<>();
@@ -45,32 +45,16 @@ public class HexRegion
 		this.chm = chm;
 		addhex(origin);
 	}
-
-	public HexRegion(FilledHex origin)
-	{
-		stats = null;
-		 
-		regionhexes = new HashSet<>();
-		edgehexes = new HashSet<>();
-		neighbourhexes = new HashSet<>();
-		biomeamounts = new HashMap<>();
-		neighbourregions = new HashSet<>();
-		
-		//Get concrete biome of origin
-		majoritybiome = origin.getBiome().getConcreteBiome();
-		majoritysize = 1; //Set to 1 to bias original concrete biome as the majority biome.
-		regionsize=0; 
-		addhex(origin);
-	}	
 	
 	public boolean tryaddhex(FilledHex hh)
 	{
 		boolean added = false;
 		
-		if (neighbourhexes.contains(hh) && hh.getRegion() == null)
+		if (hh.getRegion() == null)
 		{
 			//If valid biomes and hex's biomes have anything in common.
-			if (!Collections.disjoint(getValidBiomes(),hh.getBiomes()))
+			if ((getValidBiomes().contains("all")) || (hh.getBiome().getStrBiomes().contains("all")) ||
+			(!Collections.disjoint(getValidBiomes(),hh.getBiome().getStrBiomes())))
 			{
 				addhex(hh);
 				added = true;	
@@ -87,7 +71,7 @@ public class HexRegion
 
 		//update region - add hex.		
 		regionhexes.add(hh);
-		regionsize+=1;
+		regionsize+=1; 
 		for(Biome bb : hh.getBiomes())
 		{
 			int biomenum = 1;
@@ -126,8 +110,14 @@ public class HexRegion
 		updateNeighbourRegions();
 	}
 	
+	public Polygon getShape(Layout lt)
+	{
+		if (shape == null) {calculateShape(lt);}
+		return shape;
+	}
+	
 	//Get majority biome in region.
-	public Set<Biome> getValidBiomes()
+	public Set<String> getValidBiomes()
 	{
 		return majoritybiome.getValidRegionBiomes();
 	}
@@ -146,6 +136,11 @@ public class HexRegion
 	public int getRegionSize()
 	{
 		return regionsize;
+	}
+	
+	public Set<FilledHex> getRegionHexes()
+	{
+		return regionhexes;
 	}
 
 	public Set<HexRegion> getNeighbourRegions()
@@ -202,7 +197,8 @@ public class HexRegion
 		}
 	}
 	
-	public void calculateShape() 
+	//Should only call this method after finishing all regions
+	/*public void calculateShape(Layout lt) 
 	{
 		ConcaveHull ch = new ConcaveHull();
 		ArrayList<Point> edgepoints = new ArrayList<>();
@@ -214,13 +210,13 @@ public class HexRegion
 				edgepoints.add(pp);
 			}
 		}
-		ArrayList<Point> points = ch.calculateConcaveHull(edgepoints, 8);
+		ArrayList<Point> points = ch.calculateConcaveHull(edgepoints, 30);
 		shape = new Polygon();
 		for(int ii = 0; ii < points.size();ii++)
 		{
 			shape.addPoint((int)Math.round(points.get(ii).x), (int)Math.round(points.get(ii).y));
 		}
-	}
+	}*/
 	
 	//Merge
 	//Add all region hexes from one to the other.
@@ -249,9 +245,16 @@ public class HexRegion
 			}		
 		}
 		
-		mergee = this;
+		//points old region to this region. //TODO fix this referencing issue, doesn't do anything right now.
 		updateEdges();
 		updateNeighbourHexes();
 		updateNeighbourRegions();
+	}
+	
+	public void updateAll()
+	{
+		updateEdges();
+		updateNeighbourHexes();
+		updateNeighbourRegions();	
 	}
 }

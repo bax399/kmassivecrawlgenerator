@@ -1,4 +1,4 @@
-package merowech;
+package model.merowech;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collections;

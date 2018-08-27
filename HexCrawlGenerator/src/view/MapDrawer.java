@@ -6,14 +6,17 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
 import javax.swing.JPanel;
 
-import merowech.ConcaveHull.Point;
 import model.ConnectedHexMap;
 import model.Connection;
 import model.FilledHex;
+import model.HexRegion;
+import model.merowech.ConcaveHull.Point;
+import model.redblob.Layout;
 import model.redblob.Tuple;
 import model.worldobjects.HexTown;
 //Panel draws to screen.
@@ -21,20 +24,15 @@ public class MapDrawer extends JPanel
 {
 
 	ConnectedHexMap hexes;
-	Set<Set<Connection>> ccs;
+	Layout lt;
 	static int size = 10;
 	
-	public MapDrawer(ConnectedHexMap h)
+	public MapDrawer(ConnectedHexMap h, Layout lt)
 	{
 		hexes=h;
+		this.lt = lt;
 	}
 
-	public MapDrawer(ConnectedHexMap h, Set<Set<Connection>> cs)
-	{
-		hexes=h; 
-		ccs=cs;
-	}	
-	
 	//Needed method, draws to screen
 	@Override
 	public void paintComponent(Graphics g)
@@ -45,6 +43,8 @@ public class MapDrawer extends JPanel
 		Font font = new Font("Courier New",Font.PLAIN,11); 
 
 		g.setFont(font);
+		
+		//** HEXES **//
 		for(Map.Entry<Tuple,FilledHex> entry : hexes.getHexes().entrySet())
 		{
 			FilledHex hh = hexes.getHex(entry.getValue());
@@ -60,8 +60,8 @@ public class MapDrawer extends JPanel
 				g.drawPolygon(hh.getShape());
 			}
 			//**Name**//
-			//g.setColor(Color.BLACK);
-			//g.drawString(hh.getBiome().getBiomeName().substring(0,2), (int)hh.center.x-5, (int)hh.center.y+5);
+			g.setColor(Color.BLACK);
+			g.drawString(hh.getBiome().getPrintName(), hh.center.x.intValue()-30, hh.center.y.intValue()+5);
 			
 			//**Coords**//
 			//g.setColor(Color.BLACK);
@@ -74,6 +74,24 @@ public class MapDrawer extends JPanel
 
 		}
 		
+		//** REGIONS **//
+		if (hexes.getRegions() !=null)
+		{
+			Random rand = new Random();
+			for(HexRegion hr : hexes.getRegions())
+			{
+				g.setColor(new Color(rand.nextInt(255),rand.nextInt(255),rand.nextInt(255),200));				
+				for(FilledHex eh : hr.getRegionHexes())
+				{
+					//g.setColor(new Color(0,0,0,50));
+					//**RANDOMIZE COLOURS**//
+					
+					g.fillPolygon(eh.getShape());
+				}
+			}
+		}
+		
+		//** RIVERS **//
 		Iterator<Set<Connection>> isc = hexes.getRiverConnections().iterator();
 		g2d.setColor(Color.BLUE);
 		g2d.setStroke(new BasicStroke(2.0f));

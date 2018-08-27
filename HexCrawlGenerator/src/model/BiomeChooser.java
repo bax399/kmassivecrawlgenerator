@@ -18,6 +18,8 @@ public class BiomeChooser
 	Map<String,Biome> biomenames;
 	Set<Biome> validbiomes;
 	
+	Map<Biome, Set<Biome>> validregionbiomes; // TODO implement similar to weights, but use biome valid string instead.
+	
 	Random rand;
 
 	public BiomeChooser(ArrayList<Biome> biomes, Random random)
@@ -29,7 +31,7 @@ public class BiomeChooser
 		//Add all true-names to list
 		for(Biome b: biomes)
 		{
-			biomenames.put(b.getBiomeName(),b); 
+			biomenames.put(b.getConcreteBiomeName(),b); 
 		}
 		
 		//process weights now we have all.
@@ -48,27 +50,27 @@ public class BiomeChooser
 	}
 	
 	//Needed so that all is put at the end of the string.
-	public static String[] putAllEnd(String[] weightarray) throws IllegalArgumentException
+	public static String[] putAllEnd(String[] stringarray) throws IllegalArgumentException
 	{
 		String swap;
-		int size=weightarray.length;
+		int size=stringarray.length;
 		boolean foundend=false,found=false;
 		
-		if(weightarray[size-1].startsWith("all:"))
+		if(stringarray[size-1].startsWith("all:"))
 		{
 			foundend=true;
 		}
 		
 		for(int ii=0;ii<size-1;ii++)
 		{		
-			if (weightarray[ii].startsWith("all:"))
+			if (stringarray[ii].startsWith("all:"))
 			{
 				if(!foundend && !found)
 				{
 					//swap with the last index
-					swap = weightarray[ii];
-					weightarray[ii] = weightarray[size-1];
-					weightarray[size-1] = swap;
+					swap = stringarray[ii];
+					stringarray[ii] = stringarray[size-1];
+					stringarray[size-1] = swap;
 					found=true;
 				}
 				else
@@ -79,7 +81,7 @@ public class BiomeChooser
 			}
 		}
 			
-		return weightarray;
+		return stringarray;
 	}
 	
 	public void initializeWeights(Biome origin)
@@ -92,14 +94,14 @@ public class BiomeChooser
 		try
 		{
 		each = putAllEnd(each);
-		} catch(IllegalArgumentException e) {throw new IllegalArgumentException(e.getMessage()+" for: " + origin.getBiomeName());}
+		} catch(IllegalArgumentException e) {throw new IllegalArgumentException(e.getMessage()+" for: " + origin.getConcreteBiomeName());}
 		
 		for(String wv: each)
 		{
 			double weight;
 			String bname=wv.substring(0, wv.lastIndexOf(":"));
 			try {weight=Double.parseDouble(wv.substring(wv.lastIndexOf(":")+1));} 
-			catch(NumberFormatException e) {throw new IllegalArgumentException("Biome weight invalid in: " +origin.getBiomeName());}
+			catch(NumberFormatException e) {throw new IllegalArgumentException("Biome weight invalid in: " +origin.getConcreteBiomeName());}
 			
 			if(bname.equals("all"))
 			{
@@ -115,7 +117,7 @@ public class BiomeChooser
 			else
 			{
 				Biome bfound=biomenames.get(bname);
-				if(bfound==null) outputString(this,"Biome weight invalid in: " +origin.getBiomeName());//throw new IllegalArgumentException("Biome weight invalid in: " +origin.getBiomeName());	
+				if(bfound==null) outputString(this,"Biome weight invalid in: " +origin.getConcreteBiomeName());//throw new IllegalArgumentException("Biome weight invalid in: " +origin.getBiomeName());	
 				if(bfound!=null) bb.add(weight,bfound);				
 			}
 		}
