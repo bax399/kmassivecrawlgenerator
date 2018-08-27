@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
+import functions.PFunctions;
 import model.merowech.ConcaveHull;
 import model.merowech.ConcaveHull.Point;
 import model.redblob.Layout;
@@ -153,32 +154,27 @@ public class HexRegion
 		neighbourregions.clear();
 		for(FilledHex nh : neighbourhexes)
 		{
-			if (!neighbourregions.contains(nh.getRegion()))
-			{
-				neighbourregions.add(nh.getRegion());
-			}
+			neighbourregions.add(nh.getRegion());
 		}
 	}
 	
 	public void updateEdges()
 	{
-		for(FilledHex eh : regionhexes)
+		edgehexes.clear();
+		for(FilledHex rh : regionhexes)
 		{	
 			Set<FilledHex> updatedfrontier = new HashSet<>();
-			updatedfrontier.addAll(eh.getNeighbours(chm));
-			if (regionhexes.containsAll(updatedfrontier))
+			updatedfrontier.addAll(rh.getNeighbours(chm));
+			if (!regionhexes.containsAll(updatedfrontier))
 			{
-				edgehexes.remove(eh);
-			}
-			else
-			{
-				edgehexes.add(eh);
+				edgehexes.add(rh);
 			}
 		}		
 	}
 	
 	public void updateNeighbourHexes()
 	{
+		neighbourhexes.clear();
 		for(FilledHex eh : edgehexes)
 		{
 			Set<FilledHex> frontier = new HashSet<>();
@@ -189,16 +185,12 @@ public class HexRegion
 				{
 					neighbourhexes.add(fh);
 				}
-				else
-				{
-					neighbourhexes.remove(fh);
-				}
 			}
 		}
 	}
 	
 	//Should only call this method after finishing all regions
-	/*public void calculateShape(Layout lt) 
+	public void calculateShape(Layout lt) 
 	{
 		ConcaveHull ch = new ConcaveHull();
 		ArrayList<Point> edgepoints = new ArrayList<>();
@@ -210,13 +202,13 @@ public class HexRegion
 				edgepoints.add(pp);
 			}
 		}
-		ArrayList<Point> points = ch.calculateConcaveHull(edgepoints, 30);
+		ArrayList<Point> points = ch.calculateConcaveHull(edgepoints, 10);
 		shape = new Polygon();
 		for(int ii = 0; ii < points.size();ii++)
 		{
 			shape.addPoint((int)Math.round(points.get(ii).x), (int)Math.round(points.get(ii).y));
 		}
-	}*/
+	}
 	
 	//Merge
 	//Add all region hexes from one to the other.
@@ -224,7 +216,9 @@ public class HexRegion
 	//Iterate through region and add neighbour + edge hexes.	
 	public void mergeRegion(HexRegion mergee)
 	{
+		PFunctions.outputString(this,regionhexes + "" + mergee.getRegionHexes());
 		regionhexes.addAll(mergee.regionhexes);
+		PFunctions.outputString(this,regionhexes +"");
 		regionsize += mergee.getRegionSize();
 		
 		for(FilledHex mh : mergee.regionhexes)
@@ -242,10 +236,10 @@ public class HexRegion
 					majoritybiome = bb;
 					majoritysize = biomenum;
 				}
-			}		
+			}
+			mh.setRegion(this);
 		}
 		
-		//points old region to this region. //TODO fix this referencing issue, doesn't do anything right now.
 		updateEdges();
 		updateNeighbourHexes();
 		updateNeighbourRegions();

@@ -25,12 +25,13 @@ public class MapDrawer extends JPanel
 
 	ConnectedHexMap hexes;
 	Layout lt;
-	static int size = 10;
+	int size = 10;
 	
-	public MapDrawer(ConnectedHexMap h, Layout lt)
+	public MapDrawer(ConnectedHexMap h, Layout lt, int size)
 	{
 		hexes=h;
 		this.lt = lt;
+		this.size=size;
 	}
 
 	//Needed method, draws to screen
@@ -44,14 +45,35 @@ public class MapDrawer extends JPanel
 
 		g.setFont(font);
 		
+		
+		
+		//** REGIONS **//
+		if (hexes.getRegions() !=null)
+		{
+			Random rand = new Random();
+			for(HexRegion hr : hexes.getRegions())
+			{
+				//g.setColor(hr.getMajorityBiome().getColor());				
+				g.setColor(new Color(rand.nextInt(255),rand.nextInt(255),rand.nextInt(255)));				
+				for(FilledHex eh : hr.getRegionHexes())
+				{
+					//g.setColor(new Color(0,0,0,50));
+					//**RANDOMIZE COLOURS**//
+					
+					g.fillPolygon(eh.getShape());		
+				}
+				//g.fillPolygon(hr.getShape(lt));
+			}
+		}
+		
 		//** HEXES **//
 		for(Map.Entry<Tuple,FilledHex> entry : hexes.getHexes().entrySet())
 		{
 			FilledHex hh = hexes.getHex(entry.getValue());
 			
 			//Change offset to be relative to layout size 
-			g.setColor(hh.getBiome().getColor());
-			g.fillPolygon(hh.getShape());
+			//g.setColor(hh.getBiome().getColor());
+			//g.fillPolygon(hh.getShape());
 
 			//**Outline**//
 			if (hexes.getHexes().size() < 2000)
@@ -61,35 +83,26 @@ public class MapDrawer extends JPanel
 			}
 			//**Name**//
 			g.setColor(Color.BLACK);
-			g.drawString(hh.getBiome().getPrintName(), hh.center.x.intValue()-30, hh.center.y.intValue()+5);
+			if(size > 30)
+			{
+				g.drawString(hh.getBiome().getPrintName(), hh.center.x.intValue()-size/2, hh.center.y.intValue()+5);
+			}
+			else
+			{
+				g.drawString(hh.getBiome().getConcreteBiomeName().substring(0, 3), hh.center.x.intValue()-size/2, hh.center.y.intValue()+5);
+			}
 			
 			//**Coords**//
 			//g.setColor(Color.BLACK);
-			//g.drawString(""+hh.q,(int)hh.center.x-3, (int)hh.center.y-3);
-			//g.drawString(""+hh.r,(int)hh.center.x-3, (int)hh.center.y+5);
+			//g.drawString(""+hh.q,hh.center.x.intValue()-3, hh.center.y.intValue()-3);
+			//g.drawString(""+hh.r,hh.center.x.intValue(), hh.center.y.intValue()+5);
 			
 			//**Coords**//
 			//g.setColor(Color.BLACK);
 			//g.drawString(""+hh.getBiome().getHeight(),(int)hh.center.x-10, (int)hh.center.y+5);
 
 		}
-		
-		//** REGIONS **//
-		if (hexes.getRegions() !=null)
-		{
-			Random rand = new Random();
-			for(HexRegion hr : hexes.getRegions())
-			{
-				g.setColor(new Color(rand.nextInt(255),rand.nextInt(255),rand.nextInt(255),200));				
-				for(FilledHex eh : hr.getRegionHexes())
-				{
-					//g.setColor(new Color(0,0,0,50));
-					//**RANDOMIZE COLOURS**//
-					
-					g.fillPolygon(eh.getShape());
-				}
-			}
-		}
+
 		
 		//** RIVERS **//
 		Iterator<Set<Connection>> isc = hexes.getRiverConnections().iterator();

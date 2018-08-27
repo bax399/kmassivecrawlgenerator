@@ -16,7 +16,7 @@ import model.Region;
 public class RegionGenerator extends Generator 
 {
 	public static int min = 5;
-	public static int max = 30;
+	public static int max = 2000;
 	public static Region defaultregion =  new Region("default",1,1,min,max);	
 	ConnectedHexMap hexmap;
 	
@@ -52,14 +52,14 @@ public class RegionGenerator extends Generator
 			{
 				found = false;
 				Set<FilledHex> nh = new HashSet<>();
-				hh.getNeighbours(hexmap);
+				nh.addAll(hh.getNeighbours(hexmap));
 				
 				Iterator<FilledHex> it2 = nh.iterator();
 				while(it2.hasNext() && !found) //Look for neighbouring hex that has a region and isn't max size!
 				{
 					FilledHex neighbourhex = it2.next();
 					HexRegion neighbourregion = neighbourhex.getRegion();
-					if (neighbourregion != null && neighbourregion.getRegionSize() <  neighbourregion.stats.getMin())
+					if (neighbourregion != null && neighbourregion.getRegionSize() < neighbourregion.stats.getMax())
 					{
 						//Try and add the hex to the neighbouring region
 						if (neighbourregion.tryaddhex(hh))
@@ -92,17 +92,46 @@ public class RegionGenerator extends Generator
 			//Appropriate regions sorted by minimum size priority, then the first region to be valid for THIS region's majority biome
 			//If this fails, looks for first region that has overlap of valid biome to THIS region's valid biomes
 			//If this fails, adds to smallest region.
-		for(int ii = 0; ii < allregions.size(); ii++)
+		
+		List<HexRegion> smallRegionList = new ArrayList<>(allregions);
+		boolean merged;
+		do
 		{
-			HexRegion currregion = allregions.get(ii);
-				
-			if (currregion.getRegionSize() < currregion.stats.getMin())
+			HexRegion currregion = smallRegionList.remove(0);
+			merged = false;
+			List<HexRegion> neighbouringregions = new ArrayList<>(currregion.getNeighbourRegions());
+			Collections.sort(neighbouringregions,regionComparator);
+			
+			
+			//Merge two regions together if their majority biomes are identical, regardless of sizes.
+			if (currregion.getRegionSize() < currregion.stats.getMax())
 			{
-				boolean merged = false;
-				List<HexRegion> neighbouringregions = new ArrayList<>(currregion.getNeighbourRegions());
-				Collections.sort(neighbouringregions,regionComparator);
+				for(int jj = 0; jj < neighbouringregions.size() && !merged; jj++)
+				{
+						if (neighbouringregions.get(jj).getMajorityBiome().getConcreteBiomeName().equals(currregion.getMajorityBiome().getConcreteBiomeName()))
+						{
+							neighbouringregions.get(jj).mergeRegion(currregion);
+							merged = true;
+							allregions.add(neighbouringregions.get(jj));							
+						}
+				}
+			}						
+			
+			//Merging for regions that are too small.			
+			if (currregion.getRegionSize() < currregion.stats.getMin() && !merged)
+			{	
+				//First Try: find smallest region that has the same majority biome as this region's majority biome
+				for(int jj = 0; jj < neighbouringregions.size() && !merged; jj++)
+				{
+					if (neighbouringregions.get(jj).getMajorityBiome().getConcreteBiomeName().equals(currregion.getMajorityBiome().getConcreteBiomeName()))
+					{
+						neighbouringregions.get(jj).mergeRegion(currregion);
+						merged = true;
+						allregions.add(neighbouringregions.get(jj));						
+					}
+				}				
 				
-				//First Try: find smallest region that has a valid biome as this region's majority biome
+				//2nd Try: find smallest region that has a valid biome as this region's majority biome
 				for(int jj = 0; jj < neighbouringregions.size() && !merged; jj++)
 				{
 					
@@ -111,10 +140,11 @@ public class RegionGenerator extends Generator
 					{
 						neighbouringregions.get(jj).mergeRegion(currregion);
 						merged = true;
+						allregions.add(neighbouringregions.get(jj));						
 					}
 				}
 				
-				//Second Try: find smallest region that has any overlap of valid biomes, to this region's valid biomes.
+				//3rd Try: find smallest region that has any overlap of valid biomes, to this region's valid biomes.
 				for(int jj = 0; jj < neighbouringregions.size() && !merged; jj++)
 				{
 					if ((neighbouringregions.get(jj).getValidBiomes().contains("all"))|| 
@@ -122,19 +152,33 @@ public class RegionGenerator extends Generator
 					{
 						neighbouringregions.get(jj).mergeRegion(currregion);
 						merged = true;					
+						allregions.add(neighbouringregions.get(jj));						
 					}
 				}
 				
-				//Third Try: merge to smallest neighbouring region.
-				if(!merged)
+				//4th Try: merge to smallest neighbouring region.
+				for(int jj=0; jj< neighbouringregions.size() && !merged; jj++)
 				{
-					neighbouringregions.get(0).mergeRegion(currregion);			
+					neighbouringregions.get(jj).mergeRegion(currregion);		
+					merged=true;
+					allregions.add(neighbouringregions.get(jj));
 				}
-				System.out.println("Merged");
 			}
-		}
+
+
+			if(merged)
+			{
+				PFunctions.outputString(this,"Merged small region");				
+				allregions.remove(currregion);
+			}
+			
+		}while(smallRegionList.size() > 0);
+		
+		
+		
+		
 		PFunctions.outputString(this,""+allregions.size());
-		PFunctions.outputString(this,""+allregions.get(0).getRegionSize());
+		
 		return new HashSet<HexRegion>(allregions);
 	}
 

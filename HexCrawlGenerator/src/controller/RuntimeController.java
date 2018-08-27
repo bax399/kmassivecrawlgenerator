@@ -13,7 +13,7 @@ public class RuntimeController
 {	
 	final static double screenwidth = 1920d;
 	final static double screenheight = 1080d;
-	final static double size = 60d; //mc 30
+	final static double size = 30d; //mc 30
 	
 	public static void main(String[] args)
 	{ 
@@ -24,7 +24,7 @@ public class RuntimeController
 		fp.processFile("inputTest.txt", ptr);
  
 		Layout lt = new Layout(Layout.pointy,new Point(size,size),new Point(screenwidth/2,screenheight/2)); //Spiral Map
-		MapController mc = new MapController(5, ptr, lt, rand); 
+		MapController mc = new MapController(10, ptr, lt, rand); 
 		
 		//Layout lt = new Layout(Layout.pointy,new Point(size,size),new Point(size,size)); //Rectangle Map
 		//MapController mc = new MapController(20,30, ptr, lt, rand); //h,w
@@ -39,7 +39,7 @@ public class RuntimeController
 		//Pathfinder pfa = new Riverfinder();
 		//Set<Connection> path = pfa.GreedyBFS(mc.hexmap, mc.getHexes().get(new Tuple(0,10)), mc.getHexes().get(new Tuple(0,-10)));		
 		
-		MapDrawer ui = new MapDrawer(mc.hexmap, lt);
+		MapDrawer ui = new MapDrawer(mc.hexmap, lt,(int)size);
 		f.add(ui);
 		f.setSize((int)screenwidth,(int)screenheight);
 		f.setVisible(true);

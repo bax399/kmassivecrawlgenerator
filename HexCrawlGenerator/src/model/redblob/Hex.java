@@ -90,7 +90,7 @@ public class Hex extends Vertex
     
     public String toString()
     {
-    	return q +", " + r +", "+ s;
+    	return "|"+q +", " + r +", "+ s +"|";
     }
 
 }
