@@ -125,7 +125,7 @@ public class HexRegion
 	
 	public Biome getMajorityBiome()
 	{
-		return majoritybiome;
+		return majoritybiome; 
 	}
 	
 	//Get "edge" hexes of region.
@@ -144,6 +144,11 @@ public class HexRegion
 		return regionhexes;
 	}
 
+	public Set<FilledHex> getNeighbourHexes()
+	{
+		return neighbourhexes;
+	}
+	
 	public Set<HexRegion> getNeighbourRegions()
 	{
 		return neighbourregions;
@@ -158,7 +163,7 @@ public class HexRegion
 		}
 	}
 	
-	public void updateEdges()
+	public void updateEdges() // TODO EDGE HEXES NOT WORKING.
 	{
 		edgehexes.clear();
 		for(FilledHex rh : regionhexes)

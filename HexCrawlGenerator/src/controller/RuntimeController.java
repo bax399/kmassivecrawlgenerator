@@ -2,6 +2,8 @@ package controller;
 import static functions.PFunctions.outputString;
 
 import java.awt.GraphicsEnvironment;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Random;
 
 import javax.swing.JFrame;
@@ -13,7 +15,7 @@ public class RuntimeController
 {	
 	final static double screenwidth = 1920d;
 	final static double screenheight = 1080d;
-	final static double size = 30d; //mc 30
+	final static double size = 20d; //mc 30
 	
 	public static void main(String[] args)
 	{ 
@@ -24,7 +26,7 @@ public class RuntimeController
 		fp.processFile("inputTest.txt", ptr);
  
 		Layout lt = new Layout(Layout.pointy,new Point(size,size),new Point(screenwidth/2,screenheight/2)); //Spiral Map
-		MapController mc = new MapController(10, ptr, lt, rand); 
+		MapController mc = new MapController(300/(int)size, ptr, lt, rand); 
 		
 		//Layout lt = new Layout(Layout.pointy,new Point(size,size),new Point(size,size)); //Rectangle Map
 		//MapController mc = new MapController(20,30, ptr, lt, rand); //h,w
@@ -33,6 +35,7 @@ public class RuntimeController
 		
 		//System.out.println("total connects: " + mc.hexmap.getConnections().size());
 		JFrame f = new JFrame("HexMap");
+
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		//Deprecated
@@ -40,6 +43,23 @@ public class RuntimeController
 		//Set<Connection> path = pfa.GreedyBFS(mc.hexmap, mc.getHexes().get(new Tuple(0,10)), mc.getHexes().get(new Tuple(0,-10)));		
 		
 		MapDrawer ui = new MapDrawer(mc.hexmap, lt,(int)size);
+		f.addKeyListener(new KeyListener() {
+	        @Override
+	        public void keyTyped(KeyEvent e) {
+	        }
+
+	        @Override
+	        public void keyPressed(KeyEvent e) {
+	            ui.opacity = 250;
+	            System.out.println(ui.opacity);
+	        }
+
+	        @Override
+	        public void keyReleased(KeyEvent e) {
+	        	ui.opacity=10;
+	        	System.out.println(ui.opacity);	        	
+	        }
+	    });		
 		f.add(ui);
 		f.setSize((int)screenwidth,(int)screenheight);
 		f.setVisible(true);

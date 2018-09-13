@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
@@ -22,10 +24,10 @@ import model.worldobjects.HexTown;
 //Panel draws to screen.
 public class MapDrawer extends JPanel 
 {
-
 	ConnectedHexMap hexes;
 	Layout lt;
 	int size = 10;
+	public int opacity=0;
 	
 	public MapDrawer(ConnectedHexMap h, Layout lt, int size)
 	{
@@ -33,7 +35,7 @@ public class MapDrawer extends JPanel
 		this.lt = lt;
 		this.size=size;
 	}
-
+	
 	//Needed method, draws to screen
 	@Override
 	public void paintComponent(Graphics g)
@@ -45,35 +47,15 @@ public class MapDrawer extends JPanel
 
 		g.setFont(font);
 		
-		
-		
-		//** REGIONS **//
-		if (hexes.getRegions() !=null)
-		{
-			Random rand = new Random();
-			for(HexRegion hr : hexes.getRegions())
-			{
-				//g.setColor(hr.getMajorityBiome().getColor());				
-				g.setColor(new Color(rand.nextInt(255),rand.nextInt(255),rand.nextInt(255)));				
-				for(FilledHex eh : hr.getRegionHexes())
-				{
-					//g.setColor(new Color(0,0,0,50));
-					//**RANDOMIZE COLOURS**//
-					
-					g.fillPolygon(eh.getShape());		
-				}
-				//g.fillPolygon(hr.getShape(lt));
-			}
-		}
-		
 		//** HEXES **//
+
 		for(Map.Entry<Tuple,FilledHex> entry : hexes.getHexes().entrySet())
 		{
 			FilledHex hh = hexes.getHex(entry.getValue());
 			
 			//Change offset to be relative to layout size 
-			//g.setColor(hh.getBiome().getColor());
-			//g.fillPolygon(hh.getShape());
+			g.setColor(hh.getBiome().getColor());
+			g.fillPolygon(hh.getShape());
 
 			//**Outline**//
 			if (hexes.getHexes().size() < 2000)
@@ -87,9 +69,17 @@ public class MapDrawer extends JPanel
 			{
 				g.drawString(hh.getBiome().getPrintName(), hh.center.x.intValue()-size/2, hh.center.y.intValue()+5);
 			}
-			else
+			else if (size > 15)
 			{
 				g.drawString(hh.getBiome().getConcreteBiomeName().substring(0, 3), hh.center.x.intValue()-size/2, hh.center.y.intValue()+5);
+			}
+			else if (size > 5)
+			{
+				g.drawString(hh.getBiome().getConcreteBiomeName().substring(0, 1), hh.center.x.intValue()-size/2, hh.center.y.intValue()+5);				
+			}
+			else
+			{
+				//Dont draw anything.
 			}
 			
 			//**Coords**//
@@ -102,7 +92,23 @@ public class MapDrawer extends JPanel
 			//g.drawString(""+hh.getBiome().getHeight(),(int)hh.center.x-10, (int)hh.center.y+5);
 
 		}
-
+		
+		//** REGIONS **//
+		if (hexes.getRegions() !=null)
+		{
+			Random rand = new Random();
+			for(HexRegion hr : hexes.getRegions())
+			{
+				//g.setColor(hr.getMajorityBiome().getColor());				
+				g.setColor(new Color(rand.nextInt(255),rand.nextInt(255),rand.nextInt(255),opacity));				
+				for(FilledHex eh : hr.getRegionHexes())
+				{
+					g.fillPolygon(eh.getShape());		
+				}
+				//g.fillPolygon(hr.getShape(lt));
+			}
+		}
+		
 		
 		//** RIVERS **//
 		Iterator<Set<Connection>> isc = hexes.getRiverConnections().iterator();
@@ -183,7 +189,17 @@ public class MapDrawer extends JPanel
 			}			
 		}
 		
-
+		//For Landmarks, checking this works!
+		int map_radius = 300/size;
+		int dist=5;
+		for (int q = -map_radius; q <= map_radius; q+=dist) {
+		    int r1 = Math.max(-map_radius, -q - map_radius);
+		    int r2 = Math.min(map_radius, -q + map_radius);
+		    for (int r = r1; r <= r2; r+=dist) {
+		    	g.setColor(Color.RED);
+				g.fillPolygon(hexes.getHex(q,r).getShape());
+		    }
+		}
 		
 	}
 }
