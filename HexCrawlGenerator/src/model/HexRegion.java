@@ -4,13 +4,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import functions.PFunctions;
+import javafx.util.Pair;
 import model.merowech.ConcaveHull;
 import model.merowech.ConcaveHull.Point;
 import model.redblob.Layout;
 
+/**
+ * @author Keeley
+ * Defines Region functionality. Regions generalize hex contents in the area.
+ */
 public class HexRegion 
 {
 	
@@ -27,8 +33,11 @@ public class HexRegion
 	//private Biome tallestbiome;
 	//private int tallestheight;
 	private int majoritysize;
-	private int regionsize;
+	
+	private Map<FilledHex,ArrayList<Pair<Point,Point>>> edgelines;
 
+	
+	
 	private ConnectedHexMap chm;
 	public HexRegion(Region type, FilledHex origin,ConnectedHexMap chm)
 	{
@@ -39,12 +48,47 @@ public class HexRegion
 		neighbourhexes = new HashSet<>();
 		biomeamounts = new HashMap<>();
 		neighbourregions = new HashSet<>();
+		edgelines = new HashMap<>();
+
 		//Get concrete biome of origin
 		majoritybiome = origin.getBiome().getConcreteBiome();
 		majoritysize = 1; //Set to 1 to bias original concrete biome as the majority biome.
-		regionsize=0;
 		this.chm = chm;
 		addhex(origin);
+	}
+	
+	public void calculateEdgeLines()
+	{
+		for(FilledHex ehex : edgehexes)
+		{
+			ArrayList<Pair<Point,Point>> lines = new ArrayList<>();
+			for(int ii=0;ii<6;ii++)
+			{
+				FilledHex nhex = ehex.getNeighbour(chm, ii);
+				if (neighbourhexes.contains(nhex))
+				{
+					Point a = chm.ly.pointCorner(ehex, ii);
+					Point b;
+					if (ii<5)
+					{
+						b = chm.ly.pointCorner(ehex,ii+1);
+					}
+					else
+					{
+						b = chm.ly.pointCorner(ehex, 0);
+					}
+					Pair<Point,Point> ab = new Pair<>(a,b);
+					
+					lines.add(ab);
+				}
+			}
+			edgelines.put(ehex, lines);	
+		}
+	}
+	
+	public Map<FilledHex,ArrayList<Pair<Point,Point>>> getEdgeLines()
+	{
+		return edgelines;
 	}
 	
 	public boolean tryaddhex(FilledHex hh)
@@ -72,7 +116,6 @@ public class HexRegion
 
 		//update region - add hex.		
 		regionhexes.add(hh);
-		regionsize+=1; 
 		for(Biome bb : hh.getBiomes())
 		{
 			int biomenum = 1;
@@ -88,7 +131,7 @@ public class HexRegion
 			}
 		}
 		
-		//If the hex's neighbours are not all in the regionhex set, this hex is an edge hex, need to add new neighbours too.
+/*		//If the hex's neighbours are not all in the regionhex set, this hex is an edge hex, need to add new neighbours too.
 		Set<FilledHex> newfrontier = new HashSet<>();
 		newfrontier.addAll(hh.getNeighbours(chm));
 		if (!regionhexes.containsAll(newfrontier))
@@ -103,12 +146,10 @@ public class HexRegion
 					neighbourhexes.add(fh);
 				}
 			}
-		}
+		}*/
 		
-		//update edge hexes - iterate through and remove edgehexes that have no foreign neighbours
-		updateEdges();
-		//update neighbour regions
-		updateNeighbourRegions();
+		updateAll();
+
 	}
 	
 	public Polygon getShape(Layout lt)
@@ -128,17 +169,17 @@ public class HexRegion
 		return majoritybiome; 
 	}
 	
+	public int getRegionSize()
+	{
+		return regionhexes.size();
+	}
+	
 	//Get "edge" hexes of region.
 	public Set<FilledHex> getEdgeHexes()
 	{
 		return edgehexes;
 	}
 
-	public int getRegionSize()
-	{
-		return regionsize;
-	}
-	
 	public Set<FilledHex> getRegionHexes()
 	{
 		return regionhexes;
@@ -221,10 +262,9 @@ public class HexRegion
 	//Iterate through region and add neighbour + edge hexes.	
 	public void mergeRegion(HexRegion mergee)
 	{
-		PFunctions.outputString(this,regionhexes + "" + mergee.getRegionHexes());
+		//PFunctions.outputString(this,regionhexes + "" + mergee.getRegionHexes());
 		regionhexes.addAll(mergee.regionhexes);
-		PFunctions.outputString(this,regionhexes +"");
-		regionsize += mergee.getRegionSize();
+		//PFunctions.outputString(this,regionhexes +"");
 		
 		for(FilledHex mh : mergee.regionhexes)
 		{

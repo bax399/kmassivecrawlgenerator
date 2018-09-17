@@ -15,7 +15,7 @@ public class RuntimeController
 {	
 	final static double screenwidth = 1920d;
 	final static double screenheight = 1080d;
-	final static double size = 20d; //mc 30
+	final static double size = 5d; //mc 30
 	
 	public static void main(String[] args)
 	{ 
@@ -50,7 +50,7 @@ public class RuntimeController
 
 	        @Override
 	        public void keyPressed(KeyEvent e) {
-	            ui.opacity = 250;
+	            ui.opacity = 200;
 	            System.out.println(ui.opacity);
 	        }
 

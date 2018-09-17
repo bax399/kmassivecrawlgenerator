@@ -6,8 +6,8 @@ import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
 import model.FilledHex;
+import model.merowech.ConcaveHull.Point;
 import model.redblob.Layout;
-import model.redblob.Point;
 public class TestDrawer extends JPanel
 {
 	FilledHex h;

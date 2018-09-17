@@ -2,8 +2,8 @@ package tests;
 import javax.swing.JFrame;
 
 import model.FilledHex;
+import model.merowech.ConcaveHull.Point;
 import model.redblob.Layout;
-import model.redblob.Point;
 public class TestHexNeighbours
 {
 	
@@ -14,7 +14,7 @@ public class TestHexNeighbours
 	{ 	
 		FilledHex h = new FilledHex(2,2);
 		
-		Layout lt = new Layout(Layout.pointy,new Point(30,30),new Point(screenwidth/2,screenheight/2)); //Spiral Map
+		Layout lt = new Layout(Layout.pointy,new Point(30d,30d),new Point(screenwidth/2d,screenheight/2d)); //Spiral Map
 		
 		h.setShape(lt.polygonCorners(h));
 		

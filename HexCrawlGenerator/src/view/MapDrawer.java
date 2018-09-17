@@ -4,8 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
@@ -13,6 +12,7 @@ import java.util.Set;
 
 import javax.swing.JPanel;
 
+import javafx.util.Pair;
 import model.ConnectedHexMap;
 import model.Connection;
 import model.FilledHex;
@@ -83,13 +83,13 @@ public class MapDrawer extends JPanel
 			}
 			
 			//**Coords**//
-			//g.setColor(Color.BLACK);
-			//g.drawString(""+hh.q,hh.center.x.intValue()-3, hh.center.y.intValue()-3);
-			//g.drawString(""+hh.r,hh.center.x.intValue(), hh.center.y.intValue()+5);
+//			g.setColor(Color.BLACK);
+//			g.drawString(""+hh.q,hh.center.x.intValue()-3, hh.center.y.intValue()-3);
+//			g.drawString(""+hh.r,hh.center.x.intValue(), hh.center.y.intValue()+5);
 			
 			//**Coords**//
-			//g.setColor(Color.BLACK);
-			//g.drawString(""+hh.getBiome().getHeight(),(int)hh.center.x-10, (int)hh.center.y+5);
+//			g.setColor(Color.BLACK);
+//			g.drawString(""+hh.getBiome().getHeight(),(int)hh.center.x-10, (int)hh.center.y+5);
 
 		}
 		
@@ -97,15 +97,45 @@ public class MapDrawer extends JPanel
 		if (hexes.getRegions() !=null)
 		{
 			Random rand = new Random();
+			int count =0;
 			for(HexRegion hr : hexes.getRegions())
 			{
+				count++;
 				//g.setColor(hr.getMajorityBiome().getColor());				
 				g.setColor(new Color(rand.nextInt(255),rand.nextInt(255),rand.nextInt(255),opacity));				
 				for(FilledHex eh : hr.getRegionHexes())
 				{
-					g.fillPolygon(eh.getShape());		
+					g.fillPolygon(eh.getShape());
+					
+					
+				}
+				
+				for(FilledHex eh : hr.getRegionHexes())
+				{
+					double chance = rand.nextDouble();
+					if (chance <= 0.01f)
+					{
+						g.setColor(Color.BLACK);
+						g.drawString(""+count, eh.center.x.intValue(), eh.center.y.intValue());
+					}
 				}
 				//g.fillPolygon(hr.getShape(lt));
+			}
+			
+			
+			g2d.setColor(Color.CYAN);
+			g2d.setStroke(new BasicStroke(1.0f));				
+			for(HexRegion hr : hexes.getRegions())
+			{
+				Iterator<Map.Entry<FilledHex,ArrayList<Pair<Point,Point>>>> it = hr.getEdgeLines().entrySet().iterator();
+				while(it.hasNext())
+				{
+					Map.Entry<FilledHex,ArrayList<Pair<Point,Point>>> pointlists = (Map.Entry<FilledHex,ArrayList<Pair<Point,Point>>>) it.next();
+					for(Pair<Point,Point> pp : pointlists.getValue())
+					{
+						g2d.drawLine(pp.getKey().x.intValue(), pp.getKey().y.intValue(), pp.getValue().x.intValue(), pp.getValue().y.intValue());
+					}
+				}
 			}
 		}
 		
@@ -190,8 +220,9 @@ public class MapDrawer extends JPanel
 		}
 		
 		//For Landmarks, checking this works!
+		/* Problem is,there will always be equidistant hexes between two landmark-flagged hexes.
 		int map_radius = 300/size;
-		int dist=5;
+		int dist=4;
 		for (int q = -map_radius; q <= map_radius; q+=dist) {
 		    int r1 = Math.max(-map_radius, -q - map_radius);
 		    int r2 = Math.min(map_radius, -q + map_radius);
@@ -200,6 +231,6 @@ public class MapDrawer extends JPanel
 				g.fillPolygon(hexes.getHex(q,r).getShape());
 		    }
 		}
-		
+		*/
 	}
 }
