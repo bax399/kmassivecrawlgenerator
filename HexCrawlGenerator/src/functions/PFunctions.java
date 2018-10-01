@@ -31,7 +31,7 @@ public class PFunctions
 		return String.format("%1$-" + num + "s", str);
 	}	
 	  
-	public static Set<String> processStringtoSet(String csv)
+	public static Set<String> processCSVtoSet(String csv)
 	{
 		Set<String> stringSet = new HashSet<>();
 		csv=csv.replaceAll("\\s+", "");

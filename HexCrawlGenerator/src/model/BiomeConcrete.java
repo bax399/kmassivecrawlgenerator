@@ -41,7 +41,7 @@ public class BiomeConcrete extends HasDescriptor implements Biome,BiomePropertie
 		biomename=pp.getProperty("name");
 		weight=pp.getProperty("weight").toLowerCase();
 		validstart=PFunctions.convertToBoolean(pp.getProperty("validstart"));
-		validregion = PFunctions.processStringtoSet(pp.getProperty("validregion"));
+		validregion = PFunctions.processCSVtoSet(pp.getProperty("validregion"));
 	}
 	
 	public BiomeConcrete(String n, int[] c, int h, int tc, String sd, double ro, double re,boolean v)
@@ -56,7 +56,7 @@ public class BiomeConcrete extends HasDescriptor implements Biome,BiomePropertie
 		biomename=n;
 		weight=n+":"+"1";
 		validstart=v;
-		validregion = PFunctions.processStringtoSet(n);		
+		validregion = PFunctions.processCSVtoSet(n);		
 		
 	}
 	

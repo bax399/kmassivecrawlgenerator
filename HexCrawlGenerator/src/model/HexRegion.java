@@ -40,7 +40,7 @@ public class HexRegion
 	
 	private ConnectedHexMap chm;
 	public HexRegion(Region type, FilledHex origin,ConnectedHexMap chm)
-	{
+	{	
 		stats = type;
 
 		regionhexes = new HashSet<>();
@@ -51,10 +51,12 @@ public class HexRegion
 		edgelines = new HashMap<>();
 
 		//Get concrete biome of origin
-		majoritybiome = origin.getBiome().getConcreteBiome();
-		majoritysize = 1; //Set to 1 to bias original concrete biome as the majority biome.
+
 		this.chm = chm;
 		addhex(origin);
+		
+//		majoritybiome = origin.getBiome().getConcreteBiome();
+//		majoritysize = 1; //Set to 1 to bias original concrete biome as the majority biome.		
 	}
 	
 	public void calculateEdgeLines()
@@ -95,11 +97,10 @@ public class HexRegion
 	{
 		boolean added = false;
 		
-		if (hh.getRegion() == null)
+		if (hh.getRegion()==null)
 		{
 			//If valid biomes and hex's biomes have anything in common.
-			if ((getValidBiomes().contains("all")) || (hh.getBiome().getStrBiomes().contains("all")) ||
-			(!Collections.disjoint(getValidBiomes(),hh.getBiome().getStrBiomes())))
+			if ((getValidBiomes().contains("all")) || (!Collections.disjoint(getValidBiomes(),hh.getBiome().getStrBiomes())))
 			{
 				addhex(hh);
 				added = true;	
@@ -111,6 +112,7 @@ public class HexRegion
 	
 	public void addhex(FilledHex hh)
 	{
+		hh.setRegion(this);		
 		//update neighbour hexes - remove hex.
 		neighbourhexes.remove(hh);
 
@@ -130,23 +132,6 @@ public class HexRegion
 				majoritysize = biomenum;
 			}
 		}
-		
-/*		//If the hex's neighbours are not all in the regionhex set, this hex is an edge hex, need to add new neighbours too.
-		Set<FilledHex> newfrontier = new HashSet<>();
-		newfrontier.addAll(hh.getNeighbours(chm));
-		if (!regionhexes.containsAll(newfrontier))
-		{			
-			edgehexes.add(hh);
-			
-			//update neighbour hexes - add any new based on the edge hex		
-			for(FilledHex fh : newfrontier)
-			{
-				if (!regionhexes.contains(fh))
-				{
-					neighbourhexes.add(fh);
-				}
-			}
-		}*/
 		
 		updateAll();
 

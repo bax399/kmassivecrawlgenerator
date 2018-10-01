@@ -84,7 +84,7 @@ public class MapController
 		RoadGenerator rag = new RoadGenerator(hexmap,rand);
 		hexmap.setRoadNetworks(rag.generateRoads());		
 		
-		RegionGenerator reg = new RegionGenerator(hexmap,rand);
+		RegionGeneratorSimple reg = new RegionGeneratorSimple(hexmap,rand);
 		hexmap.setRegions(reg.initializeRegions());		
 	}
 	

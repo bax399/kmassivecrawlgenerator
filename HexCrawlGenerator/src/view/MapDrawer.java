@@ -110,15 +110,15 @@ public class MapDrawer extends JPanel
 					
 				}
 				
-				for(FilledHex eh : hr.getRegionHexes())
-				{
-					double chance = rand.nextDouble();
-					if (chance <= 0.01f)
-					{
-						g.setColor(Color.BLACK);
-						g.drawString(""+count, eh.center.x.intValue(), eh.center.y.intValue());
-					}
-				}
+//				for(FilledHex eh : hr.getRegionHexes())
+//				{
+//					double chance = rand.nextDouble();
+//					if (chance <= 0.01f)
+//					{
+//						g.setColor(Color.BLACK);
+//						g.drawString(""+count, eh.center.x.intValue(), eh.center.y.intValue());
+//					}
+//				}
 				//g.fillPolygon(hr.getShape(lt));
 			}
 			
