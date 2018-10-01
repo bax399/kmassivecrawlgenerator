@@ -10,12 +10,12 @@ import javax.swing.JFrame;
 
 import model.merowech.ConcaveHull.Point;
 import model.redblob.Layout;
-import view.MapDrawer;
+import view.MapDrawerPanel;
 public class RuntimeController 
 {	
 	final static double screenwidth = 1920d;
 	final static double screenheight = 1080d;
-	final static double size = 1d; //mc 30
+	final static double size = 30d; //mc 30
 	
 	public static void main(String[] args)
 	{ 
@@ -26,23 +26,13 @@ public class RuntimeController
 		fp.processFile("inputTest.txt", ptr);
  
 		Layout lt = new Layout(Layout.pointy,new Point(size,size),new Point(screenwidth/2,screenheight/2)); //Spiral Map
-		MapController mc = new MapController(300/(int)size, ptr, lt, rand); 
+		MapController mc = new MapController(50, ptr, lt, rand); 
 		
-		//Layout lt = new Layout(Layout.pointy,new Point(size,size),new Point(size,size)); //Rectangle Map
-		//MapController mc = new MapController(20,30, ptr, lt, rand); //h,w
-		//MapController mc = new MapController(300,500, ptr, lt, rand); //h,w
-			
-		
-		//System.out.println("total connects: " + mc.hexmap.getConnections().size());
 		JFrame f = new JFrame("HexMap");
 
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		//Deprecated
-		//Pathfinder pfa = new Riverfinder();
-		//Set<Connection> path = pfa.GreedyBFS(mc.hexmap, mc.getHexes().get(new Tuple(0,10)), mc.getHexes().get(new Tuple(0,-10)));		
 		
-		MapDrawer ui = new MapDrawer(mc.hexmap, lt,(int)size);
+		MapDrawerPanel ui = new MapDrawerPanel(mc.hexmap, lt,(int)size/30);
 		f.addKeyListener(new KeyListener() {
 	        @Override
 	        public void keyTyped(KeyEvent e) {

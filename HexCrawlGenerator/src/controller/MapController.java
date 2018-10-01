@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
+import functions.PFunctions;
 import model.ConnectedHexMap;
 import model.FilledHex;
 import model.redblob.Hex;
@@ -29,20 +30,22 @@ public class MapController
 		pstorage=ptr;		
 		BiomeGenerator bg = new BiomeGenerator(hexmap,ptr.getTypeList("biome"),rand);
 		bg.wormWrapper();
-		
 		getPolygons();
 		hexmap.initializeNeighbours();
+		PFunctions.outputString(this,"Finished Generating");
+		
 		
 		RiverGenerator rg = new RiverGenerator(hexmap,new Random());
-
 		hexmap.setRiverNetworks(rg.generateRivers());
+		PFunctions.outputString(this,"Finished Rivers");
 		
 		TownGenerator tg = new TownGenerator(hexmap,ptr.getTypeList("town"),bg.getBiomeMap(),rand);
 		tg.generateTowns();
+		PFunctions.outputString(this,"Finished Towns");
 		
 		RoadGenerator rag = new RoadGenerator(hexmap,rand);
 		hexmap.setRoadNetworks(rag.generateRoads());
-		
+		PFunctions.outputString(this,"Finished Roads");		
 
 	}
 
@@ -70,22 +73,26 @@ public class MapController
 		pstorage=ptr;		
 		BiomeGenerator bg = new BiomeGenerator(hexmap,ptr.getTypeList("biome"),rand);
 		bg.wormWrapper();
-		
 		getPolygons();
 		hexmap.initializeNeighbours();
+		PFunctions.outputString(this,"Finished Generating");
+		
 		
 		RiverGenerator rg = new RiverGenerator(hexmap,new Random());
-
 		hexmap.setRiverNetworks(rg.generateRivers());
+		PFunctions.outputString(this,"Finished Rivers");
 		
 		TownGenerator tg = new TownGenerator(hexmap,ptr.getTypeList("town"),bg.getBiomeMap(),rand);
-		tg.generateTowns();		
+		tg.generateTowns();
+		PFunctions.outputString(this,"Finished Towns");
 		
 		RoadGenerator rag = new RoadGenerator(hexmap,rand);
-		hexmap.setRoadNetworks(rag.generateRoads());		
+		hexmap.setRoadNetworks(rag.generateRoads());
+		PFunctions.outputString(this,"Finished Roads");		
 		
 		RegionGeneratorSimple reg = new RegionGeneratorSimple(hexmap,rand);
 		hexmap.setRegions(reg.initializeRegions());		
+		PFunctions.outputString(this,"Finished Regions");
 	}
 	
 	

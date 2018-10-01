@@ -15,7 +15,7 @@ import model.HexRegion;
 import model.Region;
 public class RegionGeneratorSimple extends Generator 
 {
-	public static int min = 500;
+	public static int min = 50;
 	public static int max = 20000;
 	public static Region defaultregion =  new Region("default",1,1,min,max);	
 	ConnectedHexMap hexmap;
@@ -59,23 +59,30 @@ public class RegionGeneratorSimple extends Generator
 			HexRegion currRegion = allRegions.get(ii);
 			currRegion.updateAll();
 		}			
+		PFunctions.outputString(this,"finished initial Regions");
 		mergeSimilarRegions(allRegions);
 		for(int ii = 0; ii < allRegions.size(); ii++)
 		{
 			HexRegion currRegion = allRegions.get(ii);
 			currRegion.updateAll();
-		}			
-		mergeSmallRegions(allRegions);
+		}
+		PFunctions.outputString(this,"finished similar regions");
 		
-		Set<HexRegion> uniqueregions = new HashSet<HexRegion>(allRegions);		
+		mergeSmallRegions(allRegions);
+		for(int ii = 0; ii < allRegions.size(); ii++)
+		{
+			HexRegion currRegion = allRegions.get(ii);
+			currRegion.updateAll();
+		}
+		PFunctions.outputString(this,"finished small Regions");		
 	
 		//INFO OUTPUT
-		Iterator<HexRegion> itRegion = uniqueregions.iterator();
+		Iterator<HexRegion> itRegion = allRegions.iterator();
 		int ii=0,totalsize=0;
 
 		while(itRegion.hasNext())
 		{
-			ii++;
+//			ii++;
 			HexRegion eachregion = itRegion.next();
 			eachregion.updateAll();
 			eachregion.calculateEdgeLines();
@@ -91,10 +98,9 @@ public class RegionGeneratorSimple extends Generator
 		}
 		
 		PFunctions.outputString(this,"Count Region Size: "+totalsize);
-		PFunctions.outputString(this,"Total Regions: "+allRegions.size());		
-		PFunctions.outputString(this, "Set Regions: "+uniqueregions.size());					
+		PFunctions.outputString(this,"Total Regions: "+allRegions.size());					
 
-		return uniqueregions;
+		return new HashSet<>(allRegions);
 	}
 
 	public void generateValidRegions(List<HexRegion> allRegions)
@@ -181,7 +187,7 @@ public class RegionGeneratorSimple extends Generator
 				{
 					if (neighbourRegions.get(jj).getMajorityBiome().getValidRegionBiomes().contains(currRegion.getMajorityBiome().getConcreteBiomeName()))
 					{
-						PFunctions.outputString(this,"Merged Similar");
+//						PFunctions.outputString(this,"Merged Similar");
 						neighbourRegions.get(jj).mergeRegion(currRegion);
 						allRegions.remove(currRegion);
 						break;
@@ -208,7 +214,7 @@ public class RegionGeneratorSimple extends Generator
 				{
 					if(allRegions.contains(neighbourRegions.get(jj)))
 					{
-							PFunctions.outputString(this,"Merged Small");
+//							PFunctions.outputString(this,"Merged Small");
 							neighbourRegions.get(jj).mergeRegion(currRegion);
 							allRegions.remove(currRegion);
 							break;

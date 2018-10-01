@@ -15,7 +15,7 @@ import model.HexRegion;
 import model.Region;
 public class RegionGenerator extends Generator 
 {
-	public static int min = 500;
+	public static int min = 50;
 	public static int max = 20000;
 	public static Region defaultregion =  new Region("default",1,1,min,max);	
 	ConnectedHexMap hexmap;
