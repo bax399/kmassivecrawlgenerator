@@ -6,7 +6,7 @@ import java.util.Properties;
 import java.util.Set;
 
 import functions.PFunctions;
-public class BiomeModifier extends HasDescriptor implements Biome,BiomeModifierProperties {
+public class BiomeModifier extends WorldDescriptor implements Biome,BiomeModifierProperties {
 	public static final String[] setvalues = {"biomemodifier"};
 	public static final Set<String> tags = new HashSet<>(Arrays.asList(setvalues));	
 	
@@ -27,7 +27,7 @@ public class BiomeModifier extends HasDescriptor implements Biome,BiomeModifierP
 	
 	public BiomeModifier(BiomeModifier bm, Biome nextb)
 	{
-		super(new WorldDescriptor(bm.modname, BiomeConcrete.tags, bm.modname, 0));
+		super(bm.modname, BiomeConcrete.tags, bm.modname, 0);
 		color = bm.color;
 		height = bm.height;
 		travelcost = bm.travelcost;
@@ -39,7 +39,7 @@ public class BiomeModifier extends HasDescriptor implements Biome,BiomeModifierP
 	
 	public BiomeModifier(Properties pp)
 	{
-		super(new WorldDescriptor(pp.getProperty("name"), BiomeConcrete.tags, pp.getProperty("name"), 10));
+		super(pp.getProperty("name"), BiomeConcrete.tags, pp.getProperty("name"), 10);
 		color = PFunctions.parseColor(pp.getProperty("color"));
 		height = Integer.parseInt(pp.getProperty("height"));
 		travelcost = Integer.parseInt(pp.getProperty("travelcost"));
@@ -52,7 +52,7 @@ public class BiomeModifier extends HasDescriptor implements Biome,BiomeModifierP
 
 	public BiomeModifier(String n, int[] c, int h, int tc, String sd, double ro, double re)
 	{
-		super(new WorldDescriptor(n,tags,n,0));
+		super(n,tags,n,0);
 		color = new Color(c[0],c[1],c[2]);
 		height = h;
 		travelcost = tc;
@@ -79,9 +79,9 @@ public class BiomeModifier extends HasDescriptor implements Biome,BiomeModifierP
 	}
 
 	@Override
-	public String getConcreteBiomeName()
+	public String getBiomeName()
 	{
-		return next.getConcreteBiomeName();
+		return next.getBiomeName();
 	}
 	
 	@Override

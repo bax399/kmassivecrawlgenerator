@@ -26,7 +26,7 @@ public class RuntimeController
 		fp.processFile("inputTest.txt", ptr);
  
 		Layout lt = new Layout(Layout.pointy,new Point(size,size),new Point(screenwidth/2,screenheight/2)); //Spiral Map
-		MapController mc = new MapController(50, ptr, lt, rand); 
+		MapController mc = new MapController(100, ptr, lt, rand); 
 
 		long time2 = System.currentTimeMillis();
 		long timeTaken = (time2 - time1 );

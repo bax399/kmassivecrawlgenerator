@@ -42,38 +42,16 @@ public class RegionGeneratorSimple extends Generator
 		List<HexRegion> allRegions = new ArrayList<>();
 		
 		generateValidRegions(allRegions);
-//		for(int ii = 0; ii < allRegions.size(); ii++)
-//		{
-//			HexRegion currRegion = allRegions.get(ii);
-//			currRegion.updateAll();
-//		}			
-		//Once regions have all been created, iterate through regions.
-		//If region < minsize, look to merge to most appropriate nearby region.
-			//Appropriate regions sorted by minimum size priority, then the first region to be valid for THIS region's majority biome
-			//If this fails, looks for first region that has overlap of valid biome to THIS region's valid biomes
-			//If this fails, adds to smallest region.
 
 		mergeSameRegions(allRegions);
-//		for(int ii = 0; ii < allRegions.size(); ii++)
-//		{
-//			HexRegion currRegion = allRegions.get(ii);
-//			currRegion.updateAll();
-//		}			
+
 		PFunctions.outputString(this,"finished initial Regions");
 		mergeSimilarRegions(allRegions);
-//		for(int ii = 0; ii < allRegions.size(); ii++)
-//		{
-//			HexRegion currRegion = allRegions.get(ii);
-//			currRegion.updateAll();
-//		}
+
 		PFunctions.outputString(this,"finished similar regions");
 		
 		mergeSmallRegions(allRegions);
-//		for(int ii = 0; ii < allRegions.size(); ii++)
-//		{
-//			HexRegion currRegion = allRegions.get(ii);
-//			currRegion.updateAll();
-//		}
+
 		PFunctions.outputString(this,"finished small Regions");		
 	
 		//INFO OUTPUT
@@ -82,18 +60,18 @@ public class RegionGeneratorSimple extends Generator
 
 		while(itRegion.hasNext())
 		{
-//			ii++;
+			ii++;
 			HexRegion eachregion = itRegion.next();
-//			eachregion.updateAll();
+			eachregion.updateAll();
 			eachregion.calculateEdgeLines();
 			
-			PFunctions.outputString(this,"Region Details for "+ii);
+//			PFunctions.outputString(this,"Region Details for "+ii);
 //			PFunctions.outputString(this,"Edge:"+eachregion.getEdgeHexes().size());
 //			PFunctions.outputString(this,"Edgelines: "+ eachregion.getEdgeLines().size());
 //			
 //			PFunctions.outputString(this,"NeighbourRegions:"+eachregion.getNeighbourRegions().size());			
 //			PFunctions.outputString(this,"Neighbour:"+eachregion.getNeighbourHexes().size());
-			PFunctions.outputString(this,"Size:"+eachregion.getRegionSize());
+//			PFunctions.outputString(this,"Size:"+eachregion.getRegionSize());
 			totalsize+=eachregion.getRegionSize();			
 		}
 		
@@ -155,19 +133,25 @@ public class RegionGeneratorSimple extends Generator
 		do
 		{
 			HexRegion currRegion = regionList.remove(0);
-			List<HexRegion> neighbourRegions = new ArrayList<>(currRegion.getNeighbourRegions());
+			//currRegion.updateNeighbourRegions();
+			
+			List<HexRegion> neighbourRegions = new ArrayList<>(currRegion.getNeighbourRegions());		
 			
 			for(int jj = 0; jj < neighbourRegions.size(); jj++)
 			{
+
 				if(allRegions.contains(neighbourRegions.get(jj)))
 				{
-					if (neighbourRegions.get(jj).getMajorityBiome().getConcreteBiomeName().equals(currRegion.getMajorityBiome().getConcreteBiomeName()))
+					if (neighbourRegions.get(jj).getMajorityBiome().getBiomeName().equals(currRegion.getMajorityBiome().getBiomeName()))
 					{
 						neighbourRegions.get(jj).mergeRegions(currRegion);
 						allRegions.remove(currRegion);
+						break;
 					}
 				}
-			}		
+			}	
+			
+			
 	
 			
 		}while(regionList.size() > 0);
@@ -185,7 +169,7 @@ public class RegionGeneratorSimple extends Generator
 			{
 				if(allRegions.contains(neighbourRegions.get(jj)))
 				{
-					if (neighbourRegions.get(jj).getMajorityBiome().getValidRegionBiomes().contains(currRegion.getMajorityBiome().getConcreteBiomeName()))
+					if (neighbourRegions.get(jj).getMajorityBiome().getValidRegionBiomes().contains(currRegion.getMajorityBiome().getBiomeName()))
 					{
 //						PFunctions.outputString(this,"Merged Similar");
 						neighbourRegions.get(jj).mergeRegions(currRegion);

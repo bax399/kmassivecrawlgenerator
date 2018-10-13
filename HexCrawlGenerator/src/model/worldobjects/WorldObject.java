@@ -1,14 +1,15 @@
 package model.worldobjects;
-import model.HasDescriptor;
+import java.util.Set;
+
 import model.WorldDescriptor;
-public abstract class WorldObject extends HasDescriptor implements WorldProperties
+public abstract class WorldObject extends WorldDescriptor implements WorldProperties
 {
 	private int visibility;
 	private int max;
 	
-	public WorldObject(WorldDescriptor wd, int visibility, int max)
+	public WorldObject(int visibility, int max, String name, Set<String> tags, String description, int priority)
 	{
-		super(wd);
+		super(name,tags,description,priority);
 		this.visibility = visibility;
 		this.max = max;
 	}

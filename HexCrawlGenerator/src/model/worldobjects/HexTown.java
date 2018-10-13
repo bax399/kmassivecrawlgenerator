@@ -1,9 +1,8 @@
 package model.worldobjects;
 import model.FilledHex;
-import model.HasDescriptor;
 import model.WorldDescriptor;
 import model.merowech.ConcaveHull.Point;
-public class HexTown extends HasDescriptor 
+public class HexTown extends WorldDescriptor
 {
 	public final Town stats; //what this monster references whenever it is ask for anything.
 	private final FilledHex origin; //originating hex
@@ -12,7 +11,7 @@ public class HexTown extends HasDescriptor
 	
 	public HexTown(Town type, FilledHex ohex, Point rpoint)
 	{
-		super(new WorldDescriptor(type.getName(), Town.tags, type.getDescription(), 10));
+		super(type.getName(), Town.tags, type.getDescription(), 10);
 		stats = type;
 		origin=ohex;
 		pos=rpoint;

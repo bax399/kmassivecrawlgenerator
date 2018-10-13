@@ -28,7 +28,6 @@ public class HexRegion
 	private Set<FilledHex> edgehexes;
 	private Set<FilledHex> neighbourhexes;
 	private HashMap<Biome, Integer> biomeamounts;
-	private Set<HexRegion> neighbourregions;
 	private Biome majoritybiome;
 	//private Biome tallestbiome;
 	//private int tallestheight;
@@ -47,7 +46,6 @@ public class HexRegion
 		edgehexes = new HashSet<>();
 		neighbourhexes = new HashSet<>();
 		biomeamounts = new HashMap<>();
-		neighbourregions = new HashSet<>();
 		edgelines = new HashMap<>();
 
 		//Get concrete biome of origin
@@ -157,15 +155,14 @@ public class HexRegion
 				if(Collections.disjoint(hhNeighbour.getNeighbours(chm), neighbourhexes))
 				{
 					edgehexes.remove(hhNeighbour);
-				}
+				}				
 			}
-		}
-		
-		//Update NeighbourHexes
-		if (!Collections.disjoint(hh.getNeighbours(chm), neighbourhexes))
-		{
-			edgehexes.add(hh);
-			neighbourhexes.addAll(hh.getNeighbours(chm));
+			else
+			{
+				edgehexes.add(hh);
+				neighbourhexes.add(hhNeighbour);
+			}
+			
 		}
 	
 		
@@ -198,15 +195,27 @@ public class HexRegion
 	
 	public void mergeRegions(HexRegion mergee)
 	{
-		Set<FilledHex> overlapHexes = new HashSet<>(getEdgeHexes());
-		overlapHexes.retainAll(mergee.getNeighbourHexes());
 		
-		regionhexes.addAll(mergee.getRegionHexes());
+//		Set<FilledHex> overlapHexes = new HashSet<>(getEdgeHexes());
+//		overlapHexes.retainAll(mergee.getNeighbourHexes());
 		
-		edgehexes.addAll(mergee.getEdgeHexes());
-		edgehexes.removeAll(overlapHexes);
-		neighbourhexes.addAll(mergee.getNeighbourHexes());
-		neighbourhexes.removeAll(overlapHexes);
+//		//Not correctly adding all? Or adding very few...
+//		regionhexes.addAll(mergee.getRegionHexes());
+//		
+//		edgehexes.addAll(mergee.getEdgeHexes());
+//		edgehexes.removeAll(overlapHexes);
+//		neighbourhexes.addAll(mergee.getNeighbourHexes());
+//		neighbourhexes.removeAll(overlapHexes);
+//		
+//		for(FilledHex hh : mergee.getRegionHexes())
+//		{
+//			hh.setRegion(this);
+//		}
+				
+		for(FilledHex hh : mergee.getRegionHexes())
+		{
+			addHex(hh);
+		}
 		
 	}
 	
@@ -250,7 +259,12 @@ public class HexRegion
 	
 	public Set<HexRegion> getNeighbourRegions()
 	{
-		return neighbourregions;
+		Set<HexRegion> neighbourRegions = new HashSet<>();
+		for(FilledHex nh : neighbourhexes)
+		{
+			neighbourRegions.add(nh.getRegion());
+		}
+		return neighbourRegions;
 	}
 	
 //	public void updateNeighbourRegions()
@@ -261,37 +275,37 @@ public class HexRegion
 //			neighbourregions.add(nh.getRegion());
 //		}
 //	}
+//	
+	public void updateEdges() // TODO EDGE HEXES NOT WORKING.
+	{
+		edgehexes.clear();
+		for(FilledHex rh : regionhexes)
+		{	
+			Set<FilledHex> updatedfrontier = new HashSet<>();
+			updatedfrontier.addAll(rh.getNeighbours(chm));
+			if (!regionhexes.containsAll(updatedfrontier))
+			{
+				edgehexes.add(rh);
+			}
+		}		
+	}
 	
-//	public void updateEdges() // TODO EDGE HEXES NOT WORKING.
-//	{
-//		edgehexes.clear();
-//		for(FilledHex rh : regionhexes)
-//		{	
-//			Set<FilledHex> updatedfrontier = new HashSet<>();
-//			updatedfrontier.addAll(rh.getNeighbours(chm));
-//			if (!regionhexes.containsAll(updatedfrontier))
-//			{
-//				edgehexes.add(rh);
-//			}
-//		}		
-//	}
-	
-//	public void updateNeighbourHexes()
-//	{
-//		neighbourhexes.clear();
-//		for(FilledHex eh : edgehexes)
-//		{
-//			Set<FilledHex> frontier = new HashSet<>();
-//			frontier.addAll(eh.getNeighbours(chm));
-//			for(FilledHex fh : frontier)
-//			{
-//				if (!regionhexes.contains(fh))
-//				{
-//					neighbourhexes.add(fh);
-//				}
-//			}
-//		}
-//	}
+	public void updateNeighbourHexes()
+	{
+		neighbourhexes.clear();
+		for(FilledHex eh : edgehexes)
+		{
+			Set<FilledHex> frontier = new HashSet<>();
+			frontier.addAll(eh.getNeighbours(chm));
+			for(FilledHex fh : frontier)
+			{
+				if (!regionhexes.contains(fh))
+				{
+					neighbourhexes.add(fh);
+				}
+			}
+		}
+	}
 	
 	//Should only call this method after finishing all regions
 	public void calculateShape(Layout lt) 
@@ -318,40 +332,40 @@ public class HexRegion
 	//Add all region hexes from one to the other.
 	//Clear neighbours and edges
 	//Iterate through region and add neighbour + edge hexes.	
-//	public void mergeRegion(HexRegion mergee)
-//	{
-//		//PFunctions.outputString(this,regionhexes + "" + mergee.getRegionHexes());
-//		regionhexes.addAll(mergee.regionhexes);
-//		//PFunctions.outputString(this,regionhexes +"");
-//		
-//		for(FilledHex mh : mergee.regionhexes)
-//		{
-//			for(Biome bb : mh.getBiomes())
-//			{
-//				int biomenum = 1;
-//				if (biomeamounts.get(bb) != null)
-//				{
-//					biomenum = biomeamounts.get(bb)+1;
-//				}
-//				biomeamounts.put(bb, biomenum);
-//				if (biomenum > majoritysize)
-//				{
-//					majoritybiome = bb;
-//					majoritysize = biomenum;
-//				}
-//			}
-//			mh.setRegion(this);
-//		}
-//		
-//		updateEdges();
-//		updateNeighbourHexes();
-//		updateNeighbourRegions();
-//	}
+	public void mergeRegion(HexRegion mergee)
+	{
+		//PFunctions.outputString(this,regionhexes + "" + mergee.getRegionHexes());
+		regionhexes.addAll(mergee.regionhexes);
+		//PFunctions.outputString(this,regionhexes +"");
+		
+		for(FilledHex mh : mergee.regionhexes)
+		{
+			for(Biome bb : mh.getBiomes())
+			{
+				int biomenum = 1;
+				if (biomeamounts.get(bb) != null)
+				{
+					biomenum = biomeamounts.get(bb)+1;
+				}
+				biomeamounts.put(bb, biomenum);
+				if (biomenum > majoritysize)
+				{
+					majoritybiome = bb;
+					majoritysize = biomenum;
+				}
+			}
+			mh.setRegion(this);
+		}
+		
+		updateEdges();
+		updateNeighbourHexes();
+		//updateNeighbourRegions();
+	}
 	
-//	public void updateAll()
-//	{
-//		updateEdges();
-//		updateNeighbourHexes();
-//		updateNeighbourRegions();	
-//	}
+	public void updateAll()
+	{
+		updateEdges();
+		updateNeighbourHexes();
+		//updateNeighbourRegions();	
+	}
 }

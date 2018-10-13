@@ -10,7 +10,7 @@ import java.util.Set;
 import model.Biome;
 import model.FilledHex;
 import model.MonsterProperties;
-public class Monster extends WorldObject implements MonsterProperties {
+public class Monster extends WorldDescriptor implements MonsterProperties {
 	public final String[] setvalues = {"monster"};
 	public final Set<String> tags = new HashSet<>(Arrays.asList(setvalues));
 	
@@ -27,6 +27,7 @@ public class Monster extends WorldObject implements MonsterProperties {
 	
 	public Monster(Properties pp, Random r) 
 	{
+		super(pp.getProperty("name"),tags,pp.getProperty("name"),10);
 		rand = r;
 		spawnchances = new HashMap<>();
 		processSpawnChances(pp.getProperty("spawnchance"));

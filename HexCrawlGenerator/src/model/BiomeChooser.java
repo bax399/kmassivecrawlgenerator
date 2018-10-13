@@ -31,7 +31,7 @@ public class BiomeChooser
 		//Add all true-names to list
 		for(Biome b: biomes)
 		{
-			biomenames.put(b.getConcreteBiomeName(),b); 
+			biomenames.put(b.getBiomeName(),b); 
 		}
 		
 		//process weights now we have all.
@@ -94,14 +94,14 @@ public class BiomeChooser
 		try
 		{
 		each = putAllEnd(each);
-		} catch(IllegalArgumentException e) {throw new IllegalArgumentException(e.getMessage()+" for: " + origin.getConcreteBiomeName());}
+		} catch(IllegalArgumentException e) {throw new IllegalArgumentException(e.getMessage()+" for: " + origin.getBiomeName());}
 		
 		for(String wv: each)
 		{
 			double weight;
 			String bname=wv.substring(0, wv.lastIndexOf(":"));
 			try {weight=Double.parseDouble(wv.substring(wv.lastIndexOf(":")+1));} 
-			catch(NumberFormatException e) {throw new IllegalArgumentException("Biome weight invalid in: " +origin.getConcreteBiomeName());}
+			catch(NumberFormatException e) {throw new IllegalArgumentException("Biome weight invalid in: " +origin.getBiomeName());}
 			
 			if(bname.equals("all"))
 			{
@@ -117,7 +117,7 @@ public class BiomeChooser
 			else
 			{
 				Biome bfound=biomenames.get(bname);
-				if(bfound==null) outputString(this,"Biome weight invalid in: " +origin.getConcreteBiomeName());//throw new IllegalArgumentException("Biome weight invalid in: " +origin.getBiomeName());	
+				if(bfound==null) outputString(this,"Biome weight invalid in: " +origin.getBiomeName());//throw new IllegalArgumentException("Biome weight invalid in: " +origin.getBiomeName());	
 				if(bfound!=null) bb.add(weight,bfound);				
 			}
 		}

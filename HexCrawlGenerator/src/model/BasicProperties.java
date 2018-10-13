@@ -1,6 +1,6 @@
 package model;
 
-public interface HasProperties
+public interface BasicProperties
 {
 	//public void processProperties(Properties props);
 	public String getName();

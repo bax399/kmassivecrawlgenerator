@@ -10,56 +10,55 @@ import functions.PFunctions;
  * @author Keeley
  *
  */
-public class BiomeConcrete extends HasDescriptor implements Biome,BiomeProperties{
+public class BiomeConcrete extends WorldDescriptor implements Biome,BiomeProperties{
 	public static final String[] setvalues = {"biome"};
 	public static final Set<String> tags = new HashSet<>(Arrays.asList(setvalues));
 	
-	public static BiomeConcrete basic = new BiomeConcrete("basic",new int[] {0,40,255},0,0,"1d0",0,0,false); //default biome.
+	public static BiomeConcrete basic = new BiomeConcrete("basic",Color.BLUE,0,0,"1d0",0,0,false,"basic:1",tags); //default biome.
 	
 	private final Color color;
 	private final int height;
-	private final int travelcost;
-	private final String spotdistance;
-	private final double riverorigin;
-	private final double riverend;
-	private final String biomename; //the unmodifiable name of the biome, must refer to this, not getName, as that can change.
+	private final int travelCost;
+	private final String spotDistance;
+	private final double riverOrigin;
+	private final double riverEnd;
+	private final String biomeName; //the unmodifiable name of the biome, must refer to this, not getName, as that can change.
 	private final String weight;
-	private final Set<String> validregion;
+	private final Set<String> validRegion;
 	
 	private final boolean validstart;
 	
-	
 	public BiomeConcrete(Properties pp)
 	{
-		super(new WorldDescriptor(pp.getProperty("name"), BiomeConcrete.tags, pp.getProperty("name"), 10));
+		super(pp.getProperty("name"), BiomeConcrete.tags, pp.getProperty("name"), 10);		
 		color = PFunctions.parseColor(pp.getProperty("color"));
 		height = Integer.parseInt(pp.getProperty("height"));
-		travelcost = Integer.parseInt(pp.getProperty("travelcost")); 
-		spotdistance = pp.getProperty("spotdistance");
-		riverorigin = Double.parseDouble(pp.getProperty("riverorigin"));
-		riverend = Double.parseDouble(pp.getProperty("riverend"));
-		biomename=pp.getProperty("name");
+		travelCost = Integer.parseInt(pp.getProperty("travelcost")); 
+		spotDistance = pp.getProperty("spotdistance");
+		riverOrigin = Double.parseDouble(pp.getProperty("riverorigin"));
+		riverEnd = Double.parseDouble(pp.getProperty("riverend"));
+		biomeName=pp.getProperty("name");
 		weight=pp.getProperty("weight").toLowerCase();
 		validstart=PFunctions.convertToBoolean(pp.getProperty("validstart"));
-		validregion = PFunctions.processCSVtoSet(pp.getProperty("validregion"));
+		validRegion = PFunctions.processCSVtoSet(pp.getProperty("validregion"));
 	}
 	
-	public BiomeConcrete(String n, int[] c, int h, int tc, String sd, double ro, double re,boolean v)
+	public BiomeConcrete(String inName, Color inColour, int inHeight, int inTCost, String inSpotDistance, double inRiverOrigin, double inRiverEnd, boolean inValidStart,
+						String inWeight, Set<String> inValidRegions)
 	{
-		super(new WorldDescriptor(n,tags,n,0));
-		color = new Color(c[0],c[1],c[2]);
-		height = h;
-		travelcost = tc;
-		riverorigin = ro;
-		riverend = re;
-		spotdistance = sd;
-		biomename=n;
-		weight=n+":"+"1";
-		validstart=v;
-		validregion = PFunctions.processCSVtoSet(n);		
+		super(inName,tags,inName,10);		
+		color = inColour;
+		height = inHeight;
+		travelCost = inTCost;
+		riverOrigin = inRiverOrigin;
+		riverEnd = inRiverEnd;
+		spotDistance = inSpotDistance;
+		biomeName=inName;
+		weight=inWeight;
+		validstart=inValidStart;
+		validRegion = inValidRegions;		
 		
 	}
-	
 	
 	public String getWeight()
 	{
@@ -68,13 +67,13 @@ public class BiomeConcrete extends HasDescriptor implements Biome,BiomePropertie
 	
 	public String getPrintName()
 	{
-		return biomename;
+		return biomeName;
 	}
 	
 	//returns the "true" biome name, the one made at creation. this can't be modified!
-	public String getConcreteBiomeName()
+	public String getBiomeName()
 	{
-		return biomename;
+		return biomeName;
 	}
 	
 	public Color getColor()
@@ -84,7 +83,7 @@ public class BiomeConcrete extends HasDescriptor implements Biome,BiomePropertie
 
 	public int getTravelCost()
 	{
-		return Math.max(travelcost,0);
+		return Math.max(travelCost,0);
 	}
 	
 	public int getHeight()
@@ -94,12 +93,12 @@ public class BiomeConcrete extends HasDescriptor implements Biome,BiomePropertie
 	
 	public String getSpotDistance()
 	{
-		return spotdistance;
+		return spotDistance;
 	}
 	
 	public double getRiverEnd()
 	{
-		return riverend;
+		return riverEnd;
 	}	
 	
 	public boolean isValidStart()
@@ -109,13 +108,13 @@ public class BiomeConcrete extends HasDescriptor implements Biome,BiomePropertie
 	
 	public double getRiverOrigin()
 	{
-		return riverorigin;
+		return riverOrigin;
 	}
 	
 	@Override
 	public String toString()
 	{
-		return super.getName();
+		return getPrintName();
 	}
 	
 	@Override
@@ -136,13 +135,14 @@ public class BiomeConcrete extends HasDescriptor implements Biome,BiomePropertie
 	public Set<String> getStrBiomes()
 	{
 		Set<String> me = new HashSet<>();
-		me.add(this.getConcreteBiomeName());
+		me.add(this.getBiomeName());
 		return me;		
 	}
 	
 	@Override
 	public Set<String> getValidRegionBiomes() 
 	{
-		return validregion;
+		return validRegion;
 	} //TODO create valid biomes category.
+	
 }

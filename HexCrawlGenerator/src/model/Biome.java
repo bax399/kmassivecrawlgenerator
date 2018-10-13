@@ -4,7 +4,7 @@ import java.util.Set;
 public interface Biome extends BiomeProperties
 {
 	public String getWeight();
-	public String getConcreteBiomeName();
+	public String getBiomeName();
 	public String getPrintName();
 	public Color getColor();
 	public int getTravelCost();

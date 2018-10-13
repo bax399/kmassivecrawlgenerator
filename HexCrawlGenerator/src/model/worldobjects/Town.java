@@ -24,8 +24,7 @@ public class Town extends WorldObject implements TownProperties
 	
 	public Town(Properties pp)
 	{
-		super(new WorldDescriptor(pp.getProperty("name"), Town.tags, pp.getProperty("name"), 10),
-				Integer.parseInt(pp.getProperty("visibility")),Integer.parseInt(pp.getProperty("max")));
+		super(Integer.parseInt(pp.getProperty("visibility")),Integer.parseInt(pp.getProperty("max")),pp.getProperty("name"), Town.tags, pp.getProperty("name"), 10);
 		connectivity=Integer.parseInt(pp.getProperty("connectivity"));
 		vbiomes=pp.getProperty("validbiomes").toLowerCase();
 		needsriver=PFunctions.convertToBoolean(pp.getProperty("needriver"));
@@ -33,14 +32,14 @@ public class Town extends WorldObject implements TownProperties
 
 	}
 	
-	public Town(String n, int vis, int m, int con, String vb, boolean wa,double sc)
+	public Town(String inName, int inVisibility, int inMax, int inConnectivity, String inValidBiomes, boolean inWater,double inSpawnChance)
 	{
-		super(new WorldDescriptor(n, Town.tags, n, 10),vis,m);
+		super(inVisibility,inMax,inName, Town.tags, inName, 10);
 		
-		connectivity=con;
-		vbiomes=vb;
-		needsriver=wa;
-		spawnchance=sc;
+		connectivity=inConnectivity;
+		vbiomes=inValidBiomes;
+		needsriver=inWater;
+		spawnchance=inSpawnChance;
 	}
 	
 	public boolean limitReached()

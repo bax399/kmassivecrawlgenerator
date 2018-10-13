@@ -1,4 +1,4 @@
-package controller;
+package zdeprececated;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import controller.Generator;
 import functions.PFunctions;
 import model.ConnectedHexMap;
 import model.FilledHex;

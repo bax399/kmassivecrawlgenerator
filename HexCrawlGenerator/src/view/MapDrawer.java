@@ -72,11 +72,11 @@ public class MapDrawer extends JPanel
 			}
 			else if (size > 15)
 			{
-				g.drawString(hh.getBiome().getConcreteBiomeName().substring(0, 3), hh.center.x.intValue()-size/2, hh.center.y.intValue()+5);
+				g.drawString(hh.getBiome().getBiomeName().substring(0, 3), hh.center.x.intValue()-size/2, hh.center.y.intValue()+5);
 			}
 			else if (size > 5)
 			{
-				g.drawString(hh.getBiome().getConcreteBiomeName().substring(0, 1), hh.center.x.intValue()-size/2, hh.center.y.intValue()+5);				
+				g.drawString(hh.getBiome().getBiomeName().substring(0, 1), hh.center.x.intValue()-size/2, hh.center.y.intValue()+5);				
 			}
 			else
 			{

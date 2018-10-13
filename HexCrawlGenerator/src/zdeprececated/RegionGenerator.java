@@ -1,4 +1,4 @@
-package controller;
+package zdeprececated;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import controller.Generator;
 import functions.PFunctions;
 import model.ConnectedHexMap;
 import model.FilledHex;
@@ -116,7 +117,7 @@ public class RegionGenerator extends Generator
 				{
 					if(allregions.contains(neighbouringregions.get(jj)))
 					{
-						if (neighbouringregions.get(jj).getMajorityBiome().getConcreteBiomeName().equals(currregion.getMajorityBiome().getConcreteBiomeName()))
+						if (neighbouringregions.get(jj).getMajorityBiome().getBiomeName().equals(currregion.getMajorityBiome().getBiomeName()))
 						{
 							neighbouringregions.get(jj).mergeRegion(currregion);
 							merged = true;
@@ -136,7 +137,7 @@ public class RegionGenerator extends Generator
 				{
 					if(allregions.contains(neighbouringregions.get(jj)))
 					{
-						if (neighbouringregions.get(jj).getMajorityBiome().getConcreteBiomeName().equals(currregion.getMajorityBiome().getConcreteBiomeName()))
+						if (neighbouringregions.get(jj).getMajorityBiome().getBiomeName().equals(currregion.getMajorityBiome().getBiomeName()))
 						{
 							neighbouringregions.get(jj).mergeRegion(currregion);
 							merged = true;
@@ -155,7 +156,7 @@ public class RegionGenerator extends Generator
 					{
 				
 						if ((neighbouringregions.get(jj).getValidBiomes().contains("all"))||
-						   (neighbouringregions.get(jj).getValidBiomes().contains(currregion.getMajorityBiome().getConcreteBiomeName())))
+						   (neighbouringregions.get(jj).getValidBiomes().contains(currregion.getMajorityBiome().getBiomeName())))
 						{
 							neighbouringregions.get(jj).mergeRegion(currregion);
 							merged = true;

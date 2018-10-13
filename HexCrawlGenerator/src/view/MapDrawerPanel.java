@@ -99,11 +99,11 @@ public class MapDrawerPanel extends MainPanel
 			}
 			else if (size > 15)
 			{
-				g2.drawString(hh.getBiome().getConcreteBiomeName().substring(0, 3), hh.center.x.intValue()-size/2, hh.center.y.intValue()+5);
+				g2.drawString(hh.getBiome().getBiomeName().substring(0, 3), hh.center.x.intValue()-size/2, hh.center.y.intValue()+5);
 			}
 			else if (size > 5)
 			{
-				g2.drawString(hh.getBiome().getConcreteBiomeName().substring(0, 1), hh.center.x.intValue()-size/2, hh.center.y.intValue()+5);				
+				g2.drawString(hh.getBiome().getBiomeName().substring(0, 1), hh.center.x.intValue()-size/2, hh.center.y.intValue()+5);				
 			}
 			else
 			{

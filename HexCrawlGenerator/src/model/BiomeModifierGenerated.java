@@ -2,13 +2,13 @@ package model;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
-public class BiomeModifierGeneration extends BiomeModifier implements BiomeModifierGenerationProperties
+public class BiomeModifierGenerated extends BiomeModifier implements BiomeModifierGeneratedProperties
 {
-	public static BiomeModifierGeneration coastal = new BiomeModifierGeneration("coastal", new int[] {1,2,3},-2,0,"",0d,0d,0.1d,
+	public static BiomeModifierGenerated coastal = new BiomeModifierGenerated("coastal", new int[] {1,2,3},-2,0,"",0d,0d,0.1d,
 													"ocean,reef","all");
-	public static BiomeModifierGeneration raised = new BiomeModifierGeneration("mountainous",new int[] {1,2,3},2,5,"",0d,0d,0.1d,
+	public static BiomeModifierGenerated raised = new BiomeModifierGenerated("mountainous",new int[] {1,2,3},2,5,"",0d,0d,0.1d,
 													"mountains,hills","all");
-	public static BiomeModifierGeneration forested = new BiomeModifierGeneration("forested",new int[] {1,2,3},0,2,"",0d,0d,0.1d,
+	public static BiomeModifierGenerated forested = new BiomeModifierGenerated("forested",new int[] {1,2,3},0,2,"",0d,0d,0.1d,
 													"forest","all");
 	
 	//How are these defined? Functionally these can be input via files instead.
@@ -20,7 +20,7 @@ public class BiomeModifierGeneration extends BiomeModifier implements BiomeModif
 	private final String obiomes; //Biomes that can apply
 	private final double originchance;
 
-	public BiomeModifierGeneration(String n, int[] c, int h, int tc, String sd, double ro, double re, double oc, String ob, String vb)
+	public BiomeModifierGenerated(String n, int[] c, int h, int tc, String sd, double ro, double re, double oc, String ob, String vb)
 	{
 		super(n,c,h,tc,sd,ro,re);
 		originchance = oc;
@@ -28,7 +28,7 @@ public class BiomeModifierGeneration extends BiomeModifier implements BiomeModif
 		obiomes=ob;
 	}
 	
-	public BiomeModifierGeneration(BiomeModifierGeneration bm, Biome nextb)
+	public BiomeModifierGenerated(BiomeModifierGenerated bm, Biome nextb)
 	{
 		super(bm,nextb);
 		originchance=bm.originchance;
@@ -37,7 +37,7 @@ public class BiomeModifierGeneration extends BiomeModifier implements BiomeModif
 	}
 		
 	
-	public BiomeModifierGeneration(Properties pp)
+	public BiomeModifierGenerated(Properties pp)
 	{
 		super(pp);
 		originchance=Double.parseDouble(pp.getProperty("originchance"));

@@ -1,5 +1,6 @@
 package model;
 
+//Template model, overrides submethods to be road-specific shape.
 public class Roadfinder extends Pathfinder {
 
 	@Override
@@ -24,8 +25,6 @@ public class Roadfinder extends Pathfinder {
 	    
 	    return fh;
 	}
-	
-	
 	
 	@Override
 	public int heuristic(ConnectedHexMap chm, FilledHex goal, FilledHex current, FilledHex next)

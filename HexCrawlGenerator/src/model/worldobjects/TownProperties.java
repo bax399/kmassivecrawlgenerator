@@ -1,8 +1,8 @@
 package model.worldobjects;
-import model.HasProperties;
+import model.BasicProperties;
 
 //Anything that properties input, the object is expected to use.
-public interface TownProperties extends HasProperties
+public interface TownProperties extends BasicProperties
 {
 	public String getVBiomes(); 
 	public int getMax();
