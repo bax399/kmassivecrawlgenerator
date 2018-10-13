@@ -10,11 +10,7 @@ import java.util.Set;
 
 import model.merowech.ConcaveHull.Point;
 import model.redblob.Hex;
-import model.worldobjects.Dungeon;
 import model.worldobjects.HexTown;
-import model.worldobjects.Lair;
-import model.worldobjects.Landmark;
-import model.worldobjects.Nomad;
 import model.worldobjects.RiverNode;
 import model.worldobjects.RoadNode;
 import model.worldobjects.WorldObject;
@@ -32,11 +28,8 @@ public class FilledHex extends Hex
 	//Points are stored to place worldobjects in exact locations
 	//Need a better way to store Points.
 	//These are ONLY ITEMS THAT EXIST WITHIN THE HEX
-	private Set<Lair> lairs;
-	private Set<Dungeon> dungeons;
+
 	private Set<HexTown> towns = new HashSet<>();
-	private Set<Landmark> landmarks;
-	private Set<Nomad> nomads;
 	private RiverNode river = null;
 	private RoadNode road=null; 
 	 

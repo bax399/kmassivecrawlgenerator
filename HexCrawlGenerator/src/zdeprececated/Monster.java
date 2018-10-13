@@ -1,4 +1,4 @@
-package model.worldobjects;
+package zdeprececated;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;

@@ -1,4 +1,4 @@
-package model.worldobjects;
+package zdeprececated;
 import model.FilledHex;
 import model.WorldDescriptor;
 import model.merowech.ConcaveHull.Point;

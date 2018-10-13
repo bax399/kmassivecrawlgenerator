@@ -1,4 +1,4 @@
-package model.worldobjects;
+package zdeprececated;
 
 public class Dungeon{
 

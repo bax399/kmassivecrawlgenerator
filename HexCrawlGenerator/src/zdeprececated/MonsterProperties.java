@@ -1,4 +1,4 @@
-package model;
+package zdeprececated;
 import java.util.Map;
 
 //Anything that properties input, the object is expected to use.

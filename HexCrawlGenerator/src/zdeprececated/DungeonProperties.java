@@ -1,4 +1,4 @@
-package model;
+package zdeprececated;
 import java.util.Map;
 
 import model.worldobjects.Monster;
