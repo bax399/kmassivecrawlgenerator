@@ -55,7 +55,7 @@ public class MapDrawer extends JPanel
 			FilledHex hh = hexes.getHex(entry.getValue());
 			
 			//Change offset to be relative to layout size 
-			g.setColor(hh.getBiome().getColor());
+			g.setColor(hh.getHabitat().getColor());
 			g.fillPolygon(hh.getShape());
 
 			//**Outline**//
@@ -68,15 +68,15 @@ public class MapDrawer extends JPanel
 			g.setColor(Color.BLACK);
 			if(size > 30)
 			{
-				g.drawString(hh.getBiome().getPrintName(), hh.center.x.intValue()-size/2, hh.center.y.intValue()+5);
+				g.drawString(hh.getHabitat().toString(), hh.center.x.intValue()-size/2, hh.center.y.intValue()+5);
 			}
 			else if (size > 15)
 			{
-				g.drawString(hh.getBiome().getBiomeName().substring(0, 3), hh.center.x.intValue()-size/2, hh.center.y.intValue()+5);
+				g.drawString(hh.getHabitat().toString().substring(0, 3), hh.center.x.intValue()-size/2, hh.center.y.intValue()+5);
 			}
 			else if (size > 5)
 			{
-				g.drawString(hh.getBiome().getBiomeName().substring(0, 1), hh.center.x.intValue()-size/2, hh.center.y.intValue()+5);				
+				g.drawString(hh.getHabitat().toString().substring(0, 1), hh.center.x.intValue()-size/2, hh.center.y.intValue()+5);				
 			}
 			else
 			{
@@ -175,8 +175,8 @@ public class MapDrawer extends JPanel
 		
 		//** ROADS **//
 		Iterator<Set<Connection>> irc = hexes.getRoadConnections().iterator();
-		g2d.setColor(Color.CYAN);
-		g2d.setStroke(new BasicStroke(2.0f));
+		g2d.setColor(Color.BLACK);
+		g2d.setStroke(new BasicStroke(4.0f));			
 		while(irc.hasNext())
 		{
 			//**RANDOMIZE COLOURS**//
@@ -193,8 +193,7 @@ public class MapDrawer extends JPanel
 			//**Draw from Point**//
 			for(Connection edge: irc.next())
 			{
-				g2d.setColor(Color.BLACK);
-				g2d.setStroke(new BasicStroke(2.0f));				
+			
 				Point st = edge.getVertexes().get(0).getRoadNode().getPosition();
 				Point fn = edge.getVertexes().get(1).getRoadNode().getPosition();
 				g2d.drawLine(st.x.intValue(), st.y.intValue(), fn.x.intValue(), fn.y.intValue());	
@@ -213,7 +212,8 @@ public class MapDrawer extends JPanel
 			for(HexTown t:hh.getTowns())
 			{
 				g.setColor(Color.RED);
-				g2d.fillOval(t.getPosition().x.intValue()-3, t.getPosition().y.intValue()-3, 6, 6);
+				int size = t.stats.getConnectivity()/10 + 2;
+				g2d.fillOval(t.getPosition().x.intValue()-3, t.getPosition().y.intValue()-3, size,size);
 				g.setColor(Color.BLACK);
 				g.drawString("*", t.getPosition().x.intValue()-3, t.getPosition().y.intValue()+5);
 				g.drawString(t.getConnectivity()+"", t.getPosition().x.intValue()+5, t.getPosition().y.intValue());

@@ -1,27 +1,25 @@
 package controller;
 import java.util.ArrayList;
-import static functions.PFunctions.outputString;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Queue;
 import java.util.Random;
 import java.util.Set;
 
 import model.BiomeChooser;
 import model.ConnectedHexMap;
 import model.FilledHex;
-import model.properties.BaseBiome;
+import model.stats.StatsCoreBiome;
+
 public class BiomeGenerator extends Generator
 {
 	ConnectedHexMap hexmap;
 	BiomeChooser bchoose;
-	ArrayList<BaseBiome> biomes;
+	ArrayList<StatsCoreBiome> biomes;
 	
 	public BiomeGenerator(ConnectedHexMap chm, ArrayList<Properties> bprops, Random r)
 	{
@@ -33,12 +31,12 @@ public class BiomeGenerator extends Generator
 		
 	}
 	
-	public ArrayList<BaseBiome> getBiomeList()
+	public ArrayList<StatsCoreBiome> getBiomeList()
 	{
 		return biomes;
 	}
 	
-	public Map<String,BaseBiome> getBiomeMap()
+	public Map<String,StatsCoreBiome> getBiomeMap()
 	{
 		return bchoose.getBMap();
 	}
@@ -50,14 +48,14 @@ public class BiomeGenerator extends Generator
 		
 	}
 
-	public void frontierGenerate(FilledHex startHex, BaseBiome startBiome)
+	public void frontierGenerate(FilledHex startHex, StatsCoreBiome startBiome)
 	{
-		Map<FilledHex, BaseBiome> came_from = new HashMap<>();
+		Map<FilledHex, StatsCoreBiome> came_from = new HashMap<>();
 		List<FilledHex> frontier = new ArrayList<>();
 		Set<FilledHex> visited = new HashSet<>();
 		
 		FilledHex currHex, nextHex;
-		BaseBiome currBiome=startBiome;
+		StatsCoreBiome currBiome=startBiome;
 		
 		frontier.add(startHex);
 		came_from.put(startHex, startBiome);
@@ -70,7 +68,7 @@ public class BiomeGenerator extends Generator
 			currHex = frontier.get(randomindex);
 			frontier.remove(randomindex);			
 			currBiome = bchoose.rollBiome(came_from.get(currHex));
-			currHex.setBiome(currBiome);
+			currHex.getHabitat().setCoreBiome(currBiome);
 			
 			int dir;
 			ArrayList<Integer> dirs = new ArrayList<>(Arrays.asList(0,1,2,3,4,5));
@@ -82,7 +80,7 @@ public class BiomeGenerator extends Generator
 				if ( (nextHex!=null) && (!visited.contains(nextHex)) )
 				{
 					frontier.add(nextHex);
-					came_from.put(nextHex, currHex.getBiome());
+					came_from.put(nextHex, currHex.getHabitat().getCoreBiome());
 					visited.add(nextHex);
 				}
 			}
@@ -108,9 +106,9 @@ public class BiomeGenerator extends Generator
 	private void wormStart(FilledHex start)
 	{
 		//Need to find a nearby hex to pull its biome from.
-		if (start.getBiome() == null || start.getBiome().getBiomeName().equals("basic"))
+		if (start.getHabitat().getCoreBiome() == null || start.getHabitat().getCoreBiome().getBiomeName().equals("basic"))
 		{
-			BaseBiome type = bchoose.rollBiome();
+			StatsCoreBiome type = bchoose.rollBiome();
 			FilledHex neighb;
 			int dir;
 			boolean done = false;
@@ -120,20 +118,20 @@ public class BiomeGenerator extends Generator
 				dir = dirs.get(rand.nextInt(dirs.size()));
 				dirs.remove(Integer.valueOf(dir));
 				neighb = hexmap.getHex(start.neighbor(dir));
-				if (neighb != null && ((neighb.getBiome() != null) && !neighb.getBiome().getBiomeName().equals("basic")))
+				if (neighb != null && ((neighb.getHabitat().getCoreBiome() != null) && !neighb.getHabitat().getCoreBiome().getBiomeName().equals("basic")))
 				{
-					type = neighb.getBiome();
+					type = neighb.getHabitat().getCoreBiome();
 					done=true;
 					//type = bc.rollBiome(neighb.getBiome()); //This rolls from the neighbors biome, sometimes getting something unexpected
 				}
 			}
 			while(dirs.size()>0 && !done);
-			start.setBiome(type);
+			start.getHabitat().setCoreBiome(type);
 			iterativeWormGenerate(start,type);
 		}
 	}
 	
-	private void iterativeWormGenerate(FilledHex initial,BaseBiome type)
+	private void iterativeWormGenerate(FilledHex initial,StatsCoreBiome type)
 	{
 		FilledHex curr = initial;
 		FilledHex next = null, prev=null;
@@ -149,13 +147,13 @@ public class BiomeGenerator extends Generator
 				dir = dirs.get(rand.nextInt(dirs.size()));
 				dirs.remove(Integer.valueOf(dir));
 				next = hexmap.getHex(curr.neighbor(dir));
-			}while(dirs.size()>0 && (next == null || ( next.getBiome()!=null && !next.getBiome().getBiomeName().equals("basic"))));			
+			}while(dirs.size()>0 && (next == null || ( next.getHabitat().getCoreBiome()!=null && !next.getHabitat().getCoreBiome().getBiomeName().equals("basic"))));			
 			
 			//if next is empty, replace.
-			if(next !=null && (next.getBiome() != null && next.getBiome().getBiomeName().equals("basic")))
+			if(next !=null && (next.getHabitat().getCoreBiome() != null && next.getHabitat().getCoreBiome().getBiomeName().equals("basic")))
 			{
 				curr = next;
-				curr.setBiome(type);
+				curr.getHabitat().setCoreBiome(type);
 				type = bchoose.rollBiome(type);
 				dirs.clear();
 				dirs.addAll(Arrays.asList(0,1,2,3,4,5));

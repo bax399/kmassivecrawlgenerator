@@ -7,7 +7,7 @@ public class Riverfinder extends Pathfinder {
 	{
 		FilledHex fh = goal;
 	    //for rivers...
-	    if (current.getBiome().getRiverEnd() > 0d)
+	    if (current.getHabitat().getRiverEnd() > 0d)
 	    {	    	
 	    	fh=current;
 	    }		
@@ -24,7 +24,7 @@ public class Riverfinder extends Pathfinder {
 	public int getCost(ConnectedHexMap chm, FilledHex current, FilledHex next) 
 	{
 		int heightdiff;
-		heightdiff = next.getBiome().getHeight() - (current.getBiome().getHeight());
+		heightdiff = next.getHabitat().getHeight() - (current.getHabitat().getHeight());
 		//heightdiff = Math.max(heightdiff, 0);
 		heightdiff *= 100;
 		return Math.max(heightdiff,1);//+Math.max(0,chm.adjTravelCost(current,next)-5); //minus river travel cost...

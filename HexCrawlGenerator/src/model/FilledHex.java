@@ -9,17 +9,18 @@ import java.util.Map;
 import java.util.Set;
 
 import model.merowech.ConcaveHull.Point;
-import model.properties.BaseBiome;
 import model.redblob.Hex;
 import model.stats.StatsCoreBiome;
+import model.worldplaces.Habitat;
 import model.worldplaces.HexTown;
 import model.worldplaces.RiverNode;
 import model.worldplaces.RoadNode;
 import model.worldplaces.WorldPlace;
+import zdeprececated.BaseBiome;
 
 public class FilledHex extends Hex 
 {
-	private BaseBiome biome;
+	private Habitat habitat;
 	public Point center;
 	
 	public int priority=0; //Editable field for pathfinding priority
@@ -44,17 +45,17 @@ public class FilledHex extends Hex
 	//thoughts: this should be done in hexmap, as then we just add the hex's center to the random point and we're in luck.
 	
 	//TODO addWorldObject methods to FilledHexes, randomize point then add it to the map.
-	public FilledHex(BaseBiome b, int q, int r, int s)
+	public FilledHex(Habitat hab, int q, int r, int s)
 	{
 		super(q,r);
-		biome = b;
+		habitat = hab;
 		region = null;
 	}
 
-	public FilledHex(BaseBiome b, int q, int r)
+	public FilledHex(Habitat hab, int q, int r)
 	{
 		super(q,r);
-		biome = b;
+		habitat = hab;
 		region = null;
 	}
 	
@@ -62,7 +63,7 @@ public class FilledHex extends Hex
 	public FilledHex(int q, int r)
 	{
 		super(q,r);
-		biome = StatsCoreBiome.basic;
+		habitat = new Habitat();
 		region = null;
 	}
 
@@ -130,19 +131,9 @@ public class FilledHex extends Hex
 		return river;
 	}
 	
-	public void setBiome(BaseBiome b)
+	public Habitat getHabitat()
 	{
-		biome = b;
-	}
-	
-	public BaseBiome getBiome()
-	{
-		return biome;
-	}
-	
-	public Set<BaseBiome> getBiomes()
-	{
-		return biome.getBiomes();
+		return habitat;
 	}
 	
 	public List<FilledHex> getNeighbours(ConnectedHexMap chm)

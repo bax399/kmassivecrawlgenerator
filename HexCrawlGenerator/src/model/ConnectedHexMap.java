@@ -60,11 +60,7 @@ public class ConnectedHexMap extends HexMap<FilledHex> {
 					
 					if (n!=null && containsHex(n))
 					{
-						each.getBiome();
-						each.getBiome().getTravelCost();
-						n.getBiome();
-						n.getBiome().getTravelCost();
-						neighbours.addEdge(new Connection(each, n,(int)(each.getBiome().getTravelCost()+n.getBiome().getTravelCost())/2));
+						neighbours.addEdge(new Connection(each, n,(int)(each.getHabitat().getTravelCost()+n.getHabitat().getTravelCost())/2));
 					}
 					
 					
@@ -139,7 +135,7 @@ public class ConnectedHexMap extends HexMap<FilledHex> {
 		int cost = 1000000;
 		if (neighbours(curr).contains(next))
 		{
-			cost = (int) (curr.getBiome().getTravelCost()+next.getBiome().getTravelCost())/2;
+			cost = (int) (curr.getHabitat().getTravelCost()+next.getHabitat().getTravelCost())/2;
 		}
 		return cost;
 	}

@@ -69,8 +69,9 @@ public class MapDrawerPanel extends MainPanel
 	
 	//Needed method, draws to screen
 	@Override
-	public void drawAll(Graphics2D g2, AffineTransform at)
+	public void drawAll(Graphics2D g2, AffineTransform at, float zoomFactor)
 	{
+		zoomFactor = 1/zoomFactor;
 		this.setBackground(Color.WHITE); 
 		Font font = new Font("Courier New",Font.PLAIN,11); 
 
@@ -82,7 +83,7 @@ public class MapDrawerPanel extends MainPanel
 			FilledHex hh = hexes.getHex(entry.getValue());
 			
 			//Change offset to be relative to layout size 
-			g2.setColor(hh.getBiome().getColor());
+			g2.setColor(hh.getHabitat().getColor());
 			g2.fillPolygon(hh.getShape());
 
 			//**Outline**//
@@ -95,15 +96,15 @@ public class MapDrawerPanel extends MainPanel
 			g2.setColor(Color.BLACK);
 			if(size > 30)
 			{
-				g2.drawString(hh.getBiome().getPrintName(), hh.center.x.intValue()-size/2, hh.center.y.intValue()+5);
+				g2.drawString(hh.getHabitat().toString(), hh.center.x.intValue()-size/2, hh.center.y.intValue()+5);
 			}
 			else if (size > 15)
 			{
-				g2.drawString(hh.getBiome().getBiomeName().substring(0, 3), hh.center.x.intValue()-size/2, hh.center.y.intValue()+5);
+				g2.drawString(hh.getHabitat().toString().substring(0, 3), hh.center.x.intValue()-size/2, hh.center.y.intValue()+5);
 			}
 			else if (size > 5)
 			{
-				g2.drawString(hh.getBiome().getBiomeName().substring(0, 1), hh.center.x.intValue()-size/2, hh.center.y.intValue()+5);				
+				g2.drawString(hh.getHabitat().toString().substring(0, 1), hh.center.x.intValue()-size/2, hh.center.y.intValue()+5);				
 			}
 			else
 			{
@@ -171,7 +172,7 @@ public class MapDrawerPanel extends MainPanel
 		//** RIVERS **//
 		Iterator<Set<Connection>> isc = hexes.getRiverConnections().iterator();
 		g2.setColor(Color.BLUE);
-		g2.setStroke(new BasicStroke(2.0f));
+		g2.setStroke(new BasicStroke(2.0f*zoomFactor));
 		while(isc.hasNext())
 		{
 			//**RANDOMIZE COLOURS**//
@@ -202,8 +203,8 @@ public class MapDrawerPanel extends MainPanel
 		
 		//** ROADS **//
 		Iterator<Set<Connection>> irc = hexes.getRoadConnections().iterator();
-		g2.setColor(Color.CYAN);
-		g2.setStroke(new BasicStroke(2.0f));
+		g2.setColor(Color.BLACK);
+		g2.setStroke(new BasicStroke(2.0f*zoomFactor));
 		while(irc.hasNext())
 		{
 			//**RANDOMIZE COLOURS**//
@@ -219,9 +220,7 @@ public class MapDrawerPanel extends MainPanel
 			
 			//**Draw from Point**//
 			for(Connection edge: irc.next())
-			{
-				g2.setColor(Color.BLACK);
-				g2.setStroke(new BasicStroke(2.0f));				
+			{				
 				Point st = edge.getVertexes().get(0).getRoadNode().getPosition();
 				Point fn = edge.getVertexes().get(1).getRoadNode().getPosition();
 				g2.drawLine(st.x.intValue(), st.y.intValue(), fn.x.intValue(), fn.y.intValue());	
@@ -240,7 +239,8 @@ public class MapDrawerPanel extends MainPanel
 			for(HexTown t:hh.getTowns())
 			{
 				g2.setColor(Color.RED);
-				g2.fillOval(t.getPosition().x.intValue()-3, t.getPosition().y.intValue()-3, 6, 6);
+				int size = (int)((t.stats.getConnectivity()/10 + 2)*zoomFactor);
+				g2.fillOval(t.getPosition().x.intValue()-3-size/2, t.getPosition().y.intValue()-3-size/2, size,size);
 				g2.setColor(Color.BLACK);
 				g2.drawString("*", t.getPosition().x.intValue()-3, t.getPosition().y.intValue()+5);
 				g2.drawString(t.getConnectivity()+"", t.getPosition().x.intValue()+5, t.getPosition().y.intValue());

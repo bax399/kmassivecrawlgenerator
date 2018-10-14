@@ -7,12 +7,11 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import functions.PFunctions;
 import javafx.util.Pair;
 import model.merowech.ConcaveHull;
 import model.merowech.ConcaveHull.Point;
-import model.properties.BaseBiome;
 import model.redblob.Layout;
+import model.stats.StatsCoreBiome;
 import model.stats.StatsRegion;
 
 /**
@@ -29,8 +28,8 @@ public class HexRegion
 	private Set<FilledHex> regionhexes;
 	private Set<FilledHex> edgehexes;
 	private Set<FilledHex> neighbourhexes;
-	private HashMap<BaseBiome, Integer> biomeamounts;
-	private BaseBiome majoritybiome;
+	private HashMap<StatsCoreBiome, Integer> biomeamounts;
+	private StatsCoreBiome majoritybiome;
 	//private Biome tallestbiome;
 	//private int tallestheight;
 	private int majoritysize;
@@ -126,9 +125,9 @@ public class HexRegion
 //
 //	}
 	
-	public void addBiomes(Set<BaseBiome> biomes)
+	public void addBiomes(Set<StatsCoreBiome> biomes)
 	{
-		for(BaseBiome bb : biomes)
+		for(StatsCoreBiome bb : biomes)
 		{
 			int biomenum = 1;
 			if (biomeamounts.get(bb) != null)
@@ -171,7 +170,7 @@ public class HexRegion
 		
 		regionhexes.add(hh);
 		hh.setRegion(this);
-		addBiomes(hh.getBiomes());
+		addBiomes(hh.getHabitat().getAllBiomes());
 
 	}
 	
@@ -233,7 +232,7 @@ public class HexRegion
 		return majoritybiome.getValidRegionBiomes();
 	}
 	
-	public BaseBiome getMajorityBiome()
+	public StatsCoreBiome getMajorityBiome()
 	{
 		return majoritybiome; 
 	}
@@ -342,7 +341,7 @@ public class HexRegion
 		
 		for(FilledHex mh : mergee.regionhexes)
 		{
-			for(BaseBiome bb : mh.getBiomes())
+			for(StatsCoreBiome bb : mh.getHabitat().getAllBiomes())
 			{
 				int biomenum = 1;
 				if (biomeamounts.get(bb) != null)

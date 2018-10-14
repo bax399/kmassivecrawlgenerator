@@ -1,4 +1,4 @@
-package model.properties;
+package zdeprececated;
 import java.awt.Color;
 import java.util.Set;
 public interface BaseBiome extends BiomeProperties

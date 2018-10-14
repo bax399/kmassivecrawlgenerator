@@ -10,16 +10,16 @@ import java.util.Set;
 
 import model.ConnectedHexMap;
 import model.FilledHex;
-import model.properties.BaseBiome;
+import model.stats.StatsCoreBiome;
 import model.stats.StatsTown;
 public class TownGenerator extends Generator
 {
-	Map<StatsTown,Set<BaseBiome>> validbiomes;
+	Map<StatsTown,Set<StatsCoreBiome>> validbiomes;
 	List<StatsTown> townlist;
-	Map<String,BaseBiome> allbiomes;
+	Map<String,StatsCoreBiome> allbiomes;
 	ConnectedHexMap hexmap;	
 	
-	public TownGenerator(ConnectedHexMap chm, ArrayList<Properties> townprops, Map<String,BaseBiome> biomes, Random r)
+	public TownGenerator(ConnectedHexMap chm, ArrayList<Properties> townprops, Map<String,StatsCoreBiome> biomes, Random r)
 	{
 		super(r);
 		validbiomes = new HashMap<>();
@@ -33,7 +33,7 @@ public class TownGenerator extends Generator
 		
 		for(StatsTown t : townlist)
 		{
-			Set<BaseBiome> validtbiomes = processValidBiomes(t.getVBiomes());
+			Set<StatsCoreBiome> validtbiomes = processValidBiomes(t.getVBiomes());
 			validbiomes.put(t, validtbiomes);
 		}
 	}
@@ -63,7 +63,7 @@ public class TownGenerator extends Generator
 		if (!t.limitReached())
 		{
 			//getBiome().getBiome() will get the base biomes, ignoring modifiers.
-			if (validbiomes.get(t).contains(curr.getBiome().getConcreteBiome()))
+			if (validbiomes.get(t).contains(curr.getHabitat().getCoreBiome()))
 			{
 				if(rollChance(t.getChance()))
 				{
@@ -80,9 +80,9 @@ public class TownGenerator extends Generator
 		}			
 	}
 	
-	public Set<BaseBiome> processValidBiomes(String weight)
+	public Set<StatsCoreBiome> processValidBiomes(String weight)
 	{
-		Set<BaseBiome> bset = new HashSet<>();		
+		Set<StatsCoreBiome> bset = new HashSet<>();		
 		if (!weight.contains("all"))
 		{
 		
@@ -95,7 +95,7 @@ public class TownGenerator extends Generator
 		}
 		else //if it contains keyword all
 		{
-			for(Map.Entry<String,BaseBiome> entry : allbiomes.entrySet())
+			for(Map.Entry<String,StatsCoreBiome> entry : allbiomes.entrySet())
 			{
 				bset.add(entry.getValue());
 			}

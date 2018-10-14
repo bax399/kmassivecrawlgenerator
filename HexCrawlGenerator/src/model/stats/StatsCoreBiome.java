@@ -6,14 +6,13 @@ import java.util.Properties;
 import java.util.Set;
 
 import functions.PFunctions;
-import model.WorldDescriptor;
-import model.properties.BaseBiome;
 import model.properties.BiomeProperties;
+import zdeprececated.BaseBiome;
 /**
  * @author Keeley
  *
  */
-public class StatsCoreBiome extends WorldDescriptor implements BaseBiome,BiomeProperties{
+public class StatsCoreBiome extends PropertyStats implements BiomeProperties{
 	public static final String[] setvalues = {"biome"};
 	public static final Set<String> tags = new HashSet<>(Arrays.asList(setvalues));
 	
@@ -33,7 +32,6 @@ public class StatsCoreBiome extends WorldDescriptor implements BaseBiome,BiomePr
 	
 	public StatsCoreBiome(Properties pp)
 	{
-		super(pp.getProperty("name"), StatsCoreBiome.tags, pp.getProperty("name"), 10);		
 		color = PFunctions.parseColor(pp.getProperty("color"));
 		height = Integer.parseInt(pp.getProperty("height"));
 		travelCost = Integer.parseInt(pp.getProperty("travelcost")); 
@@ -48,8 +46,7 @@ public class StatsCoreBiome extends WorldDescriptor implements BaseBiome,BiomePr
 	
 	public StatsCoreBiome(String inName, Color inColour, int inHeight, int inTCost, String inSpotDistance, double inRiverOrigin, double inRiverEnd, boolean inValidStart,
 						String inWeight, Set<String> inValidRegions)
-	{
-		super(inName,tags,inName,10);		
+	{	
 		color = inColour;
 		height = inHeight;
 		travelCost = inTCost;
@@ -86,7 +83,7 @@ public class StatsCoreBiome extends WorldDescriptor implements BaseBiome,BiomePr
 
 	public int getTravelCost()
 	{
-		return Math.max(travelCost,0);
+		return travelCost;
 	}
 	
 	public int getHeight()
@@ -114,38 +111,15 @@ public class StatsCoreBiome extends WorldDescriptor implements BaseBiome,BiomePr
 		return riverOrigin;
 	}
 	
+	public Set<String> getValidRegionBiomes()
+	{
+		return validRegion;
+	}
+	
 	@Override
 	public String toString()
 	{
 		return getPrintName();
 	}
-	
-	@Override
-	public BaseBiome getConcreteBiome()
-	{
-		return this;
-	}
-	
-	@Override 
-	public Set<BaseBiome> getBiomes()
-	{
-		Set<BaseBiome> me = new HashSet<>();
-		me.add(this);
-		return me;
-	}
-	
-	@Override
-	public Set<String> getStrBiomes()
-	{
-		Set<String> me = new HashSet<>();
-		me.add(this.getBiomeName());
-		return me;		
-	}
-	
-	@Override
-	public Set<String> getValidRegionBiomes() 
-	{
-		return validRegion;
-	} //TODO create valid biomes category.
 	
 }

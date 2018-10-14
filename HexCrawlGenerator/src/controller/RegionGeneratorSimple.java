@@ -104,7 +104,7 @@ public class RegionGeneratorSimple extends Generator
 					if (neighbourRegion != null)
 					{
 						//Try and add the hex to the neighbouring region
-						if (neighbourHex.getBiome().getConcreteBiome().equals(currHex.getBiome().getConcreteBiome()))
+						if (neighbourHex.getHabitat().getCoreBiome().equals(currHex.getHabitat().getCoreBiome()))
 						{
 							foundRegion = true;
 							neighbourRegion.addHex(currHex);
@@ -169,6 +169,8 @@ public class RegionGeneratorSimple extends Generator
 			{
 				if(allRegions.contains(neighbourRegions.get(jj)))
 				{
+					System.out.println(neighbourRegions.get(jj).getMajorityBiome().getValidRegionBiomes());
+					System.out.println(neighbourRegions.get(jj).getMajorityBiome().toString());
 					if (neighbourRegions.get(jj).getMajorityBiome().getValidRegionBiomes().contains(currRegion.getMajorityBiome().getBiomeName()))
 					{
 //						PFunctions.outputString(this,"Merged Similar");

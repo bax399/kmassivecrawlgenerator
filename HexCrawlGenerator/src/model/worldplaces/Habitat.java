@@ -1,8 +1,9 @@
 package model.worldplaces;
+import java.awt.Color;
 import java.util.HashSet;
 import java.util.Set;
 
-import model.properties.BaseBiome;
+import model.properties.BiomeProperties;
 import model.stats.StatsCoreBiome;
 import model.stats.StatsModifierBiome;
 
@@ -12,46 +13,119 @@ import model.stats.StatsModifierBiome;
  * This Class stores the stats for core-biome and modifier-biomes for a specific hex. This can retrieve all the relevant information from those two 
  * biome classes.
  */
-public class Habitat extends WorldElement
+public class Habitat extends WorldElement implements BiomeProperties
 {
-	private StatsCoreBiome coreStats;
-	private Set<StatsModifierBiome> allModifierStats;
+	private StatsCoreBiome coreBiome;
+	private Set<StatsModifierBiome> modifierBiomes;
 	
 	public Habitat()
 	{
-		coreStats = StatsCoreBiome.basic;
-		allModifierStats = new HashSet<>();
+		coreBiome = StatsCoreBiome.basic;
+		modifierBiomes = new HashSet<>();
 	}
 	
-	public StatsCoreBiome getCoreStats()
-	{
-		return coreStats;
+	@Override
+	public Color getColor() {
+		return coreBiome.getColor();
 	}
-	
-	public void setCoreStats(StatsCoreBiome coreStats)
-	{
-		this.coreStats = coreStats;
-	}
-	
-	public Set<StatsModifierBiome> getModifierStats() 
-	{
-		return allModifierStats;
-	}
-	
-	public void setModifierStats(Set<StatsModifierBiome> modifierStats) 
-	{
-		this.allModifierStats = modifierStats;
-	}
-	
-	public void addModifierStats(StatsModifierBiome modifier)
-	{
-		this.allModifierStats.add(modifier);
-	}
-	
-	public Set<BaseBiome> getAllStats()
-	{
-		Set<BaseBiome> all = allModifierStats;
+
+	@Override
+	public int getHeight() {
+		int height = coreBiome.getHeight();
+		for(StatsModifierBiome mb : modifierBiomes)
+		{
+			height += mb.getHeight();
+		}
 		
+		return height;
 	}
+
+	@Override
+	public int getTravelCost() {
+		int travel = coreBiome.getTravelCost();
+		for(StatsModifierBiome mb : modifierBiomes)
+		{
+			travel += mb.getTravelCost();
+		}
+		
+		return Math.max(travel,0);
+	}
+
+	@Override
+	public String getSpotDistance() {
+		return coreBiome.getSpotDistance();
+	}
+
+	@Override
+	public double getRiverOrigin() {
+		double riverOrigin = coreBiome.getRiverOrigin();
+		for(StatsModifierBiome mb : modifierBiomes)
+		{
+			riverOrigin += mb.getRiverOrigin();
+		}
+		
+		return riverOrigin;
+	}
+
+	@Override
+	public double getRiverEnd() {
+		double riverEnd = coreBiome.getRiverEnd();
+		for(StatsModifierBiome mb : modifierBiomes)
+		{
+			riverEnd += mb.getRiverEnd();
+		}
+		
+		return riverEnd;
+	}
+
+	@Override
+	public String getWeight() {
+		return coreBiome.getWeight();
+	}
+
+	@Override
+	public boolean isValidStart() {
+		// TODO Auto-generated method stub
+		return coreBiome.isValidStart();
+	}
+
+	public StatsCoreBiome getCoreBiome() {
+		return coreBiome;
+	}
+
+	public void setCoreBiome(StatsCoreBiome coreBiome) {
+		this.coreBiome = coreBiome;
+	}
+
+	public Set<StatsModifierBiome> getModifierBiomes() {
+		return modifierBiomes;
+	}
+
+
+
+	public void setModifierBiomes(Set<StatsModifierBiome> modifierBiomes) {
+		this.modifierBiomes = modifierBiomes;
+	}
+
+	public void addModifierBiome	(StatsModifierBiome modifierBiome)
+	{
+		this.modifierBiomes.add(modifierBiome);
+	}
+	
+	public Set<StatsCoreBiome> getAllBiomes()
+	{
+		Set<StatsCoreBiome> allStats = new HashSet<>();
+		allStats.addAll(modifierBiomes);
+		allStats.add(coreBiome);
+		return allStats;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return coreBiome.getBiomeName();
+	}
+	
+	
 	
 }

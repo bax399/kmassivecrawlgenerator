@@ -62,11 +62,10 @@ public class RiverNetwork {
 						fh.add(rn);
 						//Adds a river modifier to the hex.
 						
-						if (!fh.getBiomes().contains(StatsModifierBiome.river))
+						if (!fh.getHabitat().getAllBiomes().contains(StatsModifierBiome.river))
 						{
 							StatsModifierBiome b = StatsModifierBiome.river;						
-							b.setNext(fh.getBiome());
-							fh.setBiome(b);
+							fh.getHabitat().addModifierBiome(b);
 						}
 						nodes.add(rn);
 					}

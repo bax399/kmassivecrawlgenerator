@@ -1,5 +1,7 @@
 package model;
 
+import model.stats.StatsModifierBiome;
+
 //Template model, overrides submethods to be road-specific shape.
 public class Roadfinder extends Pathfinder {
 
@@ -17,25 +19,43 @@ public class Roadfinder extends Pathfinder {
 	    }
 	    else //end if the existing road not is NOT in set.
 	    {
+	    	
 	    	if (!start.getRoadNode().getNetwork().equals(current.getRoadNode().getNetwork()))
 	    	{
 	    		fh=current;
 	    	}
 	    }
-	    
+		
+//		if(current.getRoadNode() != null)
+//	    {
+//	    	if (!start.getRoadNode().getNetwork().equals(current.getRoadNode().getNetwork()))
+//	    	{
+//	    		fh=current;
+//	    	}
+//	    }
+//		
+//    	if(current.getLargestTown() !=null)
+//    	{
+//    		fh=current;
+//    	}
 	    return fh;
 	}
 	
 	@Override
 	public int heuristic(ConnectedHexMap chm, FilledHex goal, FilledHex current, FilledHex next)
 	{
-		return goal.distance(current) + next.getBiome().getTravelCost();
+		int prioritiseRoad = 0;
+		if (next.getHabitat().getAllBiomes().contains(StatsModifierBiome.road))
+		{
+			prioritiseRoad+=100;
+		}
+		return goal.distance(next) + next.getHabitat().getTravelCost()*10 - prioritiseRoad;
 	}
 	
 	@Override
 	public int getCost(ConnectedHexMap chm, FilledHex current, FilledHex next) 
 	{
-		return next.getBiome().getTravelCost();//chm.adjTravelCost(current, next);
+		return next.getHabitat().getTravelCost();//chm.adjTravelCost(current, next);
 	}
 
 }
