@@ -5,21 +5,21 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
 
-import model.Biome;
+import model.properties.BaseBiome;
 
 public class BWeight 
 {
-	Map<Biome,Integer> ordering;
-	Map<Integer,Biome> biomeid;
+	Map<BaseBiome,Integer> ordering;
+	Map<Integer,BaseBiome> biomeid;
 	
 	Map<Integer,ArrayList<Integer>> weights;
 	public Map<Integer,ArrayList<Integer>> rollweights;
 	int total;
 	
-	Map<String,Biome> biomenames;
+	Map<String,BaseBiome> biomenames;
 	Random rand = new Random();
 	
-	public BWeight(Properties bweights, ArrayList<Biome> biomes)
+	public BWeight(Properties bweights, ArrayList<BaseBiome> biomes)
 	{
 		ordering = new HashMap<>();
 		weights = new HashMap<>();
@@ -134,7 +134,7 @@ public class BWeight
 		return index;
 	}
 	
-	public Biome rollBiome(Biome previous)
+	public BaseBiome rollBiome(BaseBiome previous)
 	{
 		int prevnum = ordering.get(previous);
 		int nextnum = indexWeight(rollweights.get(prevnum), rollWeights(rollweights.get(prevnum)));
@@ -142,10 +142,10 @@ public class BWeight
 	}
 	
 	//TODO this rolls for a biome after reandomizing a biome, this can potentially get a Desert->Abyss into a point that shouldnt be allowed
-	public Biome rollBiome()
+	public BaseBiome rollBiome()
 	{
 		int index = rand.nextInt(biomeid.size());
-		Biome first = biomeid.get(index);
+		BaseBiome first = biomeid.get(index);
 		int prevnum = ordering.get(first);
 		int nextnum = indexWeight(rollweights.get(prevnum), rollWeights(rollweights.get(prevnum)));
 		

@@ -1,7 +1,7 @@
 package zdeprececated;
 import java.util.Map;
 
-import model.worldobjects.Monster;
+import model.worldplaces.Monster;
 
 //Anything that properties input, the object is expected to use.
 public interface DungeonProperties extends BasicProperties

@@ -8,7 +8,7 @@ import model.FilledHex;
 import model.HexRegion;
 import model.redblob.Layout;
 import model.redblob.Tuple;
-import model.worldobjects.HexTown;
+import model.worldplaces.HexTown;
 
 import java.awt.BasicStroke;
 import java.awt.Color;

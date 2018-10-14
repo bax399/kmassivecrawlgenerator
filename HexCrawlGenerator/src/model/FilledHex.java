@@ -9,15 +9,17 @@ import java.util.Map;
 import java.util.Set;
 
 import model.merowech.ConcaveHull.Point;
+import model.properties.BaseBiome;
 import model.redblob.Hex;
-import model.worldobjects.HexTown;
-import model.worldobjects.RiverNode;
-import model.worldobjects.RoadNode;
-import model.worldobjects.WorldObject;
+import model.stats.StatsCoreBiome;
+import model.worldplaces.HexTown;
+import model.worldplaces.RiverNode;
+import model.worldplaces.RoadNode;
+import model.worldplaces.WorldPlace;
 
 public class FilledHex extends Hex 
 {
-	private Biome biome;
+	private BaseBiome biome;
 	public Point center;
 	
 	public int priority=0; //Editable field for pathfinding priority
@@ -36,20 +38,20 @@ public class FilledHex extends Hex
 	private HexRegion region;
 	
 	//Stores the random points for each item it contains, rivers and roads store their own.
-	private Map<WorldObject, Point> points;
+	private Map<WorldPlace, Point> points;
 	
 	//TODO make a way to roll for random points within hex that isn't cpu intensive
 	//thoughts: this should be done in hexmap, as then we just add the hex's center to the random point and we're in luck.
 	
 	//TODO addWorldObject methods to FilledHexes, randomize point then add it to the map.
-	public FilledHex(Biome b, int q, int r, int s)
+	public FilledHex(BaseBiome b, int q, int r, int s)
 	{
 		super(q,r);
 		biome = b;
 		region = null;
 	}
 
-	public FilledHex(Biome b, int q, int r)
+	public FilledHex(BaseBiome b, int q, int r)
 	{
 		super(q,r);
 		biome = b;
@@ -60,7 +62,7 @@ public class FilledHex extends Hex
 	public FilledHex(int q, int r)
 	{
 		super(q,r);
-		biome = BiomeConcrete.basic;
+		biome = StatsCoreBiome.basic;
 		region = null;
 	}
 
@@ -128,17 +130,17 @@ public class FilledHex extends Hex
 		return river;
 	}
 	
-	public void setBiome(Biome b)
+	public void setBiome(BaseBiome b)
 	{
 		biome = b;
 	}
 	
-	public Biome getBiome()
+	public BaseBiome getBiome()
 	{
 		return biome;
 	}
 	
-	public Set<Biome> getBiomes()
+	public Set<BaseBiome> getBiomes()
 	{
 		return biome.getBiomes();
 	}

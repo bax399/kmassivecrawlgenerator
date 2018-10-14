@@ -8,18 +8,18 @@ import java.util.Properties;
 import java.util.Random;
 import java.util.Set;
 
-import model.Biome;
 import model.ConnectedHexMap;
 import model.FilledHex;
-import model.worldobjects.Town;
+import model.properties.BaseBiome;
+import model.stats.StatsTown;
 public class TownGenerator extends Generator
 {
-	Map<Town,Set<Biome>> validbiomes;
-	List<Town> townlist;
-	Map<String,Biome> allbiomes;
+	Map<StatsTown,Set<BaseBiome>> validbiomes;
+	List<StatsTown> townlist;
+	Map<String,BaseBiome> allbiomes;
 	ConnectedHexMap hexmap;	
 	
-	public TownGenerator(ConnectedHexMap chm, ArrayList<Properties> townprops, Map<String,Biome> biomes, Random r)
+	public TownGenerator(ConnectedHexMap chm, ArrayList<Properties> townprops, Map<String,BaseBiome> biomes, Random r)
 	{
 		super(r);
 		validbiomes = new HashMap<>();
@@ -31,9 +31,9 @@ public class TownGenerator extends Generator
 		townlist = pf.processProperties(townprops);
 		rand = r;
 		
-		for(Town t : townlist)
+		for(StatsTown t : townlist)
 		{
-			Set<Biome> validtbiomes = processValidBiomes(t.getVBiomes());
+			Set<BaseBiome> validtbiomes = processValidBiomes(t.getVBiomes());
 			validbiomes.put(t, validtbiomes);
 		}
 	}
@@ -51,14 +51,14 @@ public class TownGenerator extends Generator
 
 
 			
-			for(Town t:townlist)
+			for(StatsTown t:townlist)
 			{
 				rollTown(t,curr);
 			}
 		}
 	}
 		
-	public void rollTown(Town t, FilledHex curr)
+	public void rollTown(StatsTown t, FilledHex curr)
 	{
 		if (!t.limitReached())
 		{
@@ -80,9 +80,9 @@ public class TownGenerator extends Generator
 		}			
 	}
 	
-	public Set<Biome> processValidBiomes(String weight)
+	public Set<BaseBiome> processValidBiomes(String weight)
 	{
-		Set<Biome> bset = new HashSet<>();		
+		Set<BaseBiome> bset = new HashSet<>();		
 		if (!weight.contains("all"))
 		{
 		
@@ -95,7 +95,7 @@ public class TownGenerator extends Generator
 		}
 		else //if it contains keyword all
 		{
-			for(Map.Entry<String,Biome> entry : allbiomes.entrySet())
+			for(Map.Entry<String,BaseBiome> entry : allbiomes.entrySet())
 			{
 				bset.add(entry.getValue());
 			}

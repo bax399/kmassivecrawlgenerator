@@ -7,16 +7,16 @@ import java.util.Properties;
 import java.util.Random;
 import java.util.Set;
 
-import model.Biome;
 import model.FilledHex;
 import model.MonsterProperties;
+import model.properties.BaseBiome;
 public class Monster extends WorldDescriptor implements MonsterProperties {
 	public final String[] setvalues = {"monster"};
 	public final Set<String> tags = new HashSet<>(Arrays.asList(setvalues));
 	
 	private final Random rand;
 
-	private Map<Biome,Double> spawnchances; //Only return unmodifiable
+	private Map<BaseBiome,Double> spawnchances; //Only return unmodifiable
 	private final String name;
 	private final String description;
 	private final int roamradius;
@@ -40,7 +40,7 @@ public class Monster extends WorldDescriptor implements MonsterProperties {
 		encounterchance=Double.parseDouble(pp.getProperty("encounterchance"));
 	}
 
-	public HexMonster rollMonster(Biome b, FilledHex origin)
+	public HexMonster rollMonster(BaseBiome b, FilledHex origin)
 	{
 		double weight;
 		HexMonster thismonster=null;
@@ -113,7 +113,7 @@ public class Monster extends WorldDescriptor implements MonsterProperties {
 	}
 
 	@Override
-	public Map<Biome,Double> getSpawnChance() {
+	public Map<BaseBiome,Double> getSpawnChance() {
 		return spawnchances;
 	}
 

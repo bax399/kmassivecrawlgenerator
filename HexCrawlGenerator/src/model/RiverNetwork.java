@@ -2,7 +2,8 @@ package model;
 import java.util.HashSet;
 import java.util.Set;
 
-import model.worldobjects.RiverNode;
+import model.stats.StatsModifierBiome;
+import model.worldplaces.RiverNode;
 public class RiverNetwork {
 
 	private Set<Connection> connects;
@@ -61,9 +62,9 @@ public class RiverNetwork {
 						fh.add(rn);
 						//Adds a river modifier to the hex.
 						
-						if (!fh.getBiomes().contains(BiomeModifier.river))
+						if (!fh.getBiomes().contains(StatsModifierBiome.river))
 						{
-							BiomeModifier b = new BiomeModifier(BiomeModifier.river,fh.getBiome());							
+							StatsModifierBiome b = StatsModifierBiome.river;						
 							b.setNext(fh.getBiome());
 							fh.setBiome(b);
 						}

@@ -21,7 +21,7 @@ import model.HexRegion;
 import model.merowech.ConcaveHull.Point;
 import model.redblob.Layout;
 import model.redblob.Tuple;
-import model.worldobjects.HexTown;
+import model.worldplaces.HexTown;
 //Panel draws to screen.
 public class MapDrawer extends JPanel
 {

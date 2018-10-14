@@ -6,8 +6,8 @@ import java.util.Properties;
 import java.util.Set;
 
 import functions.PFunctions;
-import model.BiomeConcrete;
-import model.worldobjects.Town;
+import model.stats.StatsCoreBiome;
+import model.stats.StatsTown;
 public class PropertiesFactory
 {
 	
@@ -41,9 +41,9 @@ public class PropertiesFactory
 	}
 	
 	
-	public BiomeConcrete createBiomeConcrete(Properties pp)
+	public StatsCoreBiome createBiomeConcrete(Properties pp)
 	{
-		BiomeConcrete created = new BiomeConcrete(	
+		StatsCoreBiome created = new StatsCoreBiome(	
 									pp.getProperty("name"),
 									PFunctions.parseColor(pp.getProperty("color")),
 									Integer.parseInt(pp.getProperty("height")),
@@ -59,9 +59,9 @@ public class PropertiesFactory
 		return created;
 	}
 	
-	public Town createTown(Properties pp)
+	public StatsTown createTown(Properties pp)
 	{
-		Town created = new Town(
+		StatsTown created = new StatsTown(
 							pp.getProperty("name"),Integer.parseInt(pp.getProperty("visibility")),Integer.parseInt(pp.getProperty("max")),
 							Integer.parseInt(pp.getProperty("connectivity")),
 							pp.getProperty("validbiomes").toLowerCase(),

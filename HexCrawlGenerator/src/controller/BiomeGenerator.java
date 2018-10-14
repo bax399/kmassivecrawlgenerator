@@ -13,15 +13,15 @@ import java.util.Queue;
 import java.util.Random;
 import java.util.Set;
 
-import model.Biome;
 import model.BiomeChooser;
 import model.ConnectedHexMap;
 import model.FilledHex;
+import model.properties.BaseBiome;
 public class BiomeGenerator extends Generator
 {
 	ConnectedHexMap hexmap;
 	BiomeChooser bchoose;
-	ArrayList<Biome> biomes;
+	ArrayList<BaseBiome> biomes;
 	
 	public BiomeGenerator(ConnectedHexMap chm, ArrayList<Properties> bprops, Random r)
 	{
@@ -33,12 +33,12 @@ public class BiomeGenerator extends Generator
 		
 	}
 	
-	public ArrayList<Biome> getBiomeList()
+	public ArrayList<BaseBiome> getBiomeList()
 	{
 		return biomes;
 	}
 	
-	public Map<String,Biome> getBiomeMap()
+	public Map<String,BaseBiome> getBiomeMap()
 	{
 		return bchoose.getBMap();
 	}
@@ -50,14 +50,14 @@ public class BiomeGenerator extends Generator
 		
 	}
 
-	public void frontierGenerate(FilledHex startHex, Biome startBiome)
+	public void frontierGenerate(FilledHex startHex, BaseBiome startBiome)
 	{
-		Map<FilledHex, Biome> came_from = new HashMap<>();
+		Map<FilledHex, BaseBiome> came_from = new HashMap<>();
 		List<FilledHex> frontier = new ArrayList<>();
 		Set<FilledHex> visited = new HashSet<>();
 		
 		FilledHex currHex, nextHex;
-		Biome currBiome=startBiome;
+		BaseBiome currBiome=startBiome;
 		
 		frontier.add(startHex);
 		came_from.put(startHex, startBiome);
@@ -110,7 +110,7 @@ public class BiomeGenerator extends Generator
 		//Need to find a nearby hex to pull its biome from.
 		if (start.getBiome() == null || start.getBiome().getBiomeName().equals("basic"))
 		{
-			Biome type = bchoose.rollBiome();
+			BaseBiome type = bchoose.rollBiome();
 			FilledHex neighb;
 			int dir;
 			boolean done = false;
@@ -133,7 +133,7 @@ public class BiomeGenerator extends Generator
 		}
 	}
 	
-	private void iterativeWormGenerate(FilledHex initial,Biome type)
+	private void iterativeWormGenerate(FilledHex initial,BaseBiome type)
 	{
 		FilledHex curr = initial;
 		FilledHex next = null, prev=null;

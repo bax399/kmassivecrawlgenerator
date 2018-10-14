@@ -3,8 +3,9 @@ package model;
 import java.util.HashSet;
 import java.util.Set;
 
-import model.worldobjects.HexTown;
-import model.worldobjects.RoadNode;
+import model.stats.StatsModifierBiome;
+import model.worldplaces.HexTown;
+import model.worldplaces.RoadNode;
 public class RoadNetwork
 {
 	private Set<Connection> connects;
@@ -63,9 +64,9 @@ public class RoadNetwork
 			
 			fh.add(rn); //add road node to the hex
 			
-			if (!fh.getBiomes().contains(BiomeModifier.road))
+			if (!fh.getBiomes().contains(StatsModifierBiome.road))
 			{
-				BiomeModifier b = new BiomeModifier(BiomeModifier.road,fh.getBiome());							
+				StatsModifierBiome b = StatsModifierBiome.road;							
 				b.setNext(fh.getBiome());
 				fh.setBiome(b);
 			}			
@@ -125,9 +126,9 @@ public class RoadNetwork
 						
 						fh.add(rn); //add road node to the hex
 						
-						if (!fh.getBiomes().contains(BiomeModifier.road))
+						if (!fh.getBiomes().contains(StatsModifierBiome.road))
 						{
-							BiomeModifier b = new BiomeModifier(BiomeModifier.road,fh.getBiome());							
+							StatsModifierBiome b = new StatsModifierBiome(StatsModifierBiome.road,fh.getBiome());							
 							b.setNext(fh.getBiome());
 							fh.setBiome(b);
 						}			

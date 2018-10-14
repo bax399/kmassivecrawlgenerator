@@ -13,12 +13,12 @@ import functions.PFunctions;
 import model.ConnectedHexMap;
 import model.FilledHex;
 import model.HexRegion;
-import model.Region;
+import model.stats.StatsRegion;
 public class RegionGenerator extends Generator 
 {
 	public static int min = 50;
 	public static int max = 20000;
-	public static Region defaultregion =  new Region("default",1,1,min,max);	
+	public static StatsRegion defaultregion =  new StatsRegion("default",1,1,min,max);	
 	ConnectedHexMap hexmap;
 	
 	public static Comparator<HexRegion> regionComparator = new Comparator<HexRegion>()

@@ -11,31 +11,32 @@ import java.util.Random;
 import java.util.Set;
 
 import model.frorcommon.RandomCollection;
+import model.properties.BaseBiome;
 public class BiomeChooser 
 {
 	
-	Map<Biome,RandomCollection<Biome>> weights;
-	Map<String,Biome> biomenames;
-	Set<Biome> validbiomes;
+	Map<BaseBiome,RandomCollection<BaseBiome>> weights;
+	Map<String,BaseBiome> biomenames;
+	Set<BaseBiome> validbiomes;
 	
-	Map<Biome, Set<Biome>> validregionbiomes; // TODO implement similar to weights, but use biome valid string instead.
+	Map<BaseBiome, Set<BaseBiome>> validregionbiomes; // TODO implement similar to weights, but use biome valid string instead.
 	
 	Random rand;
 
-	public BiomeChooser(ArrayList<Biome> biomes, Random random)
+	public BiomeChooser(ArrayList<BaseBiome> biomes, Random random)
     {
 		rand = random; 
 		weights = new HashMap<>();
 		biomenames = new HashMap<>();
 		validbiomes = new HashSet<>();
 		//Add all true-names to list
-		for(Biome b: biomes)
+		for(BaseBiome b: biomes)
 		{
 			biomenames.put(b.getBiomeName(),b); 
 		}
 		
 		//process weights now we have all.
-		for(Biome b: biomes)
+		for(BaseBiome b: biomes)
 		{
 			initializeWeights(b);
 			if (b.isValidStart()) validbiomes.add(b);
@@ -44,7 +45,7 @@ public class BiomeChooser
 		outputString(this, validbiomes.toString());
 	}
 	
-	public Map<String,Biome> getBMap()
+	public Map<String,BaseBiome> getBMap()
 	{
 		return Collections.unmodifiableMap(biomenames);
 	}
@@ -84,9 +85,9 @@ public class BiomeChooser
 		return stringarray;
 	}
 	
-	public void initializeWeights(Biome origin)
+	public void initializeWeights(BaseBiome origin)
 	{
-		RandomCollection<Biome> bb = new RandomCollection<>(rand);
+		RandomCollection<BaseBiome> bb = new RandomCollection<>(rand);
 		
 		String weightstring = origin.getWeight();
 		weightstring=weightstring.replaceAll("\\s+", "");
@@ -108,7 +109,7 @@ public class BiomeChooser
 				//Add all with >=1 weight.
 				//if (weight > 0)
 				//{
-					for(Map.Entry<String,Biome> map : biomenames.entrySet())
+					for(Map.Entry<String,BaseBiome> map : biomenames.entrySet())
 					{
 						bb.add(weight, map.getValue());
 					}
@@ -116,7 +117,7 @@ public class BiomeChooser
 			}
 			else
 			{
-				Biome bfound=biomenames.get(bname);
+				BaseBiome bfound=biomenames.get(bname);
 				if(bfound==null) outputString(this,"Biome weight invalid in: " +origin.getBiomeName());//throw new IllegalArgumentException("Biome weight invalid in: " +origin.getBiomeName());	
 				if(bfound!=null) bb.add(weight,bfound);				
 			}
@@ -125,12 +126,12 @@ public class BiomeChooser
 		weights.put(origin,bb);
 	}
 	
-	public Biome rollBiome(Biome previous)
+	public BaseBiome rollBiome(BaseBiome previous)
 	{
 		if (previous !=null) 
 		{
 			
-			Biome next = weights.get(previous).next();
+			BaseBiome next = weights.get(previous).next();
 			//System.out.println(previous.getBiomeName() +" into "+ next.getBiomeName());
 			return next;
 		}
@@ -138,11 +139,11 @@ public class BiomeChooser
 	}
 	
 	//This just gets a random valid biome to start the head.
-	public Biome rollBiome()
+	public BaseBiome rollBiome()
 	{
 		int index = rand.nextInt(validbiomes.size());
-		Iterator<Biome> it = validbiomes.iterator();
-		Biome found = null;
+		Iterator<BaseBiome> it = validbiomes.iterator();
+		BaseBiome found = null;
 		for(int ii=-1;ii<index;ii++)
 		{
 			found = it.next();
@@ -150,7 +151,7 @@ public class BiomeChooser
 		return found;
 	}	
 	
-	public Biome rollBiome(String name)
+	public BaseBiome rollBiome(String name)
 	{
 		return weights.get(biomenames.get(name)).next();
 	}	

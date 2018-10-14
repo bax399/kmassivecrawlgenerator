@@ -7,7 +7,7 @@ public interface MonsterProperties extends BasicProperties
 	public int getVisibility();
 	public double getNomadChance();
 	public int getRoamRadius();
-	public Map<Biome,Double> getSpawnChance();
+	public Map<BaseBiome,Double> getSpawnChance();
 	public int getRoamType();
 	public double getEncounterChance();
 }
