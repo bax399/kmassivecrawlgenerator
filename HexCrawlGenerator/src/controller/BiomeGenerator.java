@@ -19,19 +19,18 @@ public class BiomeGenerator extends Generator
 {
 	ConnectedHexMap hexmap;
 	BiomeChooser bchoose;
-	ArrayList<StatsCoreBiome> biomes;
+	List<StatsCoreBiome> biomes;
 	
-	public BiomeGenerator(ConnectedHexMap chm, ArrayList<Properties> bprops, Random r)
+	public BiomeGenerator(ConnectedHexMap chm, List<StatsCoreBiome> bprops, Random r)
 	{
 		super(r);
-		PropertiesFactory pf = new PropertiesFactory();
-		biomes = pf.processProperties(bprops);
+		biomes = bprops;
 		bchoose = new BiomeChooser(biomes,r);
 		hexmap=chm;
 		
 	}
 	
-	public ArrayList<StatsCoreBiome> getBiomeList()
+	public List<StatsCoreBiome> getBiomeList()
 	{
 		return biomes;
 	}

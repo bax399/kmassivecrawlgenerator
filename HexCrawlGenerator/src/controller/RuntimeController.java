@@ -1,5 +1,5 @@
 package controller;
-import static functions.PFunctions.outputString;
+import static functions.KFunctions.outputString;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.event.KeyEvent;
@@ -8,7 +8,7 @@ import java.util.Random;
 
 import javax.swing.JFrame;
 
-import model.merowech.ConcaveHull.Point;
+import model.Point;
 import model.redblob.Layout;
 import view.MapDrawerPanel;
 public class RuntimeController 
@@ -21,12 +21,11 @@ public class RuntimeController
 	{ 
 		Random rand = new Random();
 		long time1 = System.currentTimeMillis();
-		FileProcessor fp = new FileProcessor();
-		PropertiesReader ptr = new PropertiesReader();
-		fp.processFile("inputTest.txt", ptr);
- 
+
+		PropertiesController pc = new PropertiesController();
+		
 		Layout lt = new Layout(Layout.pointy,new Point(size,size),new Point(screenwidth/2,screenheight/2)); //Spiral Map
-		MapController mc = new MapController(100, ptr, lt, rand); 
+		MapController mc = new MapController(100, pc, lt, rand); 
 
 		long time2 = System.currentTimeMillis();
 		long timeTaken = (time2 - time1 );

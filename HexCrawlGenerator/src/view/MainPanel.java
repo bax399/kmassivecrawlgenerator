@@ -98,13 +98,13 @@ public abstract class MainPanel extends JPanel implements MouseWheelListener, Mo
         // All drawings go here
         
         //g2.drawImage(image, 0, 0, this);
-        drawAll(g2, at,(float)zoomFactor);
+        drawAll(g2, g,(float)zoomFactor);
         
         
 
     }
     
-    public abstract void drawAll(Graphics2D g2, AffineTransform at,float zoomFactor);
+    public abstract void drawAll(Graphics2D g2,Graphics g,float zoomFactor);
     
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {

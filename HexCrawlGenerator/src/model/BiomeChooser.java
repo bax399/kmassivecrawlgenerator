@@ -1,12 +1,12 @@
 package model;
 
-import static functions.PFunctions.outputString;
+import static functions.KFunctions.outputString;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
@@ -25,7 +25,7 @@ public class BiomeChooser {
 
 	Random rand;
 
-	public BiomeChooser(ArrayList<StatsCoreBiome> biomes, Random random) {
+	public BiomeChooser(List<StatsCoreBiome> biomes, Random random) {
 		rand = random;
 		weights = new HashMap<>();
 		biomenames = new HashMap<>();

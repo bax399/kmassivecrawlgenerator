@@ -9,7 +9,7 @@ import java.util.Random;
 import java.util.Set;
 
 import controller.Generator;
-import functions.PFunctions;
+import functions.KFunctions;
 import model.ConnectedHexMap;
 import model.FilledHex;
 import model.HexRegion;
@@ -102,7 +102,7 @@ public class RegionGenerator extends Generator
 			HexRegion currregion = smallRegionList.remove(0);
 			merged = false;
 			List<HexRegion> neighbouringregions = new ArrayList<>(currregion.getNeighbourRegions());
-			PFunctions.outputString(this,currregion.getRegionSize()+"");			
+			KFunctions.outputString(this,currregion.getRegionSize()+"");			
 			Collections.sort(neighbouringregions,regionComparator);
 			
 			
@@ -206,7 +206,7 @@ public class RegionGenerator extends Generator
 
 			if(merged)
 			{
-				PFunctions.outputString(this,"Merged regions");				
+				KFunctions.outputString(this,"Merged regions");				
 				allregions.remove(currregion);
 				smallRegionList.remove(currregion);
 			}
@@ -220,9 +220,9 @@ public class RegionGenerator extends Generator
 		
 		
 
-		PFunctions.outputString(this,""+allregions.size());
+		KFunctions.outputString(this,""+allregions.size());
 		Set<HexRegion> uniqueregions = new HashSet<HexRegion>(allregions);
-		PFunctions.outputString(this, ""+uniqueregions.size());		
+		KFunctions.outputString(this, ""+uniqueregions.size());		
 		
 		Iterator<HexRegion> itRegion = uniqueregions.iterator();
 		int ii=0,totalsize=0;
@@ -233,16 +233,16 @@ public class RegionGenerator extends Generator
 			eachregion.updateAll();
 			eachregion.calculateEdgeLines();
 			
-			PFunctions.outputString(this,"Region Details for "+ii);
+			KFunctions.outputString(this,"Region Details for "+ii);
 //			PFunctions.outputString(this,"Edge:"+eachregion.getEdgeHexes().size());
 //			PFunctions.outputString(this,"Edgelines: "+ eachregion.getEdgeLines().size());
 //			
 //			PFunctions.outputString(this,"NeighbourRegions:"+eachregion.getNeighbourRegions().size());			
 //			PFunctions.outputString(this,"Neighbour:"+eachregion.getNeighbourHexes().size());
-			PFunctions.outputString(this,"Size:"+eachregion.getRegionSize());
+			KFunctions.outputString(this,"Size:"+eachregion.getRegionSize());
 			totalsize+=eachregion.getRegionSize();			
 		}
-		PFunctions.outputString(this,"Count Region Size:"+totalsize);
+		KFunctions.outputString(this,"Count Region Size:"+totalsize);
 		return uniqueregions;
 	}
 

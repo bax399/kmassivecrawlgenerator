@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import model.merowech.ConcaveHull.Point;
 import model.redblob.Hex;
 import model.stats.StatsCoreBiome;
 import model.worldplaces.Habitat;
@@ -16,7 +15,6 @@ import model.worldplaces.HexTown;
 import model.worldplaces.RiverNode;
 import model.worldplaces.RoadNode;
 import model.worldplaces.WorldPlace;
-import zdeprececated.BaseBiome;
 
 public class FilledHex extends Hex 
 {

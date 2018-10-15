@@ -5,9 +5,14 @@ import java.util.Iterator;
 import java.util.Properties;
 import java.util.Set;
 
-import functions.PFunctions;
+import functions.KFunctions;
 import model.stats.StatsCoreBiome;
 import model.stats.StatsTown;
+
+/**
+ * @author Keeley
+ * This class is responsible for turning Property lists into lists of Stats_ Objects.
+ */
 public class PropertiesFactory
 {
 	
@@ -45,15 +50,15 @@ public class PropertiesFactory
 	{
 		StatsCoreBiome created = new StatsCoreBiome(	
 									pp.getProperty("name"),
-									PFunctions.parseColor(pp.getProperty("color")),
+									KFunctions.parseColor(pp.getProperty("color")),
 									Integer.parseInt(pp.getProperty("height")),
 									Integer.parseInt(pp.getProperty("travelcost")),
 									pp.getProperty("spotdistance"),
 									Double.parseDouble(pp.getProperty("riverorigin")),
 									Double.parseDouble(pp.getProperty("riverend")),
-									PFunctions.convertToBoolean(pp.getProperty("validstart")),		
+									KFunctions.convertToBoolean(pp.getProperty("validstart")),		
 									pp.getProperty("weight").toLowerCase(),
-									PFunctions.processCSVtoSet(pp.getProperty("validregion"))
+									KFunctions.processCSVtoSet(pp.getProperty("validregion"))
 								);
 		
 		return created;
@@ -65,7 +70,7 @@ public class PropertiesFactory
 							pp.getProperty("name"),Integer.parseInt(pp.getProperty("visibility")),Integer.parseInt(pp.getProperty("max")),
 							Integer.parseInt(pp.getProperty("connectivity")),
 							pp.getProperty("validbiomes").toLowerCase(),
-							PFunctions.convertToBoolean(pp.getProperty("needriver")),
+							KFunctions.convertToBoolean(pp.getProperty("needriver")),
 							Double.parseDouble(pp.getProperty("spawnchance"))
 						);
 		return created;

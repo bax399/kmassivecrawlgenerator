@@ -6,7 +6,6 @@ import java.util.Random;
 import java.util.Set;
 
 import model.graphresource.Graph;
-import model.merowech.ConcaveHull.Point;
 import model.redblob.Layout;
 public class ConnectedHexMap extends HexMap<FilledHex> {
 

@@ -9,7 +9,7 @@ import java.util.Random;
 import java.util.Set;
 
 import controller.Generator;
-import functions.PFunctions;
+import functions.KFunctions;
 import model.ConnectedHexMap;
 import model.FilledHex;
 import model.HexRegion;
@@ -64,7 +64,7 @@ public class RegionGeneratorClean extends Generator
 //			PFunctions.outputString(this,"Size:"+eachReg.getRegionSize());
 			ii++;			
 		}
-		PFunctions.outputString(this,"Count Region Size: "+ii);			
+		KFunctions.outputString(this,"Count Region Size: "+ii);			
 		
 		return new HashSet<>(allRegions);
 	}
@@ -87,7 +87,7 @@ public class RegionGeneratorClean extends Generator
 	public HexRegion generateRegionSeed(FilledHex origin,List<FilledHex> candidates)
 	{
 		HexRegion newRegion = new HexRegion(defaultregion,origin,hexmap);
-		PFunctions.outputString(this,"Creating for: "+origin.q+" "+origin.r);
+		KFunctions.outputString(this,"Creating for: "+origin.q+" "+origin.r);
 		
 		boolean foundOne=true;
 		FilledHex currHex = origin;
@@ -114,7 +114,7 @@ public class RegionGeneratorClean extends Generator
 		for(HexRegion eachregion : allRegions)
 		{
 			eachregion.updateAll();
-			PFunctions.outputString(this,eachregion.getNeighbourRegions().size()+"");
+			KFunctions.outputString(this,eachregion.getNeighbourRegions().size()+"");
 		}
 	}
 	

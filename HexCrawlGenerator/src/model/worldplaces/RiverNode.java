@@ -1,6 +1,6 @@
 package model.worldplaces;
+import model.Point;
 import model.RiverNetwork;
-import model.merowech.ConcaveHull.Point;
 public class RiverNode 
 {
 	private Point pos;

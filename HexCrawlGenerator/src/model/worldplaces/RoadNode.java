@@ -1,6 +1,6 @@
 package model.worldplaces;
+import model.Point;
 import model.RoadNetwork;
-import model.merowech.ConcaveHull.Point;
 
 public class RoadNode 
 {

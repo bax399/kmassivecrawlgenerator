@@ -2,7 +2,7 @@ package ztests;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import controller.FileProcessor;
+import controller.UserPropertyReader;
 import controller.PropertiesReader;
 public class TestTypeReader {
 	public static void main(String[] args)
@@ -14,7 +14,7 @@ public class TestTypeReader {
 		String s = currentRelativePath.toAbsolutePath().toString();
 		System.out.println("Current relative path is: " + s);			
 		
-		FileProcessor fp = new FileProcessor();
+		UserPropertyReader fp = new UserPropertyReader();
 		PropertiesReader ptr = new PropertiesReader();
 		fp.processFile("inputTest.txt", ptr);
 		

@@ -5,13 +5,12 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
-import functions.PFunctions;
+import functions.KFunctions;
 import model.ConnectedHexMap;
 import model.FilledHex;
 import model.redblob.Hex;
 import model.redblob.Layout;
 import model.redblob.Tuple;
-import static functions.PFunctions.outputString;
 public class MapController
 {
 	PropertiesReader pstorage;
@@ -19,80 +18,63 @@ public class MapController
 	//size,origin
 	Layout layout;// = new Layout(Layout.flat, new Point(20,20), new Point(200,200));	
 
-	public MapController(int h, int w,PropertiesReader ptr , Layout lt,Random rand)
+	public MapController(int h, int w,PropertiesController pc , Layout lt,Random rand)
 	{
 
 		hexmap = new ConnectedHexMap(w,h,lt,rand);
 		layout=lt;		
 		//createRectangleMap(w,h, bweight);
 		initializeRectangleMap(h,w);
-		
-		pstorage=ptr;		
-		BiomeGenerator bg = new BiomeGenerator(hexmap,ptr.getTypeList("biome"),rand);
+			
+		BiomeGenerator bg = new BiomeGenerator(hexmap,pc.getBiomeList(),rand);
 		bg.wormWrapper();
 		getPolygons();
 		hexmap.initializeNeighbours();
-		PFunctions.outputString(this,"Finished Generating");
-		
+		KFunctions.outputString(this,"Finished Generating");
 		
 		RiverGenerator rg = new RiverGenerator(hexmap,new Random());
 		hexmap.setRiverNetworks(rg.generateRivers());
-		PFunctions.outputString(this,"Finished Rivers");
+		KFunctions.outputString(this,"Finished Rivers");
 		
-		TownGenerator tg = new TownGenerator(hexmap,ptr.getTypeList("town"),bg.getBiomeMap(),rand);
+		TownGenerator tg = new TownGenerator(hexmap,pc.getTownList(),bg.getBiomeMap(),rand);
 		tg.generateTowns();
-		PFunctions.outputString(this,"Finished Towns");
+		KFunctions.outputString(this,"Finished Towns");
 		
 		RoadGenerator rag = new RoadGenerator(hexmap,rand);
 		hexmap.setRoadNetworks(rag.generateRoads());
-		PFunctions.outputString(this,"Finished Roads");		
+		KFunctions.outputString(this,"Finished Roads");		
 
-	}
-
-	//TODO setup observer pattern.
-	public void initializeHexes()
-	{
-		/*
-		ArrayList<FilledHex> nullhexes = new ArrayList<>(hexmap.getHexes().values());
-		Iterator<FilledHex> it = nullhexes.iterator();
-		Random rand = new Random();
-		while(it.hasNext())
-		{
-			notifiyObservers(it.next());
-		}
-		*/				
 	}
 	
-	public MapController(int r,PropertiesReader ptr, Layout lt, Random rand)
+	public MapController(int r,PropertiesController pc, Layout lt, Random rand)
 	{
 		hexmap = new ConnectedHexMap(r,r,lt,rand);
 		layout=lt;		
 		//createRectangleMap(w,h, bweight);
 		initializeSpiralMap(r);
 		
-		pstorage=ptr;		
-		BiomeGenerator bg = new BiomeGenerator(hexmap,ptr.getTypeList("biome"),rand);
+		BiomeGenerator bg = new BiomeGenerator(hexmap,pc.getBiomeList(),rand);
 		bg.wormWrapper();
 		getPolygons();
 		hexmap.initializeNeighbours();
-		PFunctions.outputString(this,"Finished Generating");
-		
-		
-		RiverGenerator rg = new RiverGenerator(hexmap,new Random());
-		hexmap.setRiverNetworks(rg.generateRivers());
-		PFunctions.outputString(this,"Finished Rivers");
-		
-		TownGenerator tg = new TownGenerator(hexmap,ptr.getTypeList("town"),bg.getBiomeMap(),rand);
+		KFunctions.outputString(this,"Finished Generating");
+			
+		TownGenerator tg = new TownGenerator(hexmap,pc.getTownList(),bg.getBiomeMap(),rand);
 		tg.generateTowns();
-		PFunctions.outputString(this,"Finished Towns");
+		KFunctions.outputString(this,"Finished Towns");
+		
 		
 		RoadGenerator rag = new RoadGenerator(hexmap,rand);
 		hexmap.setRoadNetworks(rag.generateRoads());
-		PFunctions.outputString(this,"Finished Roads");		
+		KFunctions.outputString(this,"Finished Roads");		
 		
 		RegionGeneratorSimple reg = new RegionGeneratorSimple(hexmap,rand);
 		hexmap.setRegions(reg.initializeRegions());		
-		PFunctions.outputString(this,"Finished Regions");
+		KFunctions.outputString(this,"Finished Regions");
+		
+		RiverGenerator rg = new RiverGenerator(hexmap,new Random());
+		hexmap.setRiverNetworks(rg.generateRivers());
+		KFunctions.outputString(this,"Finished Rivers");		
 	}
 	
 	

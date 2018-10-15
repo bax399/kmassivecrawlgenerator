@@ -2,7 +2,7 @@ package ztests;
 import javax.swing.JFrame;
 
 import model.FilledHex;
-import model.merowech.ConcaveHull.Point;
+import model.Point;
 import model.redblob.Layout;
 public class TestHexNeighbours
 {

@@ -48,7 +48,7 @@ public class Habitat extends WorldElement implements BiomeProperties
 			travel += mb.getTravelCost();
 		}
 		
-		return Math.max(travel,0);
+		return Math.max(travel,1);
 	}
 
 	@Override

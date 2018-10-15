@@ -8,8 +8,6 @@ import java.util.Map;
 import java.util.Set;
 
 import javafx.util.Pair;
-import model.merowech.ConcaveHull;
-import model.merowech.ConcaveHull.Point;
 import model.redblob.Layout;
 import model.stats.StatsCoreBiome;
 import model.stats.StatsRegion;
@@ -18,7 +16,7 @@ import model.stats.StatsRegion;
  * @author Keeley
  * Defines Region functionality. Regions generalize hex contents in the area.
  */
-public class HexRegion 
+public class HexRegion 	
 {
 	
 	public final StatsRegion stats; //what this monster references whenever it is ask for anything.
@@ -220,12 +218,6 @@ public class HexRegion
 		
 	}
 	
-	public Polygon getShape(Layout lt)
-	{
-		if (shape == null) {calculateShape(lt);}
-		return shape;
-	}
-	
 	//Get majority biome in region.
 	public Set<String> getValidBiomes()
 	{
@@ -308,26 +300,6 @@ public class HexRegion
 		}
 	}
 	
-	//Should only call this method after finishing all regions
-	public void calculateShape(Layout lt) 
-	{
-		ConcaveHull ch = new ConcaveHull();
-		ArrayList<Point> edgepoints = new ArrayList<>();
-		for(FilledHex h : edgehexes)
-		{
-			for(int ii=0;ii<6;ii++)
-			{
-				Point pp = lt.pointCorner(h,ii);
-				edgepoints.add(pp);
-			}
-		}
-		ArrayList<Point> points = ch.calculateConcaveHull(edgepoints, 10);
-		shape = new Polygon();
-		for(int ii = 0; ii < points.size();ii++)
-		{
-			shape.addPoint((int)Math.round(points.get(ii).x), (int)Math.round(points.get(ii).y));
-		}
-	}
 	
 	//Merge
 	//Add all region hexes from one to the other.

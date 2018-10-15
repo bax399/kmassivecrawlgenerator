@@ -11,7 +11,6 @@ public abstract class Generator
 	{
 		rand=rd;
 	}
-
 	
 	public boolean rollChance(double chance)
 	{

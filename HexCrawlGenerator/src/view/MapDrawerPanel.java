@@ -2,8 +2,8 @@ package view;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
@@ -15,7 +15,7 @@ import model.ConnectedHexMap;
 import model.Connection;
 import model.FilledHex;
 import model.HexRegion;
-import model.merowech.ConcaveHull.Point;
+import model.Point;
 import model.redblob.Layout;
 import model.redblob.Tuple;
 import model.worldplaces.HexTown;
@@ -69,7 +69,7 @@ public class MapDrawerPanel extends MainPanel
 	
 	//Needed method, draws to screen
 	@Override
-	public void drawAll(Graphics2D g2, AffineTransform at, float zoomFactor)
+	public void drawAll(Graphics2D g2,Graphics g, float zoomFactor)
 	{
 		zoomFactor = 1/zoomFactor;
 		this.setBackground(Color.WHITE); 
@@ -239,8 +239,8 @@ public class MapDrawerPanel extends MainPanel
 			for(HexTown t:hh.getTowns())
 			{
 				g2.setColor(Color.RED);
-				int size = (int)((t.stats.getConnectivity()/10 + 2)*zoomFactor);
-				g2.fillOval(t.getPosition().x.intValue()-3-size/2, t.getPosition().y.intValue()-3-size/2, size,size);
+				int scaleBy = (int) (5*zoomFactor);
+				g2.fillOval(t.getPosition().x.intValue()-scaleBy/2, t.getPosition().y.intValue()-scaleBy/2,3+scaleBy,3+scaleBy);
 				g2.setColor(Color.BLACK);
 				g2.drawString("*", t.getPosition().x.intValue()-3, t.getPosition().y.intValue()+5);
 				g2.drawString(t.getConnectivity()+"", t.getPosition().x.intValue()+5, t.getPosition().y.intValue());

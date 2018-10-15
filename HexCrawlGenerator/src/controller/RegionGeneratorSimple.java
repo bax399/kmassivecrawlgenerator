@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import functions.PFunctions;
+import functions.KFunctions;
 import model.ConnectedHexMap;
 import model.FilledHex;
 import model.HexRegion;
@@ -45,14 +45,14 @@ public class RegionGeneratorSimple extends Generator
 
 		mergeSameRegions(allRegions);
 
-		PFunctions.outputString(this,"finished initial Regions");
+		KFunctions.outputString(this,"finished initial Regions");
 		mergeSimilarRegions(allRegions);
 
-		PFunctions.outputString(this,"finished similar regions");
+		KFunctions.outputString(this,"finished similar regions");
 		
 		mergeSmallRegions(allRegions);
 
-		PFunctions.outputString(this,"finished small Regions");		
+		KFunctions.outputString(this,"finished small Regions");		
 	
 		//INFO OUTPUT
 		Iterator<HexRegion> itRegion = allRegions.iterator();
@@ -75,8 +75,8 @@ public class RegionGeneratorSimple extends Generator
 			totalsize+=eachregion.getRegionSize();			
 		}
 		
-		PFunctions.outputString(this,"Count Region Size: "+totalsize);
-		PFunctions.outputString(this,"Total Regions: "+allRegions.size());					
+		KFunctions.outputString(this,"Count Region Size: "+totalsize);
+		KFunctions.outputString(this,"Total Regions: "+allRegions.size());					
 
 		return new HashSet<>(allRegions);
 	}
@@ -169,8 +169,6 @@ public class RegionGeneratorSimple extends Generator
 			{
 				if(allRegions.contains(neighbourRegions.get(jj)))
 				{
-					System.out.println(neighbourRegions.get(jj).getMajorityBiome().getValidRegionBiomes());
-					System.out.println(neighbourRegions.get(jj).getMajorityBiome().toString());
 					if (neighbourRegions.get(jj).getMajorityBiome().getValidRegionBiomes().contains(currRegion.getMajorityBiome().getBiomeName()))
 					{
 //						PFunctions.outputString(this,"Merged Similar");

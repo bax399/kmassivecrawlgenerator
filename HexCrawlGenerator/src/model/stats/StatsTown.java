@@ -1,13 +1,10 @@
 package model.stats;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Properties;
 import java.util.Set;
 
-import functions.PFunctions;
 import model.FilledHex;
-import model.WorldDescriptor;
-import model.merowech.ConcaveHull.Point;
+import model.Point;
 import model.properties.TownProperties;
 import model.worldplaces.HexTown;
 public class StatsTown extends PropertyStats implements TownProperties

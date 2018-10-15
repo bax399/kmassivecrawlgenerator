@@ -14,27 +14,25 @@ import model.stats.StatsCoreBiome;
 import model.stats.StatsTown;
 public class TownGenerator extends Generator
 {
-	Map<StatsTown,Set<StatsCoreBiome>> validbiomes;
-	List<StatsTown> townlist;
-	Map<String,StatsCoreBiome> allbiomes;
+	Map<StatsTown,Set<StatsCoreBiome>> validTownBiomes;
+	List<StatsTown> townList;
+	Map<String,StatsCoreBiome> allBiomes;
 	ConnectedHexMap hexmap;	
 	
-	public TownGenerator(ConnectedHexMap chm, ArrayList<Properties> townprops, Map<String,StatsCoreBiome> biomes, Random r)
+	public TownGenerator(ConnectedHexMap chm, List<StatsTown> townList, Map<String,StatsCoreBiome> biomes, Random r)
 	{
 		super(r);
-		validbiomes = new HashMap<>();
-		townlist = new ArrayList<>();
-		allbiomes = biomes;
+		validTownBiomes = new HashMap<>();
+		allBiomes = biomes;
 		hexmap=chm;
 		
-		PropertiesFactory pf = new PropertiesFactory();
-		townlist = pf.processProperties(townprops);
+		this.townList = townList;
 		rand = r;
 		
-		for(StatsTown t : townlist)
+		for(StatsTown t : townList)
 		{
-			Set<StatsCoreBiome> validtbiomes = processValidBiomes(t.getVBiomes());
-			validbiomes.put(t, validtbiomes);
+			Set<StatsCoreBiome> townBiomes = processValidBiomes(t.getVBiomes());
+			validTownBiomes.put(t, townBiomes);
 		}
 	}
 	
@@ -51,7 +49,7 @@ public class TownGenerator extends Generator
 
 
 			
-			for(StatsTown t:townlist)
+			for(StatsTown t:townList)
 			{
 				rollTown(t,curr);
 			}
@@ -63,7 +61,7 @@ public class TownGenerator extends Generator
 		if (!t.limitReached())
 		{
 			//getBiome().getBiome() will get the base biomes, ignoring modifiers.
-			if (validbiomes.get(t).contains(curr.getHabitat().getCoreBiome()))
+			if (validTownBiomes.get(t).contains(curr.getHabitat().getCoreBiome()))
 			{
 				if(rollChance(t.getChance()))
 				{
@@ -90,12 +88,12 @@ public class TownGenerator extends Generator
 			
 			for(int ii=0;ii<eachname.length;ii++)
 			{
-				bset.add(allbiomes.get(eachname[ii]));
+				bset.add(allBiomes.get(eachname[ii]));
 			}
 		}
 		else //if it contains keyword all
 		{
-			for(Map.Entry<String,StatsCoreBiome> entry : allbiomes.entrySet())
+			for(Map.Entry<String,StatsCoreBiome> entry : allBiomes.entrySet())
 			{
 				bset.add(entry.getValue());
 			}

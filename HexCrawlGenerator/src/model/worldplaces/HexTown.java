@@ -1,6 +1,6 @@
 package model.worldplaces;
 import model.FilledHex;
-import model.merowech.ConcaveHull.Point;
+import model.Point;
 import model.stats.StatsTown;
 public class HexTown extends WorldPlace
 {

@@ -5,9 +5,8 @@ import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
 
-import functions.PFunctions;
+import functions.KFunctions;
 import model.properties.BiomeProperties;
-import zdeprececated.BaseBiome;
 /**
  * @author Keeley
  *
@@ -32,7 +31,7 @@ public class StatsCoreBiome extends PropertyStats implements BiomeProperties{
 	
 	public StatsCoreBiome(Properties pp)
 	{
-		color = PFunctions.parseColor(pp.getProperty("color"));
+		color = KFunctions.parseColor(pp.getProperty("color"));
 		height = Integer.parseInt(pp.getProperty("height"));
 		travelCost = Integer.parseInt(pp.getProperty("travelcost")); 
 		spotDistance = pp.getProperty("spotdistance");
@@ -40,8 +39,8 @@ public class StatsCoreBiome extends PropertyStats implements BiomeProperties{
 		riverEnd = Double.parseDouble(pp.getProperty("riverend"));
 		biomeName=pp.getProperty("name");
 		weight=pp.getProperty("weight").toLowerCase();
-		validstart=PFunctions.convertToBoolean(pp.getProperty("validstart"));
-		validRegion = PFunctions.processCSVtoSet(pp.getProperty("validregion"));
+		validstart=KFunctions.convertToBoolean(pp.getProperty("validstart"));
+		validRegion = KFunctions.processCSVtoSet(pp.getProperty("validregion"));
 	}
 	
 	public StatsCoreBiome(String inName, Color inColour, int inHeight, int inTCost, String inSpotDistance, double inRiverOrigin, double inRiverEnd, boolean inValidStart,
