@@ -2,10 +2,14 @@ package model;
 import java.util.HashSet;
 import java.util.Set;
 
+import model.graphresource.Graph;
 import model.stats.StatsModifierBiome;
 import model.worldplaces.RiverNode;
 public class RiverNetwork {
 
+	
+	private Graph<FilledHex,Connection> graph;
+	
 	private Set<Connection> connects;
 	private Set<FilledHex> hexes;
 	private Set<RiverNode> nodes;
@@ -72,6 +76,7 @@ public class RiverNetwork {
 					else //It has a rivernode currently JOIN THE TWO NETWORKS TOGETHER
 					{
 						if(!nodes.contains(fh.getRiverNode())) tempset = joinNetworks(fh.getRiverNode().getNetwork(), tempset);
+						fh.getRiverNode().incrementSize(1);
 					}
 					
 				}				

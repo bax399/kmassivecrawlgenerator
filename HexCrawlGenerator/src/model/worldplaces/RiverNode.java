@@ -1,31 +1,11 @@
 package model.worldplaces;
 import model.Point;
 import model.RiverNetwork;
-public class RiverNode 
+import model.RoadNetwork;
+public class RiverNode extends NetworkNode<RiverNetwork>
 {
-	private Point pos;
-	private RiverNetwork owner;
-	
 	public RiverNode(RiverNetwork rn, Point p)
 	{
-		owner = rn;
-		pos = p;
+		super(rn,p);
 	}
-
-	public void setNetwork(RiverNetwork rn)
-	{
-		owner = rn;
-	}
-	
-	public RiverNetwork getNetwork()	
-	{
-		return owner;
-	}
-	
-	public Point getPosition()
-	{
-		return pos;
-	}
-	
-	
 }

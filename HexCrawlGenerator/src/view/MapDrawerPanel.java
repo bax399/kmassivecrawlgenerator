@@ -190,8 +190,12 @@ public class MapDrawerPanel extends MainPanel
 			for(Connection edge: isc.next())
 			{
 				g2.setColor(Color.BLUE);
+				
 				Point st = edge.getVertexes().get(0).getRiverNode().getPosition();
 				Point fn = edge.getVertexes().get(1).getRiverNode().getPosition();
+				
+				int scaleBy = (int) (5*zoomFactor*(edge.getVertexes().get(0).getRiverNode().getSize()-1));
+				g2.fillOval(st.x.intValue()-scaleBy/2, st.y.intValue()-scaleBy/2,3+scaleBy,3+scaleBy);			
 				g2.drawLine(st.x.intValue(), st.y.intValue(), fn.x.intValue(), fn.y.intValue());	
 				g2.setColor(Color.BLUE);
 				

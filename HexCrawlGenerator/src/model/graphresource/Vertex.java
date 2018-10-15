@@ -6,7 +6,7 @@ public class Vertex {
     static int instanceCounter = 0;
     int counter=0;
     
-    public Vertex(int uniqueLabel) {
+    public Vertex() {
         super();
         instanceCounter++;
         counter=instanceCounter;

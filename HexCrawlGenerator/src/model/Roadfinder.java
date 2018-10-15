@@ -6,7 +6,13 @@ import model.stats.StatsModifierBiome;
 public class Roadfinder extends Pathfinder {
 
 	@Override
-	public FilledHex earlyTermination(ConnectedHexMap chm, FilledHex start, FilledHex current)
+	public FilledHex earlyGreedyTermination(ConnectedHexMap chm, FilledHex start, FilledHex current)
+	{
+		return earlyDijkstraTermination(chm,start,current);
+	}
+	
+	@Override
+	public FilledHex earlyDijkstraTermination(ConnectedHexMap chm, FilledHex start, FilledHex current)
 	{
 		FilledHex fh = null;
 		//Terminate if you hit a town
@@ -17,7 +23,7 @@ public class Roadfinder extends Pathfinder {
 	    		fh=current;
 	    	}
 	    }
-	    else //end if the existing road not is NOT in set.
+	    else
 	    {
 	    	
 	    	if (!start.getRoadNode().getNetwork().equals(current.getRoadNode().getNetwork()))
@@ -26,18 +32,6 @@ public class Roadfinder extends Pathfinder {
 	    	}
 	    }
 		
-//		if(current.getRoadNode() != null)
-//	    {
-//	    	if (!start.getRoadNode().getNetwork().equals(current.getRoadNode().getNetwork()))
-//	    	{
-//	    		fh=current;
-//	    	}
-//	    }
-//		
-//    	if(current.getLargestTown() !=null)
-//    	{
-//    		fh=current;
-//    	}
 	    return fh;
 	}
 	

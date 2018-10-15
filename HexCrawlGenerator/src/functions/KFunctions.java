@@ -5,8 +5,15 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+
+/**
+ * @author Keeley
+ * This contains generic functions needed by much of the program.
+ */
 public class KFunctions 
 {
+	//TODO move the outputString to a sub-debugger class.
+	//private static int debug=1;
 	public static boolean convertToBoolean(String value) 
 	{
 	    boolean returnValue = false;

@@ -17,7 +17,7 @@ public class StatsModifierBiome extends StatsCoreBiome implements BiomeModifierP
 	private static String[] roadvalues = {"road"};
 	private static Set<String> roadvalidregions = new HashSet<>(Arrays.asList(roadvalues));
 											//modname,color,height,travel,spotd,rivero,rivere 
-	public static StatsModifierBiome river = new StatsModifierBiome("river",Color.BLACK,-2,2,"",0d,0.5d,rivervalidregions); //river runs through here
+	public static StatsModifierBiome river = new StatsModifierBiome("river",Color.BLACK,-2,2,"",0d,0.9d,rivervalidregions); //river runs through here
 	
 	public static StatsModifierBiome road =  new StatsModifierBiome("road",Color.BLUE,0,-2,"",0d,0d,roadvalidregions);
 	

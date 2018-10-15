@@ -17,7 +17,8 @@ public abstract class Pathfinder {
 		}
 	};
 	
-	public abstract FilledHex earlyTermination(ConnectedHexMap chm, FilledHex goal, FilledHex curr);
+	public abstract FilledHex earlyDijkstraTermination(ConnectedHexMap chm, FilledHex goal, FilledHex curr);
+	public abstract FilledHex earlyGreedyTermination(ConnectedHexMap chm, FilledHex goal, FilledHex curr);	
 	
 	public abstract int getCost(ConnectedHexMap chm, FilledHex current, FilledHex next);
 	
@@ -35,7 +36,7 @@ public abstract class Pathfinder {
 		{
 			current = frontier.poll();
 			
-			goal = earlyTermination(chm,goal,current);
+			goal = earlyGreedyTermination(chm,goal,current);
 			
 		    if (current.equals(goal))
 		    {
@@ -146,7 +147,7 @@ public abstract class Pathfinder {
 		
 		    if(!current.equals(start))
 		    {
-		    	goal = earlyTermination(chm,start,current);
+		    	goal = earlyDijkstraTermination(chm,start,current);
 		    }
 		    
 		    if (current.equals(goal))

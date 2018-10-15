@@ -13,15 +13,17 @@ import model.stats.StatsModifierBiome;
  * This Class stores the stats for core-biome and modifier-biomes for a specific hex. This can retrieve all the relevant information from those two 
  * biome classes.
  */
+
+//TODO allow many of the same modifier to be added? Or support for "adding" a modifier simply increasing the target one by the amount.
 public class Habitat extends WorldElement implements BiomeProperties
 {
 	private StatsCoreBiome coreBiome;
-	private Set<StatsModifierBiome> modifierBiomes;
-	
+	private Set<StatsModifierBiome> modifierStats;
+	//TODO private List<ModifierBiome> modifierBiomes
 	public Habitat()
 	{
 		coreBiome = StatsCoreBiome.basic;
-		modifierBiomes = new HashSet<>();
+		modifierStats = new HashSet<>();
 	}
 	
 	@Override
@@ -32,7 +34,7 @@ public class Habitat extends WorldElement implements BiomeProperties
 	@Override
 	public int getHeight() {
 		int height = coreBiome.getHeight();
-		for(StatsModifierBiome mb : modifierBiomes)
+		for(StatsModifierBiome mb : modifierStats)
 		{
 			height += mb.getHeight();
 		}
@@ -43,7 +45,7 @@ public class Habitat extends WorldElement implements BiomeProperties
 	@Override
 	public int getTravelCost() {
 		int travel = coreBiome.getTravelCost();
-		for(StatsModifierBiome mb : modifierBiomes)
+		for(StatsModifierBiome mb : modifierStats)
 		{
 			travel += mb.getTravelCost();
 		}
@@ -59,7 +61,7 @@ public class Habitat extends WorldElement implements BiomeProperties
 	@Override
 	public double getRiverOrigin() {
 		double riverOrigin = coreBiome.getRiverOrigin();
-		for(StatsModifierBiome mb : modifierBiomes)
+		for(StatsModifierBiome mb : modifierStats)
 		{
 			riverOrigin += mb.getRiverOrigin();
 		}
@@ -70,7 +72,7 @@ public class Habitat extends WorldElement implements BiomeProperties
 	@Override
 	public double getRiverEnd() {
 		double riverEnd = coreBiome.getRiverEnd();
-		for(StatsModifierBiome mb : modifierBiomes)
+		for(StatsModifierBiome mb : modifierStats)
 		{
 			riverEnd += mb.getRiverEnd();
 		}
@@ -98,24 +100,24 @@ public class Habitat extends WorldElement implements BiomeProperties
 	}
 
 	public Set<StatsModifierBiome> getModifierBiomes() {
-		return modifierBiomes;
+		return modifierStats;
 	}
 
 
 
 	public void setModifierBiomes(Set<StatsModifierBiome> modifierBiomes) {
-		this.modifierBiomes = modifierBiomes;
+		this.modifierStats = modifierBiomes;
 	}
 
-	public void addModifierBiome	(StatsModifierBiome modifierBiome)
+	public void addModifierBiome(StatsModifierBiome modifierBiome)
 	{
-		this.modifierBiomes.add(modifierBiome);
+		this.modifierStats.add(modifierBiome);
 	}
 	
 	public Set<StatsCoreBiome> getAllBiomes()
 	{
 		Set<StatsCoreBiome> allStats = new HashSet<>();
-		allStats.addAll(modifierBiomes);
+		allStats.addAll(modifierStats);
 		allStats.add(coreBiome);
 		return allStats;
 	}

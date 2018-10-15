@@ -7,7 +7,7 @@ public class Hex extends Vertex
 	//Cube
     public Hex(int q, int r, int s)
     {
-    	super(new Tuple(q,r).hashCode());
+    	super();
         this.q = q;
         this.r = r;
         this.s = s;
@@ -17,7 +17,7 @@ public class Hex extends Vertex
     //Axial
     public Hex(int q, int r)
     {
-    	super(new Tuple(q,r).hashCode());    	
+    	super();    	
     	this.q = q;
     	this.r = r;
     	this.s = -q-r;

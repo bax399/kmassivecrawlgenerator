@@ -25,12 +25,33 @@ public class MapController
 		layout=lt;		
 		//createRectangleMap(w,h, bweight);
 		initializeRectangleMap(h,w);
-			
+		
+		initializeMapGenerators(pc,rand);
+
+	}
+
+	public MapController(int r,PropertiesController pc, Layout lt, Random rand)
+	{
+		hexmap = new ConnectedHexMap(r,r,lt,rand);
+		layout=lt;		
+		//createRectangleMap(w,h, bweight);
+		initializeSpiralMap(r);
+		
+		initializeMapGenerators(pc,rand);
+	}
+	
+	public void initializeMapGenerators(PropertiesController pc,Random rand)
+	{
+		
 		BiomeGenerator bg = new BiomeGenerator(hexmap,pc.getBiomeList(),rand);
 		bg.wormWrapper();
 		getPolygons();
 		hexmap.initializeNeighbours();
 		KFunctions.outputString(this,"Finished Generating");
+		
+		RegionGenerator reg = new RegionGenerator(hexmap,rand);
+		hexmap.setRegions(reg.initializeSameRegions());		
+		KFunctions.outputString(this,"Finished Regions");
 		
 		RiverGenerator rg = new RiverGenerator(hexmap,new Random());
 		hexmap.setRiverNetworks(rg.generateRivers());
@@ -42,41 +63,9 @@ public class MapController
 		
 		RoadGenerator rag = new RoadGenerator(hexmap,rand);
 		hexmap.setRoadNetworks(rag.generateRoads());
-		KFunctions.outputString(this,"Finished Roads");		
-
+		KFunctions.outputString(this,"Finished Roads");				
 	}
-	
-	public MapController(int r,PropertiesController pc, Layout lt, Random rand)
-	{
-		hexmap = new ConnectedHexMap(r,r,lt,rand);
-		layout=lt;		
-		//createRectangleMap(w,h, bweight);
-		initializeSpiralMap(r);
 		
-		BiomeGenerator bg = new BiomeGenerator(hexmap,pc.getBiomeList(),rand);
-		bg.wormWrapper();
-		getPolygons();
-		hexmap.initializeNeighbours();
-		KFunctions.outputString(this,"Finished Generating");
-			
-		TownGenerator tg = new TownGenerator(hexmap,pc.getTownList(),bg.getBiomeMap(),rand);
-		tg.generateTowns();
-		KFunctions.outputString(this,"Finished Towns");
-		
-		
-		RoadGenerator rag = new RoadGenerator(hexmap,rand);
-		hexmap.setRoadNetworks(rag.generateRoads());
-		KFunctions.outputString(this,"Finished Roads");		
-		
-		RegionGeneratorSimple reg = new RegionGeneratorSimple(hexmap,rand);
-		hexmap.setRegions(reg.initializeRegions());		
-		KFunctions.outputString(this,"Finished Regions");
-		
-		RiverGenerator rg = new RiverGenerator(hexmap,new Random());
-		hexmap.setRiverNetworks(rg.generateRivers());
-		KFunctions.outputString(this,"Finished Rivers");		
-	}
-	
 	
 	public void getPolygons()
 	{

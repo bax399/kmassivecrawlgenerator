@@ -13,7 +13,7 @@ import model.ConnectedHexMap;
 import model.FilledHex;
 import model.HexRegion;
 import model.stats.StatsRegion;
-public class RegionGeneratorSimple extends Generator 
+public class RegionGenerator extends Generator 
 {
 	public static int min = 50;
 	public static int max = 20000;
@@ -29,15 +29,49 @@ public class RegionGeneratorSimple extends Generator
 		} 
 	};		
 	
-	public RegionGeneratorSimple(ConnectedHexMap chm, Random r)
+	public RegionGenerator(ConnectedHexMap chm, Random r)
 	{
 		super(r);
 		hexmap=chm;
 	}
 
+	/**
+	 * This method calculates Edge Lines for regions, and makes sure they're updated.
+	 * @param allRegions
+	 */
+	public void finalizeRegions(List<HexRegion> allRegions)
+	{
+		Iterator<HexRegion> itRegion = allRegions.iterator();
+		int totalsize=0;
+
+		while(itRegion.hasNext())
+		{
+			HexRegion eachregion = itRegion.next();
+			eachregion.updateAll();
+			eachregion.calculateEdgeLines();
+			totalsize+=eachregion.getRegionSize();			
+		}
+		
+		KFunctions.outputString(this,"Count Region Size: "+totalsize);
+		KFunctions.outputString(this,"Total Regions: "+allRegions.size());
+	}
+	
+	public Set<HexRegion> initializeSameRegions()
+	{
+		List<HexRegion> allRegions = new ArrayList<>();
+		
+		generateValidRegions(allRegions);
+
+		mergeSameRegions(allRegions);
+		
+		finalizeRegions(allRegions);
+		
+		return new HashSet<>(allRegions);		
+	}
+	
 	//Group Biomes
 	//Creates Regions based on majority biome's valid biomes.
-	public Set<HexRegion> initializeRegions()
+	public Set<HexRegion> initializeMergedRegions()
 	{
 		List<HexRegion> allRegions = new ArrayList<>();
 		
@@ -53,31 +87,9 @@ public class RegionGeneratorSimple extends Generator
 		mergeSmallRegions(allRegions);
 
 		KFunctions.outputString(this,"finished small Regions");		
-	
-		//INFO OUTPUT
-		Iterator<HexRegion> itRegion = allRegions.iterator();
-		int ii=0,totalsize=0;
 
-		while(itRegion.hasNext())
-		{
-			ii++;
-			HexRegion eachregion = itRegion.next();
-			eachregion.updateAll();
-			eachregion.calculateEdgeLines();
-			
-//			PFunctions.outputString(this,"Region Details for "+ii);
-//			PFunctions.outputString(this,"Edge:"+eachregion.getEdgeHexes().size());
-//			PFunctions.outputString(this,"Edgelines: "+ eachregion.getEdgeLines().size());
-//			
-//			PFunctions.outputString(this,"NeighbourRegions:"+eachregion.getNeighbourRegions().size());			
-//			PFunctions.outputString(this,"Neighbour:"+eachregion.getNeighbourHexes().size());
-//			PFunctions.outputString(this,"Size:"+eachregion.getRegionSize());
-			totalsize+=eachregion.getRegionSize();			
-		}
+		finalizeRegions(allRegions);
 		
-		KFunctions.outputString(this,"Count Region Size: "+totalsize);
-		KFunctions.outputString(this,"Total Regions: "+allRegions.size());					
-
 		return new HashSet<>(allRegions);
 	}
 
@@ -139,12 +151,12 @@ public class RegionGeneratorSimple extends Generator
 			
 			for(int jj = 0; jj < neighbourRegions.size(); jj++)
 			{
-
-				if(allRegions.contains(neighbourRegions.get(jj)))
+				HexRegion neighbourRegion = neighbourRegions.get(jj);
+				if(allRegions.contains(neighbourRegion))
 				{
-					if (neighbourRegions.get(jj).getMajorityBiome().getBiomeName().equals(currRegion.getMajorityBiome().getBiomeName()))
+					if (neighbourRegion.getMajorityBiome().getBiomeName().equals(currRegion.getMajorityBiome().getBiomeName()))
 					{
-						neighbourRegions.get(jj).mergeRegions(currRegion);
+						neighbourRegion.mergeRegion(currRegion);
 						allRegions.remove(currRegion);
 						break;
 					}

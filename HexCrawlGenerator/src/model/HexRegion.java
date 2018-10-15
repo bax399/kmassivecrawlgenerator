@@ -90,39 +90,6 @@ public class HexRegion
 		return edgelines;
 	}
 	
-//	public boolean tryaddhex(FilledHex hh)
-//	{
-//		boolean added = false;
-//		
-//		if (hh.getRegion()==null)
-//		{
-//			//If valid biomes and hex's biomes have anything in common.
-//			if ((getValidBiomes().contains("all")) || (!Collections.disjoint(getValidBiomes(),hh.getBiome().getStrBiomes())))
-//			{
-//				addhex(hh);
-//				added = true;	
-//			}
-//		}
-//		
-//		return added;
-//	}
-	
-//	public void addhex(FilledHex hh)
-//	{
-//		hh.setRegion(this);		
-//		//update neighbour hexes - remove hex.
-//		neighbourhexes.remove(hh);
-//
-//		addBiomes(hh.getBiomes());
-//		
-//		//update region - add hex.		
-//		regionhexes.add(hh);
-//
-//		
-//		updateAll();
-//
-//	}
-	
 	public void addBiomes(Set<StatsCoreBiome> biomes)
 	{
 		for(StatsCoreBiome bb : biomes)
@@ -172,50 +139,12 @@ public class HexRegion
 
 	}
 	
-	public HexRegion mergeSmallest(HexRegion other)
-	{
-		HexRegion merger;
-		HexRegion mergee;
-		if (this.getRegionSize() < other.getRegionSize())
-		{
-			merger = other;
-			mergee = this;
-		}
-		else
-		{
-			merger = this;
-			mergee = other;
-		}
-		
-		merger.mergeRegions(mergee);
-		
-		return merger;
-	}
-	
 	public void mergeRegions(HexRegion mergee)
-	{
-		
-//		Set<FilledHex> overlapHexes = new HashSet<>(getEdgeHexes());
-//		overlapHexes.retainAll(mergee.getNeighbourHexes());
-		
-//		//Not correctly adding all? Or adding very few...
-//		regionhexes.addAll(mergee.getRegionHexes());
-//		
-//		edgehexes.addAll(mergee.getEdgeHexes());
-//		edgehexes.removeAll(overlapHexes);
-//		neighbourhexes.addAll(mergee.getNeighbourHexes());
-//		neighbourhexes.removeAll(overlapHexes);
-//		
-//		for(FilledHex hh : mergee.getRegionHexes())
-//		{
-//			hh.setRegion(this);
-//		}
-				
+	{	
 		for(FilledHex hh : mergee.getRegionHexes())
 		{
 			addHex(hh);
 		}
-		
 	}
 	
 	//Get majority biome in region.

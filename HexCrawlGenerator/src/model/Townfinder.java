@@ -2,8 +2,15 @@ package model;
 
 public class Townfinder extends Pathfinder {
 
+	
 	@Override
-	public FilledHex earlyTermination(ConnectedHexMap chm, FilledHex start, FilledHex current)
+	public FilledHex earlyGreedyTermination(ConnectedHexMap chm, FilledHex start, FilledHex current)
+	{
+		return earlyDijkstraTermination(chm,start,current);
+	}
+	
+	@Override
+	public FilledHex earlyDijkstraTermination(ConnectedHexMap chm, FilledHex start, FilledHex current)
 	{
 		FilledHex fh = null;
 		//Terminate if you hit a town not in your set
