@@ -42,6 +42,9 @@ public class Graph<V extends Vertex,E extends Edge<V>>
         adjList.get(e.v1).add(e);
         adjList.get(e.v2).add(e);
 
+        vertices.add(e.v1);
+        vertices.add(e.v2);
+        
         return true;
     }
 
@@ -72,5 +75,15 @@ public class Graph<V extends Vertex,E extends Edge<V>>
 
     public Map<V, Set<E>> getAdjList() {
         return Collections.unmodifiableMap(adjList);
+    }
+    
+    public boolean containsVertex(V v)
+    {
+    	return vertices.contains(v);
+    }
+    
+    public boolean containsEdge(E e)
+    {
+    	return edges.contains(e);
     }
 }

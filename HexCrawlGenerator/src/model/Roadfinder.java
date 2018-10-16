@@ -26,7 +26,7 @@ public class Roadfinder extends Pathfinder {
 	    else
 	    {
 	    	
-	    	if (!start.getRoadNode().getNetwork().equals(current.getRoadNode().getNetwork()))
+	    	if (!start.getRoadNode().equals(current.getRoadNode()))
 	    	{
 	    		fh=current;
 	    	}

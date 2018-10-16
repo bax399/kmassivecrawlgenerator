@@ -12,7 +12,7 @@ import java.util.Set;
 
 import javafx.util.Pair;
 import model.ConnectedHexMap;
-import model.Connection;
+import model.NetworkConnection;
 import model.FilledHex;
 import model.HexRegion;
 import model.Point;
@@ -93,23 +93,35 @@ public class MapDrawerPanel extends MainPanel
 				g2.drawPolygon(hh.getShape());
 			}
 			//**Name**//
-			g2.setColor(Color.BLACK);
-			if(size > 30)
+//			g2.setColor(Color.BLACK);
+//			if(zoomFactor<0.2d)
+//			{
+//				g2.drawString(hh.getHabitat().toString(), hh.center.x.intValue()-size/2, hh.center.y.intValue()+5);
+//			}
+//			else if (zoomFactor<0.1d)
+//			{
+//				g2.drawString(hh.getHabitat().toString().substring(0, 3), hh.center.x.intValue()-size/2, hh.center.y.intValue()+5);
+//			}
+//			else if (zoomFactor<0.05d)
+//			{
+//				g2.drawString(hh.getHabitat().toString().substring(0, 1), hh.center.x.intValue()-size/2, hh.center.y.intValue()+5);				
+//			}
+//			else
+//			{
+//				//Dont draw anything.
+//			}
+			
+			if(hh.getRiverNode() !=null)
 			{
-				g2.drawString(hh.getHabitat().toString(), hh.center.x.intValue()-size/2, hh.center.y.intValue()+5);
+				g2.setColor(Color.BLUE);
+				g2.fillOval(hh.getRiverNode().getPosition().x.intValue(), hh.getRiverNode().getPosition().y.intValue(),6, 6);
 			}
-			else if (size > 15)
+			
+			if(hh.getRoadNode() !=null)
 			{
-				g2.drawString(hh.getHabitat().toString().substring(0, 3), hh.center.x.intValue()-size/2, hh.center.y.intValue()+5);
-			}
-			else if (size > 5)
-			{
-				g2.drawString(hh.getHabitat().toString().substring(0, 1), hh.center.x.intValue()-size/2, hh.center.y.intValue()+5);				
-			}
-			else
-			{
-				//Dont draw anything.
-			}
+				g2.setColor(Color.BLUE);
+				g2.fillOval(hh.getRoadNode().getPosition().x.intValue(), hh.getRoadNode().getPosition().y.intValue(),6, 6);
+			}			
 			
 			//**Coords**//
 //			g.setColor(Color.BLACK);
@@ -170,7 +182,7 @@ public class MapDrawerPanel extends MainPanel
 		
 		
 		//** RIVERS **//
-		Iterator<Set<Connection>> isc = hexes.getRiverConnections().iterator();
+		Iterator<Set<NetworkConnection>> isc = hexes.getRiverConnections().iterator();
 		g2.setColor(Color.BLUE);
 		g2.setStroke(new BasicStroke(2.0f*zoomFactor));
 		while(isc.hasNext())
@@ -187,15 +199,14 @@ public class MapDrawerPanel extends MainPanel
 			}*/
 			
 			//**Draw from Point**//
-			for(Connection edge: isc.next())
+			for(NetworkConnection edge: isc.next())
 			{
 				g2.setColor(Color.BLUE);
 				
-				Point st = edge.getVertexes().get(0).getRiverNode().getPosition();
-				Point fn = edge.getVertexes().get(1).getRiverNode().getPosition();
 				
-				int scaleBy = (int) (5*zoomFactor*(edge.getVertexes().get(0).getRiverNode().getSize()-1));
-				g2.fillOval(st.x.intValue()-scaleBy/2, st.y.intValue()-scaleBy/2,3+scaleBy,3+scaleBy);			
+				Point st = edge.getVertexes().get(0).getPosition();
+				Point fn = edge.getVertexes().get(1).getPosition();
+
 				g2.drawLine(st.x.intValue(), st.y.intValue(), fn.x.intValue(), fn.y.intValue());	
 				g2.setColor(Color.BLUE);
 				
@@ -206,32 +217,35 @@ public class MapDrawerPanel extends MainPanel
 		}
 		
 		//** ROADS **//
-		Iterator<Set<Connection>> irc = hexes.getRoadConnections().iterator();
-		g2.setColor(Color.BLACK);
-		g2.setStroke(new BasicStroke(2.0f*zoomFactor));
-		while(irc.hasNext())
+		if(hexes.getRoadConnections() != null)
 		{
-			//**RANDOMIZE COLOURS**//
-			//g2d.setColor(new Color(rand.nextInt(100)+1,rand.nextInt(100)+1,rand.nextInt(100)+156));
-			
-			//**Draw from Center**//
-			/*for(Connection edge : isc.next())
+			Iterator<Set<NetworkConnection>> irc = hexes.getRoadConnections().iterator();
+			g2.setColor(Color.BLACK);
+			g2.setStroke(new BasicStroke(2.0f*zoomFactor));
+			while(irc.hasNext())
 			{
-				Point st = edge.getVertexes().get(0).center;
-				Point fn = edge.getVertexes().get(1).center;
-				g2d.drawLine((int)st.x, (int)st.y, (int)fn.x, (int)fn.y);
-			}*/
-			
-			//**Draw from Point**//
-			for(Connection edge: irc.next())
-			{				
-				Point st = edge.getVertexes().get(0).getRoadNode().getPosition();
-				Point fn = edge.getVertexes().get(1).getRoadNode().getPosition();
-				g2.drawLine(st.x.intValue(), st.y.intValue(), fn.x.intValue(), fn.y.intValue());	
+				//**RANDOMIZE COLOURS**//
+				//g2d.setColor(new Color(rand.nextInt(100)+1,rand.nextInt(100)+1,rand.nextInt(100)+156));
 				
-				//**Draw Points**//
-				//g2d.drawOval((int)st.x, (int)st.y, 1, 1);
-				//g2d.drawOval((int)fn.x, (int)fn.y, 1, 1);
+				//**Draw from Center**//
+				/*for(Connection edge : isc.next())
+				{
+					Point st = edge.getVertexes().get(0).center;
+					Point fn = edge.getVertexes().get(1).center;
+					g2d.drawLine((int)st.x, (int)st.y, (int)fn.x, (int)fn.y);
+				}*/
+				
+				//**Draw from Point**//
+				for(NetworkConnection edge: irc.next())
+				{				
+					Point st = edge.getVertexes().get(0).getPosition();
+					Point fn = edge.getVertexes().get(1).getPosition();
+					g2.drawLine(st.x.intValue(), st.y.intValue(), fn.x.intValue(), fn.y.intValue());	
+					
+					//**Draw Points**//
+					//g2d.drawOval((int)st.x, (int)st.y, 1, 1);
+					//g2d.drawOval((int)fn.x, (int)fn.y, 1, 1);
+				}
 			}
 		}
 				

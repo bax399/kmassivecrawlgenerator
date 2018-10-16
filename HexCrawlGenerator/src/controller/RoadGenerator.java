@@ -7,11 +7,13 @@ import java.util.Random;
 import java.util.Set;
 
 import model.ConnectedHexMap;
+import model.NetworkConnection;
 import model.FilledHex;
 import model.MutableInt;
 import model.Pathfinder;
 import model.RoadNetwork;
 import model.Roadfinder;
+import model.graphresource.Edge;
 public class RoadGenerator extends Generator
 {
 	ConnectedHexMap hexmap;	
@@ -55,26 +57,31 @@ public class RoadGenerator extends Generator
 
 		while(hexHasTowns.size() > 0)
 		{
-			FilledHex fh = hexHasTowns.poll();
+			FilledHex originHex = hexHasTowns.poll();
 			
 			rn=new RoadNetwork(networks);
-			rn.addTownNode(hexmap, fh);
+			rn.addTownNode(hexmap, originHex);
 			
-			int resource =fh.getLargestTown().getConnectivity();
+			int resource =originHex.getLargestTown().getConnectivity();
 			MutableInt cost = new MutableInt(resource);				
 			//road from fh outwards.
 
-			FilledHex goal = pf.Dijkstra(hexmap, fh,cost);
+			FilledHex goal = pf.Dijkstra(hexmap, originHex,cost);
 		
-			if (goal != null && !goal.equals(fh))
+			if (goal != null && !goal.equals(originHex))
 			{
-			
+				// create BFS path from origin to destination
+				Pathfinder rf = new Roadfinder();
+				MutableInt rr = new MutableInt(resource);
+
+				Set<Edge<FilledHex>> path = rf.AStar(hexmap, goal, originHex, rr);
+				originHex.getLargestTown().setConnectivity(rr.value);
+				// destination.getLargestTown().setConnectivity(destination.getLargestTown().getConnectivity()-rr.value);
 				
-				//System.out.println("Before " + resource);
-				rn.createRoad(hexmap,goal,fh);		
+				rn.createNetwork(hexmap,path);		
 				networks.add(rn);
 				//System.out.println("After " + fh.getLargestTown().getConnectivity());
-				hexHasTowns.add(fh); //Re-add hex to townlist to go again.	
+				hexHasTowns.add(originHex); //Re-add hex to townlist to go again.	
 			}
 		}
 		

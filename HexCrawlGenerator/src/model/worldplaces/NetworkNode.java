@@ -1,13 +1,14 @@
 package model.worldplaces;
+import model.Network;
 import model.Point;
 import model.graphresource.Vertex;
-public class NetworkNode<E> extends Vertex
+public class NetworkNode extends Vertex
 {
 	private Point pos;
-	private E owner=null;
+	private Network owner=null;
 	private int size=1;
 	
-	public NetworkNode(E rn, Point p)
+	public NetworkNode(Network rn, Point p)
 	{
 		super();
 		owner = rn;
@@ -29,12 +30,12 @@ public class NetworkNode<E> extends Vertex
 		this.size = size;
 	}
 
-	public void setNetwork(E rn)
+	public void setNetwork(Network rn)
 	{
 		owner = rn;
 	}
 	
-	public E getNetwork()	
+	public Network getNetwork()	
 	{
 		return owner;
 	}

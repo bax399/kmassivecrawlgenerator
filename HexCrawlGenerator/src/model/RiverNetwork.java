@@ -2,105 +2,73 @@ package model;
 import java.util.HashSet;
 import java.util.Set;
 
-import model.graphresource.Graph;
+import model.graphresource.Edge;
 import model.stats.StatsModifierBiome;
-import model.worldplaces.RiverNode;
-public class RiverNetwork {
+import model.worldplaces.NetworkNode;
 
-	
-	private Graph<FilledHex,Connection> graph;
-	
-	private Set<Connection> connects;
-	private Set<FilledHex> hexes;
-	private Set<RiverNode> nodes;
-	private Set<RiverNetwork> allrivers;
+public class RiverNetwork extends Network
+{
 	
 	public RiverNetwork(Set<RiverNetwork> ar)
 	{
-		connects = new HashSet<>();
-		hexes = new HashSet<>();
-		nodes = new HashSet<>();
-		allrivers = ar;
+		super();
+		setNetworks(new HashSet<Network>());
+		getNetworks().addAll(ar);
 	}
 	
-	public Set<Connection> getConnections()
+	public void addNode(NetworkNode node, FilledHex origin)
 	{
-		return connects;
+		super.addNode(node, origin);
+		origin.setRiverNode(node);
 	}
 	
-	public void addNode(RiverNode rn)
+	@Override
+	public void createNetwork(ConnectedHexMap chm, Set<Edge<FilledHex>> path)
 	{
-		nodes.add(rn);
-	}
-	
-	public void addConnection(Connection c)
-	{
-		connects.add(c);
-	}
-	
-	public void addHex(FilledHex fh)
-	{
-		hexes.add(fh);
-	}	
-	
-	public void createRiver(ConnectedHexMap chm, Set<Connection> path)
-	{
-		connects = path;
-		Set<Connection> tempset = new HashSet<>();
-		tempset.addAll(connects);
+		
 		//add all hexes to set (get from connections)
-		for(Connection cc : connects) 
+		for(Edge<FilledHex> cc : path) 
 		{
-			//create river nodes and add to set,
-			FilledHex fh;
 			
 			//if added to the set, create a river node at a random point
 			for(int ii=0; ii<2; ii++)
 			{
-				fh = cc.getVertexes().get(ii);				
-				if(hexes.add(fh))
+				FilledHex fh = cc.getVertexes().get(ii);		
+				if(!super.containsHex(fh)) //if isn't already in Network
 				{
 					if(fh.getRiverNode()==null)
 					{
-						RiverNode rn = new RiverNode(this, chm.getRandomPoint(fh));						
-						fh.add(rn);
-						//Adds a river modifier to the hex.
+						NetworkNode riverNode = new NetworkNode(this,chm.getRandomPoint(fh));
 						
+						addNode(riverNode,fh);
+						
+
+						
+						//Adds a river modifier to the hex.
 						if (!fh.getHabitat().getAllBiomes().contains(StatsModifierBiome.river))
 						{
 							StatsModifierBiome b = StatsModifierBiome.river;						
 							fh.getHabitat().addModifierBiome(b);
 						}
-						nodes.add(rn);
 					}
 					else //It has a rivernode currently JOIN THE TWO NETWORKS TOGETHER
 					{
-						if(!nodes.contains(fh.getRiverNode())) tempset = joinNetworks(fh.getRiverNode().getNetwork(), tempset);
-						fh.getRiverNode().incrementSize(1);
+						joinNetworks(fh.getRiverNode().getNetwork());
 					}
 					
-				}				
+				
+				}
+				if (ii==1)
+				{
+					NetworkConnection riverLink = new NetworkConnection(cc.getVertexes().get(0).getRiverNode(),cc.getVertexes().get(1).getRiverNode(),1);
+					addConnection(riverLink);
+				}					
 			}
+			
+
+			
 		}
-		
-		connects = tempset;
 		 
 	}
-	
-	public Set<Connection> joinNetworks(RiverNetwork rne, Set<Connection> tempset)
-	{
-		tempset.addAll(rne.connects);
-		hexes.addAll(rne.hexes);
-		
-		//Change the pointers to the river network from rne to THIS
-		for(RiverNode rn : rne.nodes)
-		{
-			rn.setNetwork(this);
-		}
-		nodes.addAll(rne.nodes);
-		
-		//Deletes the old network. 
-		allrivers.remove(rne);
-		return tempset;
-	}
+
 }

@@ -5,11 +5,13 @@ import java.util.Iterator;
 import java.util.Random;
 import java.util.Set;
 
+import functions.KFunctions;
+import model.graphresource.Edge;
 import model.graphresource.Graph;
 import model.redblob.Layout;
 public class ConnectedHexMap extends HexMap<FilledHex> {
 
-	Graph<FilledHex,Connection> neighbours; // Stores each hex's neighbouring cells in hexagonal coordinates
+	Graph<FilledHex,Edge<FilledHex>> neighbours; // Stores each hex's neighbouring cells in hexagonal coordinates
 	Set<RiverNetwork> rivernetworks;
 	Set<RoadNetwork> roadnetworks;
 	Set<HexRegion> regions;
@@ -32,6 +34,7 @@ public class ConnectedHexMap extends HexMap<FilledHex> {
 	public void setRiverNetworks(Set<RiverNetwork> rivers)
 	{
 		rivernetworks = rivers;
+		KFunctions.outputString(this,"mapriversize:"+rivernetworks.size());
 	}
 	
 	public void setRoadNetworks(Set<RoadNetwork> roads)
@@ -59,7 +62,7 @@ public class ConnectedHexMap extends HexMap<FilledHex> {
 					
 					if (n!=null && containsHex(n))
 					{
-						neighbours.addEdge(new Connection(each, n,(int)(each.getHabitat().getTravelCost()+n.getHabitat().getTravelCost())/2));
+						neighbours.addEdge(new Edge<FilledHex>(each, n,(int)(each.getHabitat().getTravelCost()+n.getHabitat().getTravelCost())/2));
 					}
 					
 					
@@ -73,25 +76,29 @@ public class ConnectedHexMap extends HexMap<FilledHex> {
 		return regions;
 	}
 	
-	public Set<Set<Connection>> getRoadConnections()
+	public Set<Set<NetworkConnection>> getRoadConnections()
 	{
-		Set<Set<Connection>> roadconnections = new HashSet<>();
+		if(roadnetworks !=null)
+		{
+		Set<Set<NetworkConnection>> roadconnections = new HashSet<>();
 		for(RoadNetwork rn : roadnetworks)
 		{
-			 roadconnections.add(rn.getConnections());
+			 roadconnections.add(rn.getNetworkConnections());
 		}
-		
+
 		return  roadconnections;
+		}
+		return null;
 	}	
 	
-	public Set<Set<Connection>> getRiverConnections()
+	public Set<Set<NetworkConnection>> getRiverConnections()
 	{
-		Set<Set<Connection>> riverconnections = new HashSet<>();
+
+		Set<Set<NetworkConnection>> riverconnections = new HashSet<>();
 		for(RiverNetwork rn : rivernetworks)
 		{
-			riverconnections.add(rn.getConnections());
+			riverconnections.add(rn.getNetworkConnections());
 		}
-		
 		return riverconnections;
 	}
 	
@@ -119,7 +126,7 @@ public class ConnectedHexMap extends HexMap<FilledHex> {
 		return point;
 	}			
 
-	public Set<Connection> getConnections()
+	public Set<Edge> getConnections()
 	{
 		return Collections.unmodifiableSet(neighbours.getEdges());
 	}

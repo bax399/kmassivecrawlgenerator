@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 
 import javafx.util.Pair;
 import model.ConnectedHexMap;
-import model.Connection;
+import model.NetworkConnection;
 import model.FilledHex;
 import model.HexRegion;
 import model.Point;
@@ -141,7 +141,7 @@ public class MapDrawer extends JPanel
 		
 		
 		//** RIVERS **//
-		Iterator<Set<Connection>> isc = hexes.getRiverConnections().iterator();
+		Iterator<Set<NetworkConnection>> isc = hexes.getRiverConnections().iterator();
 		g2d.setColor(Color.BLUE);
 		g2d.setStroke(new BasicStroke(2.0f));
 		while(isc.hasNext())
@@ -158,7 +158,7 @@ public class MapDrawer extends JPanel
 			}*/
 			
 			//**Draw from Point**//
-			for(Connection edge: isc.next())
+			for(NetworkConnection edge: isc.next())
 			{
 				g2d.setColor(Color.BLUE);
 				Point st = edge.getVertexes().get(0).getRiverNode().getPosition();
@@ -173,7 +173,7 @@ public class MapDrawer extends JPanel
 		}
 		
 		//** ROADS **//
-		Iterator<Set<Connection>> irc = hexes.getRoadConnections().iterator();
+		Iterator<Set<NetworkConnection>> irc = hexes.getRoadConnections().iterator();
 		g2d.setColor(Color.BLACK);
 		g2d.setStroke(new BasicStroke(4.0f));			
 		while(irc.hasNext())
@@ -190,7 +190,7 @@ public class MapDrawer extends JPanel
 			}*/
 			
 			//**Draw from Point**//
-			for(Connection edge: irc.next())
+			for(NetworkConnection edge: irc.next())
 			{
 			
 				Point st = edge.getVertexes().get(0).getRoadNode().getPosition();

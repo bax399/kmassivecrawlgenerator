@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Set;
+
+import model.graphresource.Edge;
 public abstract class Pathfinder {
 	
 	public static Comparator<FilledHex> costComparator = new Comparator<FilledHex>()
@@ -24,7 +26,7 @@ public abstract class Pathfinder {
 	
 	public abstract int heuristic(ConnectedHexMap chm, FilledHex goal, FilledHex current, FilledHex next);
 	
-	public Set<Connection> GreedyBFS(ConnectedHexMap chm, FilledHex goal, FilledHex start)
+	public Set<Edge<FilledHex>> GreedyBFS(ConnectedHexMap chm, FilledHex goal, FilledHex start)
 	{
 		PriorityQueue<FilledHex> frontier = new PriorityQueue<>(costComparator);
 		frontier.add(start);
@@ -57,21 +59,21 @@ public abstract class Pathfinder {
 		    }
 		}
 
-		Set<Connection> path_from = getPath(chm,goal,start,came_from);
+		Set<Edge<FilledHex>> path_from = getPath(chm,goal,start,came_from);
 		
 	    return path_from;		
 	
 	}
 	
-	public Set<Connection> getPath(ConnectedHexMap chm,FilledHex goal, FilledHex start, Map<FilledHex,FilledHex>came_from)
+	public Set<Edge<FilledHex>> getPath(ConnectedHexMap chm,FilledHex goal, FilledHex start, Map<FilledHex,FilledHex>came_from)
 	{
-		Set<Connection> path_from = new HashSet<>();
+		Set<Edge<FilledHex>> path_from = new HashSet<>();
 		boolean foundstart = false;
 		FilledHex current = goal,next;
 		while(!foundstart)
 		{
 			next = came_from.get(current);
-			path_from.add(new Connection(current,next,getCost(chm,current,next)));
+			path_from.add(new Edge<FilledHex>(current,next,getCost(chm,current,next)));
 			if(next.equals(start))
 			{
 				foundstart = true;
@@ -83,7 +85,7 @@ public abstract class Pathfinder {
 	}
 	
 	//Tests if can reach goal in < resource distance.
-	public Set<Connection> AStar(ConnectedHexMap chm, FilledHex goal, FilledHex start, MutableInt resource)
+	public Set<Edge<FilledHex>> AStar(ConnectedHexMap chm, FilledHex goal, FilledHex start, MutableInt resource)
 	{
 		PriorityQueue<FilledHex> frontier = new PriorityQueue<>(costComparator);
 		frontier.add(start);
@@ -120,7 +122,7 @@ public abstract class Pathfinder {
 		}
 		
 		
-		Set<Connection> path_from = getPath(chm,goal,start,came_from);
+		Set<Edge<FilledHex>> path_from = getPath(chm,goal,start,came_from);
 	
 	    return path_from;		
 	}	

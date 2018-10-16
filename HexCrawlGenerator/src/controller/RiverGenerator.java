@@ -9,12 +9,12 @@ import java.util.Set;
 
 import functions.KFunctions;
 import model.ConnectedHexMap;
-import model.Connection;
 import model.FilledHex;
 import model.MutableInt;
 import model.Pathfinder;
 import model.RiverNetwork;
 import model.Riverfinder;
+import model.graphresource.Edge;
 
 //TODO add variance to river winding, greedy doesn't do it enough justice
 public class RiverGenerator extends Generator {
@@ -39,6 +39,7 @@ public class RiverGenerator extends Generator {
 			networks = generateRandomEndRivers();
 		}
 		
+		KFunctions.outputString(this,"riversize:"+networks.size());
 		return networks;
 	}
 	
@@ -69,8 +70,8 @@ public class RiverGenerator extends Generator {
 			
 			if(riverEnd !=null && !riverEnd.equals(riverStarter))
 			{
-				Set<Connection> path = riverFinder.GreedyBFS(hexmap, riverEnd, riverStarter);
-				riverNetwork.createRiver(hexmap, path);
+				Set<Edge<FilledHex>> path = riverFinder.GreedyBFS(hexmap, riverEnd, riverStarter);
+				riverNetwork.createNetwork(hexmap, path);
 				networks.add(riverNetwork);			
 			}
 			else
@@ -78,6 +79,9 @@ public class RiverGenerator extends Generator {
 				KFunctions.outputString(this,"	River failed!");
 			}
 		}
+		
+		KFunctions.outputString(this,"River Amount:"+networks.size()+"");
+		
 		return networks;
 	}
 	
@@ -121,10 +125,11 @@ public class RiverGenerator extends Generator {
 			fend = riverends.get(random);
 			riverends.remove(random);
 
-			Set<Connection> path = rf.GreedyBFS(hexmap, fend,fh2);
-			riverNetwork.createRiver(hexmap, path);
+			Set<Edge<FilledHex>> path = rf.GreedyBFS(hexmap, fend,fh2);
+			riverNetwork.createNetwork(hexmap, path);
 			networks.add(riverNetwork);
 		}
+
 
 		return networks;
 	}

@@ -3,7 +3,7 @@ package view;
 import java.util.*;
 
 import model.ConnectedHexMap;
-import model.Connection;
+import model.NetworkConnection;
 import model.FilledHex;
 import model.HexRegion;
 import model.redblob.Layout;

@@ -9,11 +9,9 @@ import java.util.Map;
 import java.util.Set;
 
 import model.redblob.Hex;
-import model.stats.StatsCoreBiome;
 import model.worldplaces.Habitat;
 import model.worldplaces.HexTown;
-import model.worldplaces.RiverNode;
-import model.worldplaces.RoadNode;
+import model.worldplaces.NetworkNode;
 import model.worldplaces.WorldPlace;
 
 public class FilledHex extends Hex 
@@ -31,9 +29,7 @@ public class FilledHex extends Hex
 	//These are ONLY ITEMS THAT EXIST WITHIN THE HEX
 
 	private Set<HexTown> towns = new HashSet<>();
-	private RiverNode river = null;
-	private RoadNode road=null; 
-	 
+	private NetworkNode riverNode=null, roadNode=null;
 	private HexRegion region;
 	
 	//Stores the random points for each item it contains, rivers and roads store their own.
@@ -75,23 +71,24 @@ public class FilledHex extends Hex
 		return Collections.unmodifiableSet(towns);
 	}
 	
-	
-	//TODO setup structure storing in hexes, search all for object o.
-	public boolean contains(Object o)
+	public void setRiverNode(NetworkNode node)
 	{
-		
-		return false;
-		
+		riverNode=node;
 	}
 	
-	public void add(RoadNode rn)
+	public void setRoadNode(NetworkNode node)
 	{
-		road=rn;
+		roadNode=node;
 	}
 	
-	public RoadNode getRoadNode()
+	public NetworkNode getRiverNode()
 	{
-		return road;
+		return riverNode;
+	}
+	
+	public NetworkNode getRoadNode()
+	{
+		return roadNode;
 	}
 	
 	public HexTown getLargestTown()
@@ -109,11 +106,7 @@ public class FilledHex extends Hex
 		return largest;
 	}
 	
-	public void add(RiverNode rn)
-	{
-		river = rn;
-	}
-	
+
 	public HexRegion getRegion()
 	{
 		return region;
@@ -123,12 +116,7 @@ public class FilledHex extends Hex
 	{
 		this.region = region;
 	}
-	
-	public RiverNode getRiverNode()
-	{
-		return river;
-	}
-	
+
 	public Habitat getHabitat()
 	{
 		return habitat;
