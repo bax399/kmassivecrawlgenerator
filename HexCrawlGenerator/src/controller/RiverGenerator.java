@@ -16,6 +16,7 @@ import model.Pathfinder;
 import model.RiverNetwork;
 import model.Riverfinder;
 
+//TODO add variance to river winding, greedy doesn't do it enough justice
 public class RiverGenerator extends Generator {
 	ConnectedHexMap hexmap;
 
