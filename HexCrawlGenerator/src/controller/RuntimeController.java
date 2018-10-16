@@ -25,7 +25,7 @@ public class RuntimeController
 		PropertiesController pc = new PropertiesController();
 		
 		Layout lt = new Layout(Layout.pointy,new Point(size,size),new Point(screenwidth/2,screenheight/2)); //Spiral Map
-		MapController mc = new MapController(30, pc, lt, rand); 
+		MapController mc = new MapController(100, pc, lt, rand); 
 
 		long time2 = System.currentTimeMillis();
 		long timeTaken = (time2 - time1 );

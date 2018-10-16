@@ -15,7 +15,8 @@ public class Roadfinder extends Pathfinder {
 	public FilledHex earlyDijkstraTermination(ConnectedHexMap chm, FilledHex start, FilledHex current)
 	{
 		FilledHex fh = null;
-		//Terminate if you hit a town
+		//Terminate if you hit a town 
+		//CURRENT ITERATION: Doesn't link nearby towns together, avoids spindlyness
 	    if(current.getRoadNode() == null)
 	    {
 	    	if(current.getLargestTown() !=null)
@@ -23,16 +24,34 @@ public class Roadfinder extends Pathfinder {
 	    		fh=current;
 	    	}
 	    }
-	    else
+	    else if(current.getRoadNode() !=null)
 	    {
 	    	
-	    	if (!start.getRoadNode().equals(current.getRoadNode()))
+	    	if (!start.getRoadNode().equals(current.getRoadNode()) && !start.getRoadNode().getNetwork().equals(current.getRoadNode().getNetwork()))
 	    	{
 	    		fh=current;
 	    	}
+	    	
 	    }
 		
 	    return fh;
+	    
+//		//BAD ITERATION: connects back and forward between similar towns.
+//    	if(current.getLargestTown() !=null)
+//    	{
+//    		fh=current;
+//    	}
+//    	
+//    	if(current.getRoadNode() !=null)
+//	    {
+//	    	
+//	    	if (!start.getRoadNode().equals(current.getRoadNode()) && !start.getRoadNode().getNetwork().equals(current.getRoadNode().getNetwork()))
+//	    	{
+//	    		fh=current;
+//	    	}
+//	    }
+//		
+//	    return fh;	     
 	}
 	
 	@Override

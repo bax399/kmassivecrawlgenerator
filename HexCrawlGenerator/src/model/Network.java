@@ -3,6 +3,7 @@ package model;
 import java.util.HashSet;
 import java.util.Set;
 
+import functions.KFunctions;
 import model.graphresource.Edge;
 import model.graphresource.Graph;
 import model.worldplaces.NetworkNode;
@@ -11,21 +12,18 @@ public abstract class Network
 {
 	
 	private Graph<NetworkNode,NetworkConnection> graph;
-	private Set<Network> allNetworks;
 	private Set<FilledHex> hexes;
 	
 	public Network()
 	{
-		allNetworks=new HashSet<>();
 		graph=new Graph<>();
 		hexes=new HashSet<>();
 	}
 	
-	public abstract void createNetwork(ConnectedHexMap chm, Set<Edge<FilledHex>> path);
+	public abstract Network createNetwork(ConnectedHexMap chm, Set<Edge<FilledHex>> path,Set<Network> networks);
 	
-	public void joinNetworks(Network otherNetwork)
-	{
-		
+	public void joinNetworks(Network otherNetwork,Set<Network> networks)
+	{	
 		//Change the pointers to the river network from rne to THIS
 		for(NetworkConnection connect : otherNetwork.getNetworkConnections())
 		{
@@ -35,7 +33,7 @@ public abstract class Network
 		}
 		
 		//Deletes the old network. 
-		allNetworks.remove(otherNetwork);
+		networks.remove(otherNetwork);		
 	}
 	
 	public boolean containsHex(FilledHex origin)
@@ -75,13 +73,13 @@ public abstract class Network
 		return graph.getEdges();
 	}
 	
-	public Set<Network> getNetworks()
-	{
-		return allNetworks;
-	}
-	
-	public void setNetworks(Set<Network> networks)
-	{
-		allNetworks=networks;
-	}
+//	public Set<Network> getNetworks()
+//	{
+//		return allNetworks;
+//	}
+//	
+//	public void setNetworks(Set<Network> networks)
+//	{
+//		allNetworks=networks;
+//	}
 }

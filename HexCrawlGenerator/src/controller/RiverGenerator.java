@@ -11,6 +11,7 @@ import functions.KFunctions;
 import model.ConnectedHexMap;
 import model.FilledHex;
 import model.MutableInt;
+import model.Network;
 import model.Pathfinder;
 import model.RiverNetwork;
 import model.Riverfinder;
@@ -26,27 +27,25 @@ public class RiverGenerator extends Generator {
 		hexmap = chm;
 	}
 
-	public Set<RiverNetwork> generateRivers()
+	public Set<Network> generateRivers()
 	{
-		Set<RiverNetwork> networks = new HashSet<>();		
+		Set<Network> networks = new HashSet<>();		
 
 		if(hexmap.getRegions().size() > 1)
 		{
-			networks = generateOceanRivers();
+			networks = generateOceanRivers(networks);
 		}
 		else
 		{
-			networks = generateRandomEndRivers();
+			networks = generateRandomEndRivers(networks);
 		}
-		
-		KFunctions.outputString(this,"riversize:"+networks.size());
+
 		return networks;
 	}
 	
-	public Set<RiverNetwork> generateOceanRivers()
+	public Set<Network> generateOceanRivers(Set<Network> networks)
 	{
 		RiverNetwork riverNetwork;
-		Set<RiverNetwork> networks = new HashSet<>();
 		
 		List<FilledHex> riverStarts = new ArrayList<>();
 		
@@ -64,14 +63,14 @@ public class RiverGenerator extends Generator {
 		for(FilledHex riverStarter : riverStarts )
 		{
 			FilledHex riverEnd = null;
-			riverNetwork = new RiverNetwork(networks);
+			riverNetwork = new RiverNetwork();
 			
 			riverEnd = riverFinder.Dijkstra(hexmap, riverStarter, new MutableInt(50));
 			
 			if(riverEnd !=null && !riverEnd.equals(riverStarter))
 			{
 				Set<Edge<FilledHex>> path = riverFinder.GreedyBFS(hexmap, riverEnd, riverStarter);
-				riverNetwork.createNetwork(hexmap, path);
+				riverNetwork.createNetwork(hexmap, path,networks);
 				networks.add(riverNetwork);			
 			}
 			else
@@ -80,19 +79,16 @@ public class RiverGenerator extends Generator {
 			}
 		}
 		
-		KFunctions.outputString(this,"River Amount:"+networks.size()+"");
-		
 		return networks;
 	}
 	
-	public Set<RiverNetwork> generateRandomEndRivers() 
+	public Set<Network> generateRandomEndRivers(Set<Network> networks)
 	{
 		List<FilledHex> riverstarts = new ArrayList<>();
 
 		List<FilledHex> riverends = new ArrayList<>();
 
 		RiverNetwork riverNetwork;
-		Set<RiverNetwork> networks = new HashSet<>();
 
 		Iterator<FilledHex> it = hexmap.getHexes().values().iterator();
 		while (it.hasNext()) {
@@ -115,7 +111,7 @@ public class RiverGenerator extends Generator {
 		Pathfinder rf = new Riverfinder();
 		while (it2.hasNext() && riverends.size() > 0) 
 		{
-			riverNetwork = new RiverNetwork(networks);
+			riverNetwork = new RiverNetwork();
 			FilledHex fh2 = it2.next();
 			int random = 0;
 
@@ -126,7 +122,7 @@ public class RiverGenerator extends Generator {
 			riverends.remove(random);
 
 			Set<Edge<FilledHex>> path = rf.GreedyBFS(hexmap, fend,fh2);
-			riverNetwork.createNetwork(hexmap, path);
+			riverNetwork.createNetwork(hexmap, path,networks);
 			networks.add(riverNetwork);
 		}
 

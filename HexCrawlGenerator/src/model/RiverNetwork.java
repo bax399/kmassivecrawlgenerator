@@ -9,11 +9,9 @@ import model.worldplaces.NetworkNode;
 public class RiverNetwork extends Network
 {
 	
-	public RiverNetwork(Set<RiverNetwork> ar)
+	public RiverNetwork()
 	{
 		super();
-		setNetworks(new HashSet<Network>());
-		getNetworks().addAll(ar);
 	}
 	
 	public void addNode(NetworkNode node, FilledHex origin)
@@ -23,9 +21,9 @@ public class RiverNetwork extends Network
 	}
 	
 	@Override
-	public void createNetwork(ConnectedHexMap chm, Set<Edge<FilledHex>> path)
+	public Network createNetwork(ConnectedHexMap chm, Set<Edge<FilledHex>> path,Set<Network> networks)
 	{
-		
+		Network delNetwork=null;
 		//add all hexes to set (get from connections)
 		for(Edge<FilledHex> cc : path) 
 		{
@@ -53,7 +51,8 @@ public class RiverNetwork extends Network
 					}
 					else //It has a rivernode currently JOIN THE TWO NETWORKS TOGETHER
 					{
-						joinNetworks(fh.getRiverNode().getNetwork());
+						delNetwork=fh.getRiverNode().getNetwork();
+						joinNetworks(delNetwork,networks);
 					}
 					
 				
@@ -68,7 +67,7 @@ public class RiverNetwork extends Network
 
 			
 		}
-		 
+		 return delNetwork;
 	}
 
 }

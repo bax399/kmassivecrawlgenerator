@@ -12,8 +12,7 @@ import model.redblob.Layout;
 public class ConnectedHexMap extends HexMap<FilledHex> {
 
 	Graph<FilledHex,Edge<FilledHex>> neighbours; // Stores each hex's neighbouring cells in hexagonal coordinates
-	Set<RiverNetwork> rivernetworks;
-	Set<RoadNetwork> roadnetworks;
+	Set<Network> rivernetworks, roadnetworks;
 	Set<HexRegion> regions;
 	public final int height;
 	public final int width;
@@ -31,13 +30,12 @@ public class ConnectedHexMap extends HexMap<FilledHex> {
 		rand = r; 
 	}
 	
-	public void setRiverNetworks(Set<RiverNetwork> rivers)
+	public void setRiverNetworks(Set<Network> rivers)
 	{
 		rivernetworks = rivers;
-		KFunctions.outputString(this,"mapriversize:"+rivernetworks.size());
 	}
 	
-	public void setRoadNetworks(Set<RoadNetwork> roads)
+	public void setRoadNetworks(Set<Network> roads)
 	{
 		roadnetworks = roads;
 	}
@@ -81,7 +79,7 @@ public class ConnectedHexMap extends HexMap<FilledHex> {
 		if(roadnetworks !=null)
 		{
 		Set<Set<NetworkConnection>> roadconnections = new HashSet<>();
-		for(RoadNetwork rn : roadnetworks)
+		for(Network rn : roadnetworks)
 		{
 			 roadconnections.add(rn.getNetworkConnections());
 		}
@@ -95,7 +93,7 @@ public class ConnectedHexMap extends HexMap<FilledHex> {
 	{
 
 		Set<Set<NetworkConnection>> riverconnections = new HashSet<>();
-		for(RiverNetwork rn : rivernetworks)
+		for(Network rn : rivernetworks)
 		{
 			riverconnections.add(rn.getNetworkConnections());
 		}

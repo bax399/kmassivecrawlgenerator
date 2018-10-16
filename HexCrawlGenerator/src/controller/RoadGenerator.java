@@ -6,13 +6,15 @@ import java.util.PriorityQueue;
 import java.util.Random;
 import java.util.Set;
 
+import functions.KFunctions;
 import model.ConnectedHexMap;
-import model.NetworkConnection;
 import model.FilledHex;
 import model.MutableInt;
+import model.Network;
 import model.Pathfinder;
 import model.RoadNetwork;
 import model.Roadfinder;
+import model.Townfinder;
 import model.graphresource.Edge;
 public class RoadGenerator extends Generator
 {
@@ -33,11 +35,11 @@ public class RoadGenerator extends Generator
 		hexmap = chm;
 	}
 	
-	public Set<RoadNetwork> generateRoads()
+	public Set<Network> generateRoads()
 	{	
 
-		Set<RoadNetwork> networks = new HashSet<>();
-		RoadNetwork	rn;
+		Set<Network> networks = new HashSet<>();
+		RoadNetwork	rn=null;
 		//Possible starting points.
 		PriorityQueue<FilledHex> hexHasTowns = new PriorityQueue<>(sizeComparator);
 		
@@ -54,12 +56,13 @@ public class RoadGenerator extends Generator
 
 
 		Pathfinder pf = new Roadfinder();
-
+		Pathfinder tf = new Townfinder();
+		
 		while(hexHasTowns.size() > 0)
 		{
 			FilledHex originHex = hexHasTowns.poll();
 			
-			rn=new RoadNetwork(networks);
+			rn=new RoadNetwork();
 			rn.addTownNode(hexmap, originHex);
 			
 			int resource =originHex.getLargestTown().getConnectivity();
@@ -67,7 +70,14 @@ public class RoadGenerator extends Generator
 			//road from fh outwards.
 
 			FilledHex goal = pf.Dijkstra(hexmap, originHex,cost);
-		
+
+			//Town finder is too laggy, makes too many networks.
+//			if (goal==null)
+//			{
+//				goal=tf.Dijkstra(hexmap, originHex, cost);
+//				KFunctions.outputString(this,"townroad"+goal);
+//			}
+//			
 			if (goal != null && !goal.equals(originHex))
 			{
 				// create BFS path from origin to destination
@@ -78,61 +88,15 @@ public class RoadGenerator extends Generator
 				originHex.getLargestTown().setConnectivity(rr.value);
 				// destination.getLargestTown().setConnectivity(destination.getLargestTown().getConnectivity()-rr.value);
 				
-				rn.createNetwork(hexmap,path);		
+				rn.createNetwork(hexmap,path,networks);		
 				networks.add(rn);
 				//System.out.println("After " + fh.getLargestTown().getConnectivity());
 				hexHasTowns.add(originHex); //Re-add hex to townlist to go again.	
 			}
 		}
 		
-		//Town finder, finds neighbouring towns and shores up shoddy connections from before.
-		
-		
-		/*
-		Pathfinder tf = new Townfinder();
-		it = hexmap.getHexes().values().iterator();
-		while(it.hasNext())
-		{
-			FilledHex fh =it.next();
-			
-			if (fh.getLargestTown() !=null && fh.getLargestTown().getConnectivity() > 0)
-			{
-				hexHasTowns.add(fh);
-			}
-		}
-		System.out.println("starting town finder");
-		while(hexHasTowns.size() > 0)
-		{
-			FilledHex fh = hexHasTowns.poll();
-			
-			rn=new RoadNetwork(networks);
-			rn.addTownNode(hexmap, fh);
-			
-			int resource =fh.getLargestTown().getConnectivity();
-			MutableInt cost = new MutableInt(resource);				
-			//road from fh outwards.
-
-			FilledHex goal = tf.Dijkstra(hexmap, fh,cost);
-		
-			if (goal != null && !goal.equals(fh))
-			{
-			
-				rn.createRoad(hexmap,goal,fh);		
-				networks.add(rn);
-				hexHasTowns.add(fh); //Re-add hex to townlist to go again.	
-			}	
-		}
-		*/
-		
-		//TODO branch cleaner, 
-		//if one connection has nothing (no branches or towns) (simple)
-		//and starts and ends in the same place as another connection, destroy it.
-		//Therefore, will delete branches that aren't as important.
-		//Get each roadnode, if >2 connections, follow each connection
-		//step on each connection until a town or branch is reached. If a branch is reached, this is no longer a simple branch and cannot be deleted.
-		//	This branch continues until a town OR meets a node on a different branch, but cannot delete itself.
-		//	if any two+ connections end in the same node, delete the simple path (with most distance).
-		return networks;
+//		KFunctions.outputString(this,"NumRoadsNetworks:"+networks.size());
+		return networks;		
 	}
 }
 

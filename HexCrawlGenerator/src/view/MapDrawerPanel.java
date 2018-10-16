@@ -111,18 +111,6 @@ public class MapDrawerPanel extends MainPanel
 //				//Dont draw anything.
 //			}
 			
-			if(hh.getRiverNode() !=null)
-			{
-				g2.setColor(Color.BLUE);
-				g2.fillOval(hh.getRiverNode().getPosition().x.intValue(), hh.getRiverNode().getPosition().y.intValue(),6, 6);
-			}
-			
-			if(hh.getRoadNode() !=null)
-			{
-				g2.setColor(Color.BLUE);
-				g2.fillOval(hh.getRoadNode().getPosition().x.intValue(), hh.getRoadNode().getPosition().y.intValue(),6, 6);
-			}			
-			
 			//**Coords**//
 //			g.setColor(Color.BLACK);
 //			g.drawString(""+hh.q,hh.center.x.intValue()-3, hh.center.y.intValue()-3);

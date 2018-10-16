@@ -12,11 +12,9 @@ public class RoadNetwork extends Network{
 
 	private Set<HexTown> towns;
 	
-	public RoadNetwork(Set<RoadNetwork> ar)
+	public RoadNetwork()
 	{
 		super();
-		setNetworks(new HashSet<Network>());
-		getNetworks().addAll(ar);
 		towns=new HashSet<>();
 	}
 	
@@ -65,9 +63,11 @@ public class RoadNetwork extends Network{
 	}
 
 	@Override
-	public void createNetwork(ConnectedHexMap chm, Set<Edge<FilledHex>> path) 
+	public Network createNetwork(ConnectedHexMap chm, Set<Edge<FilledHex>> path,Set<Network> networks) 
 	{
 		//add all hexes to set (get from connections)
+		Network delNetwork=null;
+		
 		for(Edge<FilledHex> cc : path) 
 		{
 			//create river nodes and add to set,
@@ -91,9 +91,10 @@ public class RoadNetwork extends Network{
 							fh.getHabitat().addModifierBiome(b);
 						}
 					}
-					else //It has a rivernode currently JOIN THE TWO NETWORKS TOGETHER
+					else //It has a roadnode currently JOIN THE TWO NETWORKS TOGETHER
 					{
-						joinNetworks(fh.getRoadNode().getNetwork());
+						delNetwork= fh.getRoadNode().getNetwork();
+						joinNetworks(delNetwork,networks);
 					}
 					
 				}
@@ -104,7 +105,8 @@ public class RoadNetwork extends Network{
 				}						
 			}
 		}
-		 
+		return delNetwork; 
 	}
+	
 
 }

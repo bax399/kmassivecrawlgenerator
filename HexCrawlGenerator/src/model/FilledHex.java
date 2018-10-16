@@ -12,6 +12,7 @@ import model.redblob.Hex;
 import model.worldplaces.Habitat;
 import model.worldplaces.HexTown;
 import model.worldplaces.NetworkNode;
+import model.worldplaces.RoadNode;
 import model.worldplaces.WorldPlace;
 
 public class FilledHex extends Hex 
@@ -31,7 +32,7 @@ public class FilledHex extends Hex
 	private Set<HexTown> towns = new HashSet<>();
 	private NetworkNode riverNode=null, roadNode=null;
 	private HexRegion region;
-	
+
 	//Stores the random points for each item it contains, rivers and roads store their own.
 	private Map<WorldPlace, Point> points;
 	

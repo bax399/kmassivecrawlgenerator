@@ -13,11 +13,15 @@ public class Townfinder extends Pathfinder {
 	public FilledHex earlyDijkstraTermination(ConnectedHexMap chm, FilledHex start, FilledHex current)
 	{
 		FilledHex fh = null;
-		//Terminate if you hit a town not in your set
-    	if(current.getLargestTown() !=null)
+    	if(current.getLargestTown() !=null && start.getRoadNode().getNetwork().equals(current.getRoadNode().getNetwork()))
     	{
     		fh=current;
     	}
+    	
+//    	if (current.getRoadNode() != null)
+//    	{
+//    		fh=current;
+//    	}
 	    
 	    return fh;
 	}
@@ -25,7 +29,12 @@ public class Townfinder extends Pathfinder {
 	@Override
 	public int heuristic(ConnectedHexMap chm, FilledHex goal, FilledHex current, FilledHex next)
 	{
-		return goal.distance(current) + next.getHabitat().getTravelCost();
+		int roadBetween = 0;
+		if (next.getRoadNode() != null && next.getLargestTown() == null)
+		{
+			roadBetween = 1;
+		}		
+		return goal.distance(current) + next.getHabitat().getTravelCost() - 10000*roadBetween;
 	}
 	
 	@Override
