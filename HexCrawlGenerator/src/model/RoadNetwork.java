@@ -9,7 +9,8 @@ import model.worldplaces.HexTown;
 import model.worldplaces.NetworkNode;
 
 public class RoadNetwork extends Network{
-
+	
+	//TODO fix towns so they can be accessed privately.
 	private Set<HexTown> towns;
 	
 	public RoadNetwork()
@@ -36,6 +37,7 @@ public class RoadNetwork extends Network{
 		if (fh.getRoadNode() != null)
 		{
 			roadNetwork = fh.getRoadNode().getNetwork();
+			
 		}
 		else 
 		{
@@ -81,7 +83,15 @@ public class RoadNetwork extends Network{
 				{
 					if(fh.getRoadNode()==null)
 					{
-						NetworkNode roadNode = new NetworkNode(this,chm.getRandomPoint(fh));
+						NetworkNode roadNode=null;
+						if (fh.getLargestTown() != null) 
+						{
+							roadNode = new NetworkNode(this, fh.getLargestTown().getPosition());
+						} 
+						else
+						{
+							roadNode = new NetworkNode(this, chm.getRandomPoint(fh));
+						}
 						addNode(roadNode,fh);
 						
 						//Adds a river modifier to the hex.

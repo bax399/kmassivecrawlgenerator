@@ -24,17 +24,12 @@ public class RuntimeController
 
 		PropertiesController pc = new PropertiesController();
 		
-		Layout lt = new Layout(Layout.pointy,new Point(size,size),new Point(screenwidth/2,screenheight/2)); //Spiral Map
-		MapController mc = new MapController(100, pc, lt, rand); 
 
-		long time2 = System.currentTimeMillis();
-		long timeTaken = (time2 - time1 );
-		outputString("TimeTaken " + timeTaken +" ms");	
+		Layout lt = new Layout(Layout.pointy,new Point(size,size),new Point(screenwidth/2,screenheight/2)); //Spiral Map		
+		MapController mc = new MapController(100, pc, lt, rand); 
 		
 		JFrame f = new JFrame("HexMap");
-
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
 		MapDrawerPanel ui = new MapDrawerPanel(mc.hexmap, lt,(int)size/30);
 		f.addKeyListener(new KeyListener() {
 	        @Override
@@ -49,14 +44,22 @@ public class RuntimeController
 
 	        @Override
 	        public void keyReleased(KeyEvent e) {
-	        	ui.opacity=10;
+	        	ui.opacity=0;
 	        	System.out.println(ui.opacity);	        	
 	        }
 	    });		
 		f.add(ui);
 		f.setSize((int)screenwidth,(int)screenheight);
 		f.setVisible(true);
+					
+		long time2 = System.currentTimeMillis();		
+
+
+		long timeTaken = (time2 - time1 );
+		outputString("TimeTaken " + timeTaken +" ms");	
+
 		
+
 		outputString("total hexes:" + mc.getHexes().size());
 
 		

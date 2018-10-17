@@ -19,7 +19,7 @@ public class StatsModifierBiome extends StatsCoreBiome implements BiomeModifierP
 											//modname,color,height,travel,spotd,rivero,rivere 
 	public static StatsModifierBiome river = new StatsModifierBiome("river",Color.BLACK,-2,2,"",0d,0.9d,rivervalidregions); //river runs through here
 	
-	public static StatsModifierBiome road =  new StatsModifierBiome("road",Color.BLUE,0,-2,"",0d,0d,roadvalidregions);
+	public static StatsModifierBiome road =  new StatsModifierBiome("road",Color.BLUE,0,-5,"",0d,0d,roadvalidregions);
 	
 	
 	public StatsModifierBiome(String inName, Color inColour, int inHeight, int inTCost, String inSpotDistance, double inRiverOrigin, double inRiverEnd,Set<String> inValidRegions)

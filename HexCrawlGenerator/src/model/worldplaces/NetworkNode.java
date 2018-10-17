@@ -30,6 +30,11 @@ public class NetworkNode extends Vertex
 		this.size = size;
 	}
 
+	public void setPoint(Point p)
+	{
+		pos = p;
+	}
+	
 	public void setNetwork(Network rn)
 	{
 		owner = rn;

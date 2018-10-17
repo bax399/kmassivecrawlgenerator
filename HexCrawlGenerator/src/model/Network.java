@@ -36,6 +36,17 @@ public abstract class Network
 		networks.remove(otherNetwork);		
 	}
 	
+	public boolean areNeighbours(NetworkNode n1, NetworkNode n2)
+	{
+		boolean neighbours = false;
+		
+		if (graph.containsEdge(new NetworkConnection(n1,n2,1)))
+		{
+			neighbours = true;
+		}	
+		return neighbours;
+	}
+	
 	public boolean containsHex(FilledHex origin)
 	{
 		return hexes.contains(origin);

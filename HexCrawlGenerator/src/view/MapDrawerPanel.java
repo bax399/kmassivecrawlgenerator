@@ -245,10 +245,10 @@ public class MapDrawerPanel extends MainPanel
 			for(HexTown t:hh.getTowns())
 			{
 				g2.setColor(Color.RED);
-				int scaleBy = (int) (5*zoomFactor);
-				g2.fillOval(t.getPosition().x.intValue()-scaleBy/2, t.getPosition().y.intValue()-scaleBy/2,3+scaleBy,3+scaleBy);
+				int scaleBy = Math.min((int)(5*zoomFactor) * Math.min(Math.max(t.stats.getConnectivity()/30,1),10),50);
+				g2.fillOval(t.getPosition().x.intValue()-scaleBy/2, t.getPosition().y.intValue()-scaleBy/2,scaleBy,scaleBy);
 				g2.setColor(Color.BLACK);
-				g2.drawString("*", t.getPosition().x.intValue()-3, t.getPosition().y.intValue()+5);
+				g2.drawString("*", t.getPosition().x.intValue(), t.getPosition().y.intValue());
 				g2.drawString(t.getConnectivity()+"", t.getPosition().x.intValue()+5, t.getPosition().y.intValue());
 			}			
 		}

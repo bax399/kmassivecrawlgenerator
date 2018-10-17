@@ -106,6 +106,11 @@ public class MapController
 		    }
 		}
 	}	
+	
+	public ConnectedHexMap getMap()
+	{
+		return hexmap;
+	}
 
 	public Hex getHex(int q,int r)
 	{

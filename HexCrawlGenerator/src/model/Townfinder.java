@@ -1,5 +1,7 @@
 package model;
 
+import model.stats.StatsModifierBiome;
+
 public class Townfinder extends Pathfinder {
 
 	
@@ -13,34 +15,44 @@ public class Townfinder extends Pathfinder {
 	public FilledHex earlyDijkstraTermination(ConnectedHexMap chm, FilledHex start, FilledHex current)
 	{
 		FilledHex fh = null;
-    	if(current.getLargestTown() !=null && start.getRoadNode().getNetwork().equals(current.getRoadNode().getNetwork()))
+	    
+		//BAD ITERATION: connects back and forward between similar towns.
+    	if(current.getLargestTown() !=null && !current.equals(start))
     	{
     		fh=current;
     	}
     	
-//    	if (current.getRoadNode() != null)
-//    	{
-//    		fh=current;
-//    	}
-	    
-	    return fh;
+    	if(current.getRoadNode() !=null)
+	    {
+	    	if (!start.getRoadNode().equals(current.getRoadNode()))
+	    	{
+	    		fh=current;
+	    	}
+	    }
+		
+	    return fh;	     
 	}
 	
 	@Override
 	public int heuristic(ConnectedHexMap chm, FilledHex goal, FilledHex current, FilledHex next)
 	{
-		int roadBetween = 0;
-		if (next.getRoadNode() != null && next.getLargestTown() == null)
+		int prioritiseRoad = 0;
+		if (next.getHabitat().getAllBiomes().contains(StatsModifierBiome.road))
 		{
-			roadBetween = 1;
-		}		
-		return goal.distance(current) + next.getHabitat().getTravelCost() - 10000*roadBetween;
+			prioritiseRoad+=100;
+		}
+		return goal.distance(next) + next.getHabitat().getTravelCost()*10 + prioritiseRoad;
 	}
 	
 	@Override
 	public int getCost(ConnectedHexMap chm, FilledHex current, FilledHex next) 
 	{
-		return next.distance(current) + next.getHabitat().getTravelCost();//chm.adjTravelCost(current, next);
+		int avoidRoad=0;
+		if (next.getRoadNode() != null)
+		{
+			avoidRoad = 1;
+		}
+		return (current.getHabitat().getTravelCost()+next.getHabitat().getTravelCost())/2+avoidRoad*10;//chm.adjTravelCost(current, next);
 	}
 
 }

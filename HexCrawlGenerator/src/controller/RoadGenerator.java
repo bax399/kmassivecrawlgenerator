@@ -1,4 +1,5 @@
 package controller;
+import java.awt.event.ActionListener;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -6,7 +7,6 @@ import java.util.PriorityQueue;
 import java.util.Random;
 import java.util.Set;
 
-import functions.KFunctions;
 import model.ConnectedHexMap;
 import model.FilledHex;
 import model.MutableInt;
@@ -57,7 +57,7 @@ public class RoadGenerator extends Generator
 
 		Pathfinder pf = new Roadfinder();
 		Pathfinder tf = new Townfinder();
-		
+		Set<FilledHex> townTry = new HashSet<>();
 		while(hexHasTowns.size() > 0)
 		{
 			FilledHex originHex = hexHasTowns.poll();
@@ -72,10 +72,15 @@ public class RoadGenerator extends Generator
 			FilledHex goal = pf.Dijkstra(hexmap, originHex,cost);
 
 			//Town finder is too laggy, makes too many networks.
-//			if (goal==null)
+//			if (goal==null && cost.value > 1 && !townTry.contains(originHex))
 //			{
 //				goal=tf.Dijkstra(hexmap, originHex, cost);
-//				KFunctions.outputString(this,"townroad"+goal);
+//				townTry.add(originHex);
+//				
+//				if(goal!=null)
+//				{
+//					KFunctions.outputString(this,"Road from TownFinder");
+//				}
 //			}
 //			
 			if (goal != null && !goal.equals(originHex))
@@ -99,7 +104,6 @@ public class RoadGenerator extends Generator
 		return networks;		
 	}
 }
-
 /*
 boolean found = false;
 FilledHex starttry;
