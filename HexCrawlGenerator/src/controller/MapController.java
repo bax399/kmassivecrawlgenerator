@@ -53,7 +53,7 @@ public class MapController
 		hexmap.setRegions(reg.initializeSameRegions());		
 		KFunctions.outputString(this,"Finished Regions");
 		
-		RiverGenerator rg = new RiverGenerator(hexmap,new Random());
+		RiverGenerator rg = new RiverGenerator(hexmap,rand);
 		hexmap.setRiverNetworks(rg.generateRivers());
 		KFunctions.outputString(this,"Finished Rivers");
 		

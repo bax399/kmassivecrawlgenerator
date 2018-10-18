@@ -31,18 +31,18 @@ public class RoadNetwork extends Network{
 		}
 	}
 	
-	public void addTownNode(ConnectedHexMap chm, FilledHex fh) 
+	public void addTownNode(ConnectedHexMap chm, FilledHex fh,Set<Network> networks) 
 	{
-		Network roadNetwork=null;
+		Network otherNetwork=null;
 		if (fh.getRoadNode() != null)
 		{
-			roadNetwork = fh.getRoadNode().getNetwork();
-			
+			otherNetwork = fh.getRoadNode().getNetwork();
+			joinNetworks(otherNetwork,networks);
 		}
 		else 
 		{
 			NetworkNode roadNode;
-			roadNetwork = this;
+
 			if (fh.getLargestTown() != null) 
 			{
 				roadNode = new NetworkNode(this, fh.getLargestTown().getPosition());

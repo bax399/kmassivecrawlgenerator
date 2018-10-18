@@ -27,7 +27,6 @@ public class TownGenerator extends Generator
 		hexmap=chm;
 		
 		this.townList = townList;
-		rand = r;
 		
 		for(StatsTown t : townList)
 		{
@@ -43,7 +42,7 @@ public class TownGenerator extends Generator
 		
 		while(list.size() > 0)
 		{
-			int randomindex = rand.nextInt(list.size());
+			int randomindex = getRand().nextInt(list.size());
 			FilledHex curr = list.get(randomindex);
 			list.remove(randomindex);
 

@@ -4,6 +4,11 @@ import java.util.Random;
 
 public class Riverfinder extends Pathfinder {
 
+	public Riverfinder(Random rand)
+	{
+		super(rand);
+	}
+	
 	@Override
 	public FilledHex earlyDijkstraTermination(ConnectedHexMap chm, FilledHex goal, FilledHex current)
 	{
@@ -34,11 +39,10 @@ public class Riverfinder extends Pathfinder {
 	public int heuristic(ConnectedHexMap chm, FilledHex goal, FilledHex current, FilledHex next)
 	{
 		int prioritiseWater = 0;
-		Random rand = new Random();
 
 		prioritiseWater=(int)(next.getHabitat().getRiverEnd());
 		//dist up = towards goal
-		return goal.distance(next)*20 + Math.max((next.getHabitat().getHeight()-current.getHabitat().getHeight())*1,0) - prioritiseWater + rand.nextInt(5)*5;
+		return goal.distance(next)*20 + Math.max((next.getHabitat().getHeight()-current.getHabitat().getHeight())*1,0) - prioritiseWater + getRand().nextInt(5)*5;
 	}
 		
 	

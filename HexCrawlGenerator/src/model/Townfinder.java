@@ -1,9 +1,15 @@
 package model;
 
+import java.util.Random;
+
 import model.stats.StatsModifierBiome;
 
 public class Townfinder extends Pathfinder {
 
+	public Townfinder(Random rand)
+	{
+		super(rand);
+	}
 	
 	@Override
 	public FilledHex earlyGreedyTermination(ConnectedHexMap chm, FilledHex start, FilledHex current)

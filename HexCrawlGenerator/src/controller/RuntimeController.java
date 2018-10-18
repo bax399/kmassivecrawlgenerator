@@ -19,7 +19,7 @@ public class RuntimeController
 	
 	public static void main(String[] args)
 	{ 
-		Random rand = new Random();
+		Random rand = new Random(123);
 		long time1 = System.currentTimeMillis();
 
 		PropertiesController pc = new PropertiesController();

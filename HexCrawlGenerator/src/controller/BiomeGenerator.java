@@ -62,7 +62,7 @@ public class BiomeGenerator extends Generator
 		
 		while(!frontier.isEmpty())
 		{
-			int randomindex =rand.nextInt(frontier.size());
+			int randomindex =getRand().nextInt(frontier.size());
 			
 			currHex = frontier.get(randomindex);
 			frontier.remove(randomindex);			
@@ -73,7 +73,7 @@ public class BiomeGenerator extends Generator
 			ArrayList<Integer> dirs = new ArrayList<>(Arrays.asList(0,1,2,3,4,5));
 			do
 			{
-				dir = dirs.get(rand.nextInt(dirs.size()));
+				dir = dirs.get(getRand().nextInt(dirs.size()));
 				dirs.remove(Integer.valueOf(dir));
 				nextHex=hexmap.getHex(currHex.neighbor(dir));
 				if ( (nextHex!=null) && (!visited.contains(nextHex)) )
@@ -114,7 +114,7 @@ public class BiomeGenerator extends Generator
 			ArrayList<Integer> dirs = new ArrayList<>(Arrays.asList(0,1,2,3,4,5));
 			do
 			{
-				dir = dirs.get(rand.nextInt(dirs.size()));
+				dir = dirs.get(getRand().nextInt(dirs.size()));
 				dirs.remove(Integer.valueOf(dir));
 				neighb = hexmap.getHex(start.neighbor(dir));
 				if (neighb != null && ((neighb.getHabitat().getCoreBiome() != null) && !neighb.getHabitat().getCoreBiome().getBiomeName().equals("basic")))
@@ -143,7 +143,7 @@ public class BiomeGenerator extends Generator
 			//Choose a valid random direction
 			do
 			{		
-				dir = dirs.get(rand.nextInt(dirs.size()));
+				dir = dirs.get(getRand().nextInt(dirs.size()));
 				dirs.remove(Integer.valueOf(dir));
 				next = hexmap.getHex(curr.neighbor(dir));
 			}while(dirs.size()>0 && (next == null || ( next.getHabitat().getCoreBiome()!=null && !next.getHabitat().getCoreBiome().getBiomeName().equals("basic"))));			

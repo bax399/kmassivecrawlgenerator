@@ -5,11 +5,16 @@ import model.ConnectedHexMap;
 import model.FilledHex;
 public abstract class Generator 
 {
-	Random rand;
+	private Random rand;
 	
 	public Generator(Random rd)
 	{
 		rand=rd;
+	}
+	
+	public Random getRand()
+	{
+		return rand;
 	}
 	
 	public boolean rollChance(double chance)

@@ -59,7 +59,7 @@ public class RiverGenerator extends Generator {
 			} 
 		}
 		
-		Pathfinder riverFinder = new Riverfinder();
+		Pathfinder riverFinder = new Riverfinder(getRand());
 		for(FilledHex riverStarter : riverStarts )
 		{
 			FilledHex riverEnd = null;
@@ -108,7 +108,7 @@ public class RiverGenerator extends Generator {
 
 		Iterator<FilledHex> it2 = riverstarts.iterator();
 
-		Pathfinder rf = new Riverfinder();
+		Pathfinder rf = new Riverfinder(getRand());
 		while (it2.hasNext() && riverends.size() > 0) 
 		{
 			riverNetwork = new RiverNetwork();
@@ -117,7 +117,7 @@ public class RiverGenerator extends Generator {
 
 			// Choosing a random ending that isn't too close
 			FilledHex fend = null;
-			random = rand.nextInt(riverends.size());
+			random = getRand().nextInt(riverends.size());
 			fend = riverends.get(random);
 			riverends.remove(random);
 

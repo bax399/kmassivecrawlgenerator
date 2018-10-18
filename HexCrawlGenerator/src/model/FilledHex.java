@@ -98,7 +98,7 @@ public class FilledHex extends Hex
 		HexTown largest=null;
 		for(HexTown t: towns)
 		{
-			if (t.getConnectivity() > c)
+			if (t.getConnectivity() >= c)
 			{
 				c = t.getConnectivity();
 				largest=t;

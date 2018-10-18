@@ -5,10 +5,23 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.PriorityQueue;
+import java.util.Random;
 import java.util.Set;
 
 import model.graphresource.Edge;
 public abstract class Pathfinder {
+	
+	private Random rand;
+	
+	public Pathfinder(Random rand)
+	{
+		this.rand = rand;
+	}
+	
+	public Random getRand()
+	{
+		return rand;
+	}
 	
 	public static Comparator<FilledHex> costComparator = new Comparator<FilledHex>()
 	{

@@ -27,6 +27,7 @@ public class MapDrawerPanel extends MainPanel
 	int size = 10;
 	public int opacity=0;
 	
+	//TODO do better updating on paint method, allow for real-time generation to view each step of generation process.
 	public MapDrawerPanel(ConnectedHexMap h, Layout lt, int size)
 	{	
 		super(size);
