@@ -141,7 +141,7 @@ public abstract class Pathfinder {
 	}	
 	
 	//Gets earliest termination within resource.
-	public FilledHex Dijkstra(ConnectedHexMap chm, FilledHex start, MutableInt resource)
+	public FilledHex terminatingDijkstra(ConnectedHexMap chm, FilledHex start, MutableInt resource)
 	{
 		PriorityQueue<FilledHex> frontier = new PriorityQueue<>(costComparator);
 		frontier.add(start);

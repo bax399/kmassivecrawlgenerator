@@ -19,14 +19,14 @@ public class RuntimeController
 	
 	public static void main(String[] args)
 	{ 
-		Random rand = new Random(123);
+		Random rand = new Random(399);
 		long time1 = System.currentTimeMillis();
 
-		PropertiesController pc = new PropertiesController();
+		PropertiesController pc = new PropertiesController(); 
 		
 
 		Layout lt = new Layout(Layout.pointy,new Point(size,size),new Point(screenwidth/2,screenheight/2)); //Spiral Map		
-		MapController mc = new MapController(100, pc, lt, rand); 
+		MapController mc = new MapController(50, pc, lt, rand); 
 		
 		JFrame f = new JFrame("HexMap");
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

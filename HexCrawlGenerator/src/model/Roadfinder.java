@@ -23,11 +23,14 @@ public class Roadfinder extends Pathfinder {
 	{
 		FilledHex fh = null;
 
+		
+		 
     	if(current.getTowns().size() > 0 && !current.equals(start))
     	{
     		if (current.getRoadNode() ==null)
     		{
-    			fh=current;    			
+    			fh=current;    	
+
     		}
     	}
     	
@@ -35,7 +38,7 @@ public class Roadfinder extends Pathfinder {
     	{
     		if(!start.getRoadNode().getNetwork().equals(current.getRoadNode().getNetwork()))
     		{
-    			fh=current;
+    			fh=current;   			
     		}
     	}
 		    	
@@ -45,43 +48,29 @@ public class Roadfinder extends Pathfinder {
 	
 	@Override
 	public int heuristic(ConnectedHexMap chm, FilledHex goal, FilledHex current, FilledHex next)
-	{
-		int prioritiseRoad = 0, prioritiseTown = 0, prioritiseConnection = 0;
-		
-//		if (next.getHabitat().getAllBiomes().contains(StatsModifierBiome.road))
-//		{
-//			prioritiseRoad+=1;
-//		}		
-		
-//		if (next.getLargestTown() !=null)
-//		{
-//			prioritiseTown+=1;
-//		}
-		
+	{	
 		if (next.getRoadNode() !=null && current.getRoadNode() !=null)
 		{		
 			if (next.getRoadNode().getNetwork().areNeighbours(current.getRoadNode(), next.getRoadNode()))
 			{
-				prioritiseConnection+=next.getHabitat().getTravelCost();
+				return 0;
 			}
 		}
 		
-		return next.getHabitat().getTravelCost() - prioritiseConnection - prioritiseRoad - next.distance(goal);
+		return next.getHabitat().getTravelCost();
 	}
 	
 	@Override
 	public int getCost(ConnectedHexMap chm, FilledHex current, FilledHex next) 
 	{			
-		//return next.getHabitat().getTravelCost();
-		int prioritiseConnection=0;
 		if (next.getRoadNode() !=null && current.getRoadNode() !=null)
 		{
-			if (next.getRoadNode().getNetwork().areNeighbours(current.getRoadNode(), next.getRoadNode()))
+			if (next.getRoadNode().getNetwork().areNeighbours(next.getRoadNode(),current.getRoadNode()))
 			{
-				prioritiseConnection+=next.getHabitat().getTravelCost();
+				return 0;
 			}
 		}
-		return next.getHabitat().getTravelCost() - prioritiseConnection;
+		return next.getHabitat().getTravelCost();
 	}
 
 }

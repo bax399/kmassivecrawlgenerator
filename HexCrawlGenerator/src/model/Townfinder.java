@@ -43,7 +43,7 @@ public class Townfinder extends Pathfinder {
 	public int heuristic(ConnectedHexMap chm, FilledHex goal, FilledHex current, FilledHex next)
 	{
 		int prioritiseRoad = 0;
-		if (next.getHabitat().getAllBiomes().contains(StatsModifierBiome.road))
+		if (next.getRoadNode() !=null)
 		{
 			prioritiseRoad+=100;
 		}

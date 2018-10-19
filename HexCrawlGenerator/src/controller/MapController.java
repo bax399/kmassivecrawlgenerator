@@ -58,7 +58,7 @@ public class MapController
 		KFunctions.outputString(this,"Finished Rivers");
 		
 		TownGenerator tg = new TownGenerator(hexmap,pc.getTownList(),bg.getBiomeMap(),rand);
-		tg.generateTowns();
+		hexmap.setTowns(tg.generateTowns());
 		KFunctions.outputString(this,"Finished Towns");
 		
 		RoadGenerator rag = new RoadGenerator(hexmap,rand);

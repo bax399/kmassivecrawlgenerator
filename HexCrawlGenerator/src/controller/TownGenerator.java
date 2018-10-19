@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Random;
 import java.util.Set;
 
@@ -12,6 +11,7 @@ import model.ConnectedHexMap;
 import model.FilledHex;
 import model.stats.StatsCoreBiome;
 import model.stats.StatsTown;
+import model.worldplaces.HexTown;
 public class TownGenerator extends Generator
 {
 	Map<StatsTown,Set<StatsCoreBiome>> validTownBiomes;
@@ -35,28 +35,34 @@ public class TownGenerator extends Generator
 		}
 	}
 	
-	public void generateTowns()
+	public Set<HexTown> generateTowns()
 	{
 		
 		List<FilledHex> list = new ArrayList<FilledHex>(hexmap.getHexes().values());
-		
+		Set<HexTown> towns=new HashSet<>();
 		while(list.size() > 0)
 		{
 			int randomindex = getRand().nextInt(list.size());
 			FilledHex curr = list.get(randomindex);
 			list.remove(randomindex);
 
-
-			
 			for(StatsTown t:townList)
 			{
-				rollTown(t,curr);
+				HexTown town = rollTown(t,curr);
+				if (town!=null)
+				{
+					towns.add(town);
+				}
 			}
 		}
+		
+		return towns;
+		
 	}
 		
-	public void rollTown(StatsTown t, FilledHex curr)
+	public HexTown rollTown(StatsTown t, FilledHex curr)
 	{
+		HexTown town=null;
 		if (!t.limitReached())
 		{
 			//getBiome().getBiome() will get the base biomes, ignoring modifiers.
@@ -66,15 +72,16 @@ public class TownGenerator extends Generator
 				{
 					if(t.needsRiver() && (curr.getRiverNode() != null))
 					{
-						t.createTown(curr, hexmap.getRandomPoint(curr));
+						town=t.createTown(curr, hexmap.getRandomPoint(curr));
 					}
 					else if (!t.needsRiver())
 					{
-						t.createTown(curr, hexmap.getRandomPoint(curr));
+						town=t.createTown(curr, hexmap.getRandomPoint(curr));
 					}
 				}
 			}
-		}			
+		}
+		return town;
 	}
 	
 	public Set<StatsCoreBiome> processValidBiomes(String weight)

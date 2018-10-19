@@ -42,7 +42,7 @@ public class Riverfinder extends Pathfinder {
 
 		prioritiseWater=(int)(next.getHabitat().getRiverEnd());
 		//dist up = towards goal
-		return goal.distance(next)*20 + Math.max((next.getHabitat().getHeight()-current.getHabitat().getHeight())*1,0) - prioritiseWater + getRand().nextInt(5)*5;
+		return goal.distance(next)*20 + Math.max((next.getHabitat().getHeight()-current.getHabitat().getHeight())*1,0) - prioritiseWater + getRand().nextInt(5)*10;
 	}
 		
 	

@@ -65,7 +65,7 @@ public class RiverGenerator extends Generator {
 			FilledHex riverEnd = null;
 			riverNetwork = new RiverNetwork();
 			
-			riverEnd = riverFinder.Dijkstra(hexmap, riverStarter, new MutableInt(50));
+			riverEnd = riverFinder.terminatingDijkstra(hexmap, riverStarter, new MutableInt(50));
 			
 			if(riverEnd !=null && !riverEnd.equals(riverStarter))
 			{

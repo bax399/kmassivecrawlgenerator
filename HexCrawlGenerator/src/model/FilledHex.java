@@ -12,7 +12,6 @@ import model.redblob.Hex;
 import model.worldplaces.Habitat;
 import model.worldplaces.HexTown;
 import model.worldplaces.NetworkNode;
-import model.worldplaces.RoadNode;
 import model.worldplaces.WorldPlace;
 
 public class FilledHex extends Hex 
@@ -20,9 +19,7 @@ public class FilledHex extends Hex
 	private Habitat habitat;
 	public Point center;
 	
-	public int priority=0; //Editable field for pathfinding priority
-	public int rivertype=-1; //Editable field for creating rivers
-	
+	public int priority=0; //Editable field for pathfinding priority	
 	
 	private Polygon shape;	
 	//Points are stored to place worldobjects in exact locations
@@ -32,12 +29,6 @@ public class FilledHex extends Hex
 	private Set<HexTown> towns = new HashSet<>();
 	private NetworkNode riverNode=null, roadNode=null;
 	private HexRegion region;
-
-	//Stores the random points for each item it contains, rivers and roads store their own.
-	private Map<WorldPlace, Point> points;
-	
-	//TODO make a way to roll for random points within hex that isn't cpu intensive
-	//thoughts: this should be done in hexmap, as then we just add the hex's center to the random point and we're in luck.
 	
 	//TODO addWorldObject methods to FilledHexes, randomize point then add it to the map.
 	public FilledHex(Habitat hab, int q, int r, int s)
@@ -102,8 +93,9 @@ public class FilledHex extends Hex
 			{
 				c = t.getConnectivity();
 				largest=t;
-			}
+			}	
 		}
+		
 		return largest;
 	}
 	

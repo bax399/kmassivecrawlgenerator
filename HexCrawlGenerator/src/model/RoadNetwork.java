@@ -33,34 +33,11 @@ public class RoadNetwork extends Network{
 	
 	public void addTownNode(ConnectedHexMap chm, FilledHex fh,Set<Network> networks) 
 	{
-		Network otherNetwork=null;
-		if (fh.getRoadNode() != null)
-		{
-			otherNetwork = fh.getRoadNode().getNetwork();
-			joinNetworks(otherNetwork,networks);
-		}
-		else 
-		{
-			NetworkNode roadNode;
+		NetworkNode roadNode;
 
-			if (fh.getLargestTown() != null) 
-			{
-				roadNode = new NetworkNode(this, fh.getLargestTown().getPosition());
-			} 
-			else
-			{
-				roadNode = new NetworkNode(this, chm.getRandomPoint(fh));
-			}
+		roadNode = new NetworkNode(this, fh.getLargestTown().getPosition());
 
-			addNode(roadNode,fh);
-
-			if (!fh.getHabitat().getAllBiomes().contains(StatsModifierBiome.road)) {
-				StatsModifierBiome b = StatsModifierBiome.road;
-				fh.getHabitat().addModifierBiome(b);
-			}
-
-
-		}
+		addNode(roadNode,fh);
 
 	}
 
@@ -81,10 +58,15 @@ public class RoadNetwork extends Network{
 				fh = cc.getVertexes().get(ii);		
 				if(!super.containsHex(fh)) //if isn't already in Network
 				{
-					if(fh.getRoadNode()==null)
+					NetworkNode roadNode=fh.getRoadNode();
+
+					if (roadNode != null) //It has a roadnode currently JOIN THE TWO NETWORKS TOGETHER
 					{
-						NetworkNode roadNode=null;
-						if (fh.getLargestTown() != null) 
+						joinNetworks(fh.getRoadNode().getNetwork(),networks);
+					}
+					else
+					{
+						if (fh.getTowns().size() > 0) 
 						{
 							roadNode = new NetworkNode(this, fh.getLargestTown().getPosition());
 						} 
@@ -92,28 +74,16 @@ public class RoadNetwork extends Network{
 						{
 							roadNode = new NetworkNode(this, chm.getRandomPoint(fh));
 						}
-						addNode(roadNode,fh);
-						
-						//Adds a river modifier to the hex.
-						if (!fh.getHabitat().getAllBiomes().contains(StatsModifierBiome.road))
-						{
-							StatsModifierBiome b = StatsModifierBiome.road;						
-							fh.getHabitat().addModifierBiome(b);
-						}
 					}
-					else //It has a roadnode currently JOIN THE TWO NETWORKS TOGETHER
-					{
-						delNetwork= fh.getRoadNode().getNetwork();
-						joinNetworks(delNetwork,networks);
-					}
-					
+					addNode(roadNode,fh);
 				}
-				if (ii==1)
-				{
-					NetworkConnection roadLink = new NetworkConnection(cc.getVertexes().get(0).getRoadNode(),cc.getVertexes().get(1).getRoadNode(),1);
-					addConnection(roadLink);
-				}						
+	
 			}
+			
+			NetworkConnection roadLink = new NetworkConnection(cc.getVertexes().get(0).getRoadNode(),cc.getVertexes().get(1).getRoadNode(),1);
+			NetworkConnection roadLink2 = new NetworkConnection(cc.getVertexes().get(1).getRoadNode(),cc.getVertexes().get(0).getRoadNode(),1);
+			addConnection(roadLink);
+			addConnection(roadLink2);							
 		}
 		return delNetwork; 
 	}

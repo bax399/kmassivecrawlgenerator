@@ -5,15 +5,16 @@ import java.util.Iterator;
 import java.util.Random;
 import java.util.Set;
 
-import functions.KFunctions;
 import model.graphresource.Edge;
 import model.graphresource.Graph;
 import model.redblob.Layout;
+import model.worldplaces.HexTown;
 public class ConnectedHexMap extends HexMap<FilledHex> {
 
 	Graph<FilledHex,Edge<FilledHex>> neighbours; // Stores each hex's neighbouring cells in hexagonal coordinates
 	Set<Network> rivernetworks, roadnetworks;
 	Set<HexRegion> regions;
+	Set<HexTown> towns;
 	public final int height;
 	public final int width;
 	
@@ -28,6 +29,11 @@ public class ConnectedHexMap extends HexMap<FilledHex> {
 		height = h;		
 		ly = l;
 		rand = r; 
+	}
+	
+	public void setTowns(Set<HexTown> towns)
+	{
+		this.towns=towns;
 	}
 	
 	public void setRiverNetworks(Set<Network> rivers)
@@ -60,7 +66,7 @@ public class ConnectedHexMap extends HexMap<FilledHex> {
 					
 					if (n!=null && containsHex(n))
 					{
-						neighbours.addEdge(new Edge<FilledHex>(each, n,(int)(each.getHabitat().getTravelCost()+n.getHabitat().getTravelCost())/2));
+						neighbours.addEdge(new Edge<FilledHex>(each, n,1));
 					}
 					
 					
@@ -98,6 +104,11 @@ public class ConnectedHexMap extends HexMap<FilledHex> {
 			riverconnections.add(rn.getNetworkConnections());
 		}
 		return riverconnections;
+	}
+	
+	public Set<HexTown> getTowns()
+	{
+		return towns;
 	}
 	
 	public Point getRandomPoint(FilledHex origin)

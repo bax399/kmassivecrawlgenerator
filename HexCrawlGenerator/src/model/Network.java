@@ -29,7 +29,7 @@ public abstract class Network
 		{
 			graph.addEdge(connect);
 			connect.getVertexes().get(1).setNetwork(this);
-			connect.getVertexes().get(0).setNetwork(this);			
+			connect.getVertexes().get(0).setNetwork(this);	
 		}
 		
 		//Deletes the old network. 
@@ -39,11 +39,13 @@ public abstract class Network
 	public boolean areNeighbours(NetworkNode n1, NetworkNode n2)
 	{
 		boolean neighbours = false;
-		
+
 		if (graph.containsEdge(new NetworkConnection(n1,n2,1)))
 		{
-			neighbours = true;
-		}	
+				neighbours=true;
+		}
+	
+		
 		return neighbours;
 	}
 	
