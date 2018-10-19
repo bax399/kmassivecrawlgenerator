@@ -30,8 +30,8 @@ public class Roadfinder extends Pathfinder {
     		if (current.getRoadNode() ==null)
     		{
     			fh=current;    	
-
     		}
+    		
     	}
     	
     	if (current.getRoadNode() !=null)
@@ -40,6 +40,7 @@ public class Roadfinder extends Pathfinder {
     		{
     			fh=current;   			
     		}
+
     	}
 		    	
 		

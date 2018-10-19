@@ -26,7 +26,7 @@ public class RuntimeController
 		
 
 		Layout lt = new Layout(Layout.pointy,new Point(size,size),new Point(screenwidth/2,screenheight/2)); //Spiral Map		
-		MapController mc = new MapController(50, pc, lt, rand); 
+		MapController mc = new MapController(100, pc, lt, rand); 
 		
 		JFrame f = new JFrame("HexMap");
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -53,7 +53,7 @@ public class RoadGenerator extends Generator
 			if (originHex.getRoadNode() == null)
 			{
 				rn=new RoadNetwork();
-				rn.addTownNode(hexmap, originHex,networks);
+				rn.addNode(rn.createNode(hexmap, originHex), originHex);
 			}
 			else
 			{
@@ -83,10 +83,6 @@ public class RoadGenerator extends Generator
 					
 					rn.createNetwork(hexmap,path,networks);		
 					networks.add(rn);
-					
-					KFunctions.outputString(this,originHex.getRoadNode().getNetwork() + " vs "+ goal.getRoadNode().getNetwork());
-					//goal.getRoadNode().setNetwork(originHex.getRoadNode().getNetwork());										
-					KFunctions.outputString(this,"Origin Hex: " + originHex +" to " + goal);					
 					successfulRoad=true;
 				}
 			}

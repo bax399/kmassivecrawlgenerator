@@ -9,14 +9,27 @@ import model.worldplaces.HexTown;
 import model.worldplaces.NetworkNode;
 
 public class RoadNetwork extends Network{
-	
-	//TODO fix towns so they can be accessed privately.
 	private Set<HexTown> towns;
 	
 	public RoadNetwork()
 	{
 		super();
 		towns=new HashSet<>();
+	}
+	
+	public NetworkNode createNode(ConnectedHexMap chm, FilledHex origin)
+	{
+		NetworkNode roadNode;
+		if (origin.getTowns().size() > 0) 
+		{
+			roadNode = new NetworkNode(this, origin.getLargestTown().getPosition());
+		} 
+		else
+		{
+			roadNode = new NetworkNode(this, chm.getRandomPoint(origin));
+		}
+		
+		return roadNode;
 	}
 	
 	public void addNode(NetworkNode node, FilledHex origin)
@@ -29,16 +42,6 @@ public class RoadNetwork extends Network{
 			// Add towns from fh to the network.
 			towns.addAll(origin.getTowns());
 		}
-	}
-	
-	public void addTownNode(ConnectedHexMap chm, FilledHex fh,Set<Network> networks) 
-	{
-		NetworkNode roadNode;
-
-		roadNode = new NetworkNode(this, fh.getLargestTown().getPosition());
-
-		addNode(roadNode,fh);
-
 	}
 
 	@Override
@@ -66,14 +69,7 @@ public class RoadNetwork extends Network{
 					}
 					else
 					{
-						if (fh.getTowns().size() > 0) 
-						{
-							roadNode = new NetworkNode(this, fh.getLargestTown().getPosition());
-						} 
-						else
-						{
-							roadNode = new NetworkNode(this, chm.getRandomPoint(fh));
-						}
+						roadNode=createNode(chm,fh);
 					}
 					addNode(roadNode,fh);
 				}
