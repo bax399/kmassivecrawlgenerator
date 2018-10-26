@@ -1,6 +1,6 @@
 package model;
 
-import java.awt.Polygon;
+import javafx.scene.shape.Polygon;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;

@@ -8,9 +8,11 @@ import java.util.Random;
 
 import javax.swing.JFrame;
 
+import javafx.stage.Stage;
 import model.Point;
 import model.redblob.Layout;
 import view.MapDrawerPanel;
+import viewtesting.RuntimeController2;
 public class RuntimeController 
 {	
 	final static double screenwidth = 1920d;
@@ -23,7 +25,6 @@ public class RuntimeController
 		long time1 = System.currentTimeMillis();
 
 		PropertiesController pc = new PropertiesController(); 
-		
 
 		Layout lt = new Layout(Layout.pointy,new Point(size,size),new Point(screenwidth/2,screenheight/2)); //Spiral Map		
 		MapController mc = new MapController(100, pc, lt, rand); 
