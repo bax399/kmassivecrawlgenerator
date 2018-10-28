@@ -1,7 +1,7 @@
 package model.redblob;
-import javafx.scene.shape.Polygon;
-import model.Point;
+import java.awt.Polygon;
 
+import model.Point;
 public class Layout {
 	   public Layout(Orientation orientation, Point size, Point origin)
 	    { 
@@ -49,10 +49,10 @@ public class Layout {
 	        Point center = hexToPixel(h);
 	        for (int i = 0; i < 6; i++)
 	        {
-	        	double xi = hexCornerOffset(i).x;
-	        	double yi = hexCornerOffset(i).y;
-	        	
-	            corners.getPoints().addAll(new Double[] {center.x+xi,center.y+yi});
+
+	            Point offset = hexCornerOffset(i);	        	
+	            //corners.add(new Point(center.x + offset.x, center.y + offset.y));
+	            corners.addPoint((int)Math.round(center.x+offset.x),  (int)Math.round(center.y+offset.y));
 	        }
 	        return corners;
 	    }

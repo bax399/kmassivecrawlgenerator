@@ -42,10 +42,10 @@ public class MapController
 	
 	public void initializeMapGenerators(PropertiesController pc,Random rand)
 	{
+		getPolygons();		
 		
 		BiomeGenerator bg = new BiomeGenerator(hexmap,pc.getBiomeList(),rand);
 		bg.wormWrapper();
-		getPolygons();
 		hexmap.initializeNeighbours();
 		KFunctions.outputString(this,"Finished Generating");
 		

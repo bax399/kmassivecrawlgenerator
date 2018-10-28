@@ -1,4 +1,4 @@
-package controller;
+ package controller;
 import static functions.KFunctions.outputString;
 
 import java.awt.GraphicsEnvironment;
@@ -7,31 +7,32 @@ import java.awt.event.KeyListener;
 import java.util.Random;
 
 import javax.swing.JFrame;
+import javax.swing.JLayeredPane;
 
-import javafx.stage.Stage;
 import model.Point;
 import model.redblob.Layout;
 import view.MapDrawerPanel;
-import viewtesting.RuntimeController2;
 public class RuntimeController 
 {	
 	final static double screenwidth = 1920d;
 	final static double screenheight = 1080d;
-	final static double size = 30d; //mc 30
+	final static double size = 90d; //mc 30
 	
 	public static void main(String[] args)
 	{ 
-		Random rand = new Random(399);
+		Random rand = new Random(411);
 		long time1 = System.currentTimeMillis();
 
 		PropertiesController pc = new PropertiesController(); 
 
 		Layout lt = new Layout(Layout.pointy,new Point(size,size),new Point(screenwidth/2,screenheight/2)); //Spiral Map		
-		MapController mc = new MapController(100, pc, lt, rand); 
+		MapController mc = new MapController(200, pc, lt, rand); 
 		
 		JFrame f = new JFrame("HexMap");
+		
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		MapDrawerPanel ui = new MapDrawerPanel(mc.hexmap, lt,(int)size/30);
+
 		f.addKeyListener(new KeyListener() {
 	        @Override
 	        public void keyTyped(KeyEvent e) {
@@ -48,8 +49,12 @@ public class RuntimeController
 	        	ui.opacity=0;
 	        	System.out.println(ui.opacity);	        	
 	        }
-	    });		
+	    });
+		
 		f.add(ui);
+		
+		
+
 		f.setSize((int)screenwidth,(int)screenheight);
 		f.setVisible(true);
 					

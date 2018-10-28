@@ -4,9 +4,8 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
-public class RuntimeController2 extends Application
+public class ApplicationController extends Application
 {
 	public static int WINDOWWIDTH = 1024;
 	public static int WINDOWHEIGHT = 768;
@@ -15,14 +14,8 @@ public class RuntimeController2 extends Application
 	public void init() throws Exception
 	{
 		System.out.println("init");
-	}
-	
-	public static void main(String[] args)
-	{
-		Application.launch(args);
-
-
-
+		
+		//Initialized the 
 	}
 	
 	public void start(Stage stage)
@@ -35,6 +28,8 @@ public class RuntimeController2 extends Application
 		LayerSystem map = new LayerSystem(layers);
 
 		root.getChildren().add(layers);
+		
+		layers.addPolygonGrid(10);
 		
 		Scene scene = new Scene(root, WINDOWWIDTH,WINDOWHEIGHT);
 		SceneGestures sceneGestures = new SceneGestures(layers);
@@ -49,8 +44,8 @@ public class RuntimeController2 extends Application
         stage.show();	
         
 	}
-
 	
+
 }
 
 //Group squares = new Group();

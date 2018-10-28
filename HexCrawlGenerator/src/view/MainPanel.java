@@ -1,18 +1,5 @@
 //https://github.com/Thanasis1101/Zoomable-Java-Panel/tree/master/Execute
 package view;
-import java.util.*;
-
-import model.ConnectedHexMap;
-import model.NetworkConnection;
-import model.FilledHex;
-import model.HexRegion;
-import model.redblob.Layout;
-import model.redblob.Tuple;
-import model.worldplaces.HexTown;
-
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.MouseInfo;
@@ -23,19 +10,19 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
-import javax.swing.JPanel;
+import java.util.ArrayList;
+import java.util.List;
 
-import javafx.util.Pair;
+import javax.swing.JLayeredPane;
 
 /**
  *
  * @author Thanasis1101
  * @version 1.0
  */
-public abstract class MainPanel extends JPanel implements MouseWheelListener, MouseListener, MouseMotionListener {
+public class MainPanel extends JLayeredPane implements MouseWheelListener, MouseListener, MouseMotionListener {
     
-    
+	
     private double zoomFactor = 1;
     private double prevZoomFactor = 1;
     private boolean zoomer;
@@ -47,12 +34,11 @@ public abstract class MainPanel extends JPanel implements MouseWheelListener, Mo
     private int yDiff;
     private Point startPoint;
 
-    public MainPanel(int size) 
-    {
+    public MainPanel() 
+    {    	
         initComponent();
-
     }
-
+    
     private void initComponent() {
         addMouseWheelListener(this);
         addMouseMotionListener(this);
@@ -60,11 +46,11 @@ public abstract class MainPanel extends JPanel implements MouseWheelListener, Mo
     }
 
     @Override
-    public void paint(Graphics g) {
-        super.paint(g);
-
+    public void paint(Graphics g) 
+    {
+        
         Graphics2D g2 = (Graphics2D) g;
-        AffineTransform at = new AffineTransform();;
+        AffineTransform at = new AffineTransform();
         
         if (zoomer) {
             double xRel = MouseInfo.getPointerInfo().getLocation().getX() - getLocationOnScreen().getX();
@@ -96,15 +82,15 @@ public abstract class MainPanel extends JPanel implements MouseWheelListener, Mo
         }
 
         // All drawings go here
-        
-        //g2.drawImage(image, 0, 0, this);
-        drawAll(g2, g,(float)zoomFactor);
-        
-        
+        drawAll(g2,at, zoomFactor);
+        super.paint(g2);
 
     }
     
-    public abstract void drawAll(Graphics2D g2,Graphics g,float zoomFactor);
+    public void drawAll(Graphics2D g2,AffineTransform at, double zoomFactor) 
+    {
+
+    }
     
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
@@ -113,15 +99,30 @@ public abstract class MainPanel extends JPanel implements MouseWheelListener, Mo
 
         //Zoom in
         if (e.getWheelRotation() < 0) {
-            zoomFactor *= 1.1;
+            zoomFactor = clamp(zoomFactor*1.1,0.1d,1d);
             repaint();
         }
         //Zoom out
+        
         if (e.getWheelRotation() > 0) {
-            zoomFactor /= 1.1;
+            zoomFactor =clamp(zoomFactor/1.1,0.1d,1d);
             repaint();
         }
     }
+    
+    private double clamp(double value, double min, double max) 
+    {
+        if (value < min)
+
+            return min;
+
+        if (value > max)
+
+            return max;
+
+        return value;
+
+    }    
 
     @Override
     public void mouseDragged(MouseEvent e) {

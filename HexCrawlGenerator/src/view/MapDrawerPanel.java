@@ -2,8 +2,8 @@ package view;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
@@ -12,9 +12,9 @@ import java.util.Set;
 
 import javafx.util.Pair;
 import model.ConnectedHexMap;
-import model.NetworkConnection;
 import model.FilledHex;
 import model.HexRegion;
+import model.NetworkConnection;
 import model.Point;
 import model.redblob.Layout;
 import model.redblob.Tuple;
@@ -30,47 +30,15 @@ public class MapDrawerPanel extends MainPanel
 	//TODO do better updating on paint method, allow for real-time generation to view each step of generation process.
 	public MapDrawerPanel(ConnectedHexMap h, Layout lt, int size)
 	{	
-		super(size);
+		super();
 		hexes=h;
 		this.lt = lt;
 		this.size=size;
 	}
 	
-
-//	@Override
-//	public void drawAll(Graphics2D g2, AffineTransform at)
-//	{
-//		this.setBackground(Color.WHITE); 
-//		Font font = new Font("Courier New",Font.PLAIN,11); 
-//
-//		g2.setFont(font);
-//		
-//		//** HEXES **//
-//		for(Map.Entry<Tuple,FilledHex> entry : hexes.getHexes().entrySet())
-//		{
-//			FilledHex hh = hexes.getHex(entry.getValue());
-//			
-//			//Change offset to be relative to layout size 
-//			g2.setColor(hh.getBiome().getColor());
-//			
-//			Shape scaleHex = at.createTransformedShape(hh.getShape());
-//			
-//			g2.fill(scaleHex);
-//
-//			//**Outline**//
-//			if (hexes.getHexes().size() < 2000)
-//			{
-//				g2.setColor(new Color(0,0,0,50));
-//				g2.draw(scaleHex);
-//			}
-//
-//		}
-//
-//	}	
-	
 	//Needed method, draws to screen
 	@Override
-	public void drawAll(Graphics2D g2,Graphics g, float zoomFactor)
+	public void drawAll(Graphics2D g2, AffineTransform at, double zoomFactor)
 	{
 		zoomFactor = 1/zoomFactor;
 		this.setBackground(Color.WHITE); 
@@ -82,7 +50,8 @@ public class MapDrawerPanel extends MainPanel
 		for(Map.Entry<Tuple,FilledHex> entry : hexes.getHexes().entrySet())
 		{
 			FilledHex hh = hexes.getHex(entry.getValue());
-			
+//			g2.setColor(Color.BLACK);
+//			g2.drawPolygon(hh.getShape());
 			//Change offset to be relative to layout size 
 			g2.setColor(hh.getHabitat().getColor());
 			g2.fillPolygon(hh.getShape());
@@ -173,7 +142,7 @@ public class MapDrawerPanel extends MainPanel
 		//** RIVERS **//
 		Iterator<Set<NetworkConnection>> isc = hexes.getRiverConnections().iterator();
 		g2.setColor(Color.BLUE);
-		g2.setStroke(new BasicStroke(2.0f*zoomFactor));
+		g2.setStroke(new BasicStroke(2.0f*(float)zoomFactor));
 		while(isc.hasNext())
 		{
 			//**RANDOMIZE COLOURS**//
@@ -210,7 +179,7 @@ public class MapDrawerPanel extends MainPanel
 		{
 			Iterator<Set<NetworkConnection>> irc = hexes.getRoadConnections().iterator();
 			g2.setColor(Color.BLACK);
-			g2.setStroke(new BasicStroke(2.0f*zoomFactor));
+			g2.setStroke(new BasicStroke(2.0f*(float)zoomFactor));
 			while(irc.hasNext())
 			{
 				//**RANDOMIZE COLOURS**//

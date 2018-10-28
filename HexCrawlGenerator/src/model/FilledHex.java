@@ -1,6 +1,6 @@
 package model;
 
-import javafx.scene.shape.Polygon;
+import java.awt.Polygon;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -22,6 +22,7 @@ public class FilledHex extends Hex
 	public int priority=0; //Editable field for pathfinding priority	
 	
 	private Polygon shape;	
+	private javafx.scene.shape.Polygon fxshape;
 	//Points are stored to place worldobjects in exact locations
 	//Need a better way to store Points.
 	//These are ONLY ITEMS THAT EXIST WITHIN THE HEX
@@ -141,5 +142,15 @@ public class FilledHex extends Hex
 	public Polygon getShape()
 	{
 		return this.shape;
+	}
+	
+	public void setFXShape(javafx.scene.shape.Polygon shape)
+	{
+		this.fxshape = shape;
+	}	
+	
+	public javafx.scene.shape.Polygon getFXShape()
+	{
+		return this.fxshape;
 	}
 }

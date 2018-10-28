@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import javafx.scene.Node;
 /**
  * @author Keeley
- *	Layered pane object that stores multiple canvas within.
+ *	This class handles which LayerGUI panes are draw above one another, and can remove them from the canvas as ordered to.
+ *  Stores the pannableCanvas root class that all layers are drawn to.
  */
 public class LayerSystem
 {
@@ -45,19 +46,6 @@ public class LayerSystem
 		
 		return previous;
 	}
-	
-//	public void redrawAll()
-//	{
-//		for(int ii = 0; ii <ARRAYSIZE; ii++)
-//		{
-//			layers[ii].setCache(true);			
-//		}
-//	}
-//	
-//	public void redrawLayer(int index)
-//	{
-//		layers[index].setCache(true);
-//	}
 	
 	public void turnOnAll()
 	{
